@@ -33,50 +33,9 @@
     --red-light: #fef2f2;
     --red-border: #fecaca;
   }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; font-family: 'Sora', sans-serif; background: var(--cream); color: var(--text-dark); scroll-behavior: smooth; }
 
-  /* ============================================================
-     NUEVO: OCUPAR TODA LA PANTALLA
-     ============================================================ */
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Sora', sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
-  }
-
-  #main-app {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: var(--cream);
-  }
-
-  #main {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px 16px 100px;
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  #consent-screen {
-    min-height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    background: linear-gradient(160deg, var(--green-deep) 0%, #1a5c38 60%, #2db870 100%);
-  }
   .custom-alert {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0,0,0,0.5); display: flex; justify-content: center;
@@ -114,6 +73,8 @@
     cursor: pointer; padding: 5px 10px; border-radius: 8px; transition: background 0.2s;
   }
   .save-progress-btn:hover { background: rgba(255,255,255,0.3); }
+
+  #main { max-width: 600px; margin: 0 auto; padding: 20px 16px 100px; }
   .section-card {
     background: var(--white); border-radius: var(--radius); padding: 20px;
     margin-bottom: 16px; box-shadow: var(--shadow); border-left: 4px solid var(--green-light);
@@ -188,6 +149,7 @@
   .tab-nav { background: linear-gradient(135deg, var(--green-mid) 0%, var(--green-light) 100%); border-radius: var(--radius) var(--radius) 0 0; margin-bottom: -2px; }
   .tab-nav .tab-label { color: white !important; font-weight: 700; }
   .tab-nav .tab-icon { color: white; }
+  #consent-screen { min-height: 100vh; display: flex; flex-direction: column; background: linear-gradient(160deg, var(--green-deep) 0%, #1a5c38 60%, #2db870 100%); padding: 40px 24px 60px; }
   .consent-logo { font-size: 60px; text-align: center; margin-bottom: 16px; }
   .consent-title { color: white; font-size: 22px; font-weight: 700; text-align: center; line-height: 1.3; margin-bottom: 6px; }
   .consent-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; text-align: center; font-family: 'Space Mono', monospace; margin-bottom: 28px; }
