@@ -2,150 +2,1975 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Lípidos · Centro de aprendizaje</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0d4a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Encuesta CAP">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Encuesta CAP – Malaria & Dengue Perú</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+  :root {
+    --green-deep: #0d4a2e;
+    --green-mid: #1a7a4a;
+    --green-light: #2db870;
+    --amber: #f59e0b;
+    --amber-light: #fbbf24;
+    --cream: #faf7f0;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a5568;
+    --text-light: #718096;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --shadow: 0 4px 24px rgba(13,74,46,0.12);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --red-border: #fecaca;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; font-family: 'Sora', sans-serif; background: var(--cream); color: var(--text-dark); scroll-behavior: smooth; }
 
-  :root{
-    --paper:#FBF6EC; --ink:#1B1A22; --gold:#E8A700; --ember:#D9531E;
-    --membrane:#3E7A5C; --water:#2D4A7A; --line: rgba(27,26,34,0.14);
+  .custom-alert {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5); display: flex; justify-content: center;
+    align-items: flex-start; padding: 40px 16px; z-index: 10000;
+    backdrop-filter: blur(4px); overflow-y: auto; box-sizing: border-box;
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{height:100%;background:var(--paper);color:var(--ink);font-family:'Space Grotesk',sans-serif;overflow:hidden;}
-  .display{font-family:'Fraunces',serif;}
-  .mono{font-family:'JetBrains Mono',monospace;}
+  .custom-alert-content {
+    background-color: white; border-radius: 16px; padding: 24px 20px 20px 20px;
+    width: 100%; max-width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center; animation: fadeSlide 0.2s ease-out; box-sizing: border-box;
+  }
+  .custom-alert-message {
+    font-size: 14px; line-height: 1.5; color: #1f2937; margin-bottom: 24px;
+    white-space: normal; word-wrap: break-word; text-align: left; padding: 0 8px;
+  }
+  .custom-alert-button {
+    background-color: var(--green-mid); color: white; border: none;
+    padding: 10px 20px; border-radius: 30px; font-size: 16px; font-weight: 600;
+    cursor: pointer; width: 100%; transition: background-color 0.2s;
+  }
+  .custom-alert-button:active { background-color: var(--green-deep); transform: scale(0.98); }
 
-  /* ===================== LAUNCHER ===================== */
-  #launcher{
-    position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:2.4rem; padding:2rem; overflow-y:auto; -webkit-overflow-scrolling:touch;
-    background:
-      radial-gradient(circle at 8% 8%, rgba(232,167,0,0.12), transparent 38%),
-      radial-gradient(circle at 92% 14%, rgba(45,74,122,0.10), transparent 40%),
-      radial-gradient(circle at 50% 100%, rgba(62,122,92,0.10), transparent 45%),
-      var(--paper);
-    z-index:5;
+  #app-header {
+    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+    color: var(--white); padding: 16px 20px 14px; position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 16px rgba(13,74,46,0.3);
   }
-  .launcher-head{text-align:center; max-width:560px; display:flex; flex-direction:column; gap:.6rem;}
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace; font-size:.74rem; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--ember); display:flex; align-items:center; justify-content:center; gap:.55rem;
+  #header-text h1 { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.85; }
+  #header-text p { font-size: 11px; opacity: 0.65; font-family: 'Space Mono', monospace; margin-top: 2px; }
+  #progress-bar-wrap { height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin-top: 10px; }
+  #progress-bar { height: 4px; background: var(--amber-light); border-radius: 2px; transition: width 0.4s ease; }
+  #progress-label { font-size: 11px; font-family: 'Space Mono', monospace; opacity: 0.75; text-align: right; margin-top: 4px; }
+  .save-progress-btn {
+    background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px;
+    cursor: pointer; padding: 5px 10px; border-radius: 8px; transition: background 0.2s;
   }
-  .eyebrow::before, .eyebrow::after{content:'';width:18px;height:2px;background:var(--ember);display:inline-block;}
-  .launcher-head h1{font-size:clamp(1.7rem,4vw,2.5rem); font-weight:700; letter-spacing:-0.01em; line-height:1.1;}
-  .launcher-head h1 em{font-style:italic; color:var(--gold); -webkit-text-stroke:.4px var(--ink);}
-  .launcher-head p{font-size:.92rem; line-height:1.55; color:rgba(27,26,34,.72);}
+  .save-progress-btn:hover { background: rgba(255,255,255,0.3); }
 
-  .window-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; width:100%; max-width:760px;}
-  @media(max-width:680px){
-    .window-grid{grid-template-columns:1fr;}
-    #launcher{ justify-content:flex-start; padding-top:2.6rem; padding-bottom:2.6rem; gap:1.8rem; }
+  #main { max-width: 600px; margin: 0 auto; padding: 20px 16px 100px; }
+  .section-card {
+    background: var(--white); border-radius: var(--radius); padding: 20px;
+    margin-bottom: 16px; box-shadow: var(--shadow); border-left: 4px solid var(--green-light);
+    animation: slideIn 0.3s ease-out;
   }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .section-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green-deep); display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .section-icon { font-size: 18px; }
+  .section-progress { margin-left: auto; font-size: 11px; background: var(--green-light); padding: 2px 8px; border-radius: 12px; color: white; }
+  .question-block { margin-bottom: 20px; transition: all 0.2s ease; }
+  .question-block:not(:last-child) { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 20px; }
+  .question-label { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; line-height: 1.45; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .question-code { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--green-mid); font-weight: 700; margin-right: 6px; white-space: nowrap; }
+  .hint { font-size: 11px; color: var(--text-light); margin-top: 3px; font-style: italic; }
+  .tooltip-icon {
+    display: inline-flex; margin-left: 8px; cursor: help; color: var(--green-mid); font-size: 12px;
+    border-radius: 50%; width: 18px; height: 18px; text-align: center; background: #e8f5e9;
+    align-items: center; justify-content: center; font-weight: bold;
+  }
+  input[type="text"], input[type="number"], textarea {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+    font-family: 'Sora', sans-serif; font-size: 14px; background: var(--cream); color: var(--text-dark);
+    transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none;
+  }
+  input:focus { outline: none; border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(45,184,112,0.15); }
+  input[type="number"] { max-width: 140px; }
+  select {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+    font-family: 'Sora', sans-serif; font-size: 14px; background: var(--cream); color: var(--text-dark);
+    -webkit-appearance: none; appearance: none;
+  }
+  select:focus { outline: none; border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(45,184,112,0.15); }
+  .options-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .option-item {
+    display: flex; align-items: flex-start; gap: 12px; background: var(--cream);
+    border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 11px 14px;
+    cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .option-item:hover:not(.disabled) { transform: translateX(4px); background: #f0f9f4; }
+  .option-item.selected { background: linear-gradient(135deg, #e8f8ef 0%, #d4f1e3 100%); border-color: var(--green-mid); border-left-width: 4px; }
+  .option-item input[type="radio"], .option-item input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; cursor: pointer; accent-color: var(--green-mid); margin-top: 1px; }
+  .option-item.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+  .option-text { font-size: 14px; line-height: 1.4; }
+  .skip-note { background: #fff8e1; border: 1px solid #fbbf24; border-radius: var(--radius-sm); padding: 8px 12px; font-size: 12px; color: #92400e; margin: 8px 0 12px 0; display: flex; gap: 6px; align-items: flex-start; }
+  .likert-wrap { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; margin-top: 8px; }
+  .likert-btn {
+    flex: 1; min-width: 90px; padding: 14px 6px; text-align: center; border: 2px solid var(--border);
+    border-radius: 12px; background: var(--cream); cursor: pointer; font-size: 13px;
+    font-family: 'Sora', sans-serif; font-weight: 600; transition: all 0.2s ease;
+    white-space: normal; word-break: break-word; line-height: 1.4; color: var(--text-dark);
+  }
+  .likert-btn:active { transform: scale(0.97); }
+  .likert-btn:hover:not(.selected) { background: #e8f5e9; transform: translateY(-2px); }
+  .likert-btn.selected { background: var(--green-mid); border-color: var(--green-mid); color: white; box-shadow: 0 4px 12px rgba(13,74,46,0.2); }
+  @media (max-width: 550px) { .likert-wrap { gap: 8px; } .likert-btn { flex: 0 0 calc(50% - 8px); min-width: 0; font-size: 11px; padding: 12px 4px; } }
+  @media (min-width: 800px) { .likert-btn { font-size: 12px; padding: 12px 4px; } }
+  #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: transparent; padding: 0; display: flex; justify-content: center; z-index: 150; pointer-events: none; }
+  #bottom-nav-row { max-width: 600px; width: 100%; margin: 0 auto; padding: 0 16px 20px; pointer-events: auto; }
+  .btn-prev-fixed { background: var(--cream); color: var(--text-mid); border: 1.5px solid var(--border); padding: 14px 20px; border-radius: var(--radius); font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: opacity 0.2s; }
+  .btn-prev-fixed:disabled { opacity: 0.5; cursor: not-allowed; }
+  #btn-prev-fixed { display: flex; }
+  #tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); display: flex; z-index: 200; }
+  .tab-btn { flex: 1; padding: 12px 8px 14px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; border: none; background: none; font-family: 'Sora', sans-serif; }
+  .tab-btn .tab-icon { font-size: 22px; }
+  .tab-btn .tab-label { font-size: 10px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .tab-btn.active .tab-label { color: var(--green-mid); }
+  .tab-nav { background: linear-gradient(135deg, var(--green-mid) 0%, var(--green-light) 100%); border-radius: var(--radius) var(--radius) 0 0; margin-bottom: -2px; }
+  .tab-nav .tab-label { color: white !important; font-weight: 700; }
+  .tab-nav .tab-icon { color: white; }
+  #consent-screen { min-height: 100vh; display: flex; flex-direction: column; background: linear-gradient(160deg, var(--green-deep) 0%, #1a5c38 60%, #2db870 100%); padding: 40px 24px 60px; }
+  .consent-logo { font-size: 60px; text-align: center; margin-bottom: 16px; }
+  .consent-title { color: white; font-size: 22px; font-weight: 700; text-align: center; line-height: 1.3; margin-bottom: 6px; }
+  .consent-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; text-align: center; font-family: 'Space Mono', monospace; margin-bottom: 28px; }
+  .consent-box { background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px; color: rgba(255,255,255,0.9); font-size: 13px; line-height: 1.7; margin-bottom: 28px; }
+  .consent-info { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; margin-top: 15px; }
+  .consent-info small { display: block; margin: 5px 0; }
+  .consent-actions { display: flex; flex-direction: column; gap: 12px; }
+  .btn-consent-accept { background: var(--amber); color: var(--green-deep); font-weight: 700; font-size: 16px; padding: 16px; border-radius: 14px; border: none; cursor: pointer; font-family: 'Sora', sans-serif; transition: transform 0.1s; }
+  .btn-consent-accept:active { transform: scale(0.98); }
+  .btn-consent-reject { background: transparent; color: rgba(255,255,255,0.6); font-size: 14px; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; font-family: 'Sora', sans-serif; }
+  #complete-screen { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; text-align: center; }
+  .complete-icon { font-size: 72px; margin-bottom: 20px; }
+  .complete-title { font-size: 26px; font-weight: 700; color: var(--green-deep); margin-bottom: 10px; }
+  .saved-list { background: var(--white); border-radius: 12px; padding: 16px 20px; box-shadow: var(--shadow); width: 100%; max-width: 400px; text-align: left; margin-bottom: 24px; }
+  #admin-screen { padding: 20px 16px 80px; }
+  .record-card { background: var(--white); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; box-shadow: var(--shadow); border-left: 3px solid var(--amber); }
+  .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 8px; font-family: 'Sora', sans-serif; cursor: pointer; border: none; font-weight: 600; }
+  .btn-sm-primary { background: var(--green-mid); color: white; }
+  .btn-sm-danger { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+  #toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: var(--green-deep); color: white; padding: 12px 16px; border-radius: 14px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s; white-space: normal; word-break: break-word; text-align: center; pointer-events: none; width: 85%; max-width: 360px; }
+  #toast.show { opacity: 1; }
+  .hidden { display: none !important; }
+  .other-input { margin-top: 6px; margin-left: 30px; width: calc(100% - 30px); display: none; }
+  .other-input.visible { display: block; }
+  .geo-info { background: #e6f7ee; border-radius: var(--radius-sm); padding: 10px; margin-bottom: 15px; border-left: 3px solid var(--green-mid); }
+  .timer-info { background: #fef3c7; border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 12px; font-size: 12px; color: #92400e; display: flex; flex-direction: column; gap: 8px; }
+  .timer-countdown { font-weight: 700; font-family: 'Space Mono', monospace; background: #92400e; color: white; padding: 2px 8px; border-radius: 20px; }
+  .timer-bar { height: 4px; background: var(--amber-light); width: 100%; border-radius: 2px; transition: width 0.1s linear; }
+  .order-input-container { margin-top: 16px; padding: 12px; background: #f0f9f4; border-radius: var(--radius-sm); border-left: 3px solid var(--green-mid); }
+  .order-input-container label { font-weight: 600; font-size: 13px; color: var(--green-deep); display: block; margin-bottom: 8px; }
+  .order-input { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-family: 'Sora', sans-serif; font-size: 13px; background: white; }
+  .order-hint { font-size: 11px; color: var(--text-light); margin-top: 6px; }
+  .radio-group-order { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; margin-bottom: 15px; }
+  .order-item { display: flex; align-items: center; gap: 12px; background: var(--cream); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  .order-item label { font-weight: normal; font-size: 13px; margin: 0; }
+  .order-select { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); font-family: 'Sora', sans-serif; background: white; }
+  .required-mark { background: var(--red); color: white; padding: 2px 6px; border-radius: 12px; font-size: 10px; margin-left: 8px; }
+  .field-error { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(220,38,38,0.15) !important; }
+  .error-msg { color: var(--red); font-size: 11px; margin-top: 4px; font-weight: 600; }
+  .validation-summary { background: var(--red-light); border: 1px solid var(--red-border); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: var(--red); font-weight: 600; }
+  .question-block.has-error .question-label { color: var(--red); }
+  .option-item.error-outline { border-color: var(--red) !important; }
+  .sent-indicator { font-size: 11px; color: #16a34a; margin-left: 12px; font-weight: normal; }
+  .warning-message { background: #fef3c7; border-left: 4px solid var(--amber); padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 12px; color: #92400e; }
+  #connection-status { position: fixed; bottom: 70px; right: 10px; padding: 5px 10px; border-radius: 20px; font-size: 10px; z-index: 1000; font-family: monospace; font-weight: bold; }
+  .shortcuts-hint { position: fixed; bottom: 10px; left: 10px; font-size: 9px; color: var(--text-light); background: rgba(255,255,255,0.9); padding: 4px 8px; border-radius: 4px; pointer-events: none; z-index: 1000; }
 
-  .window-card{
-    position:relative; background:#fff; border:1.5px solid var(--line); border-radius:20px; padding:1.6rem 1.5rem;
-    cursor:pointer; text-align:left; display:flex; flex-direction:column; gap:.7rem; overflow:visible;
-    box-shadow:0 10px 26px rgba(27,26,34,.06); transition:transform .2s ease, box-shadow .2s ease;
-  }
-  .window-card:hover{transform:translateY(-4px); box-shadow:0 16px 34px rgba(27,26,34,.12);}
-  .window-card .blob-icon{
-    width:54px; height:54px; border-radius:46% 54% 60% 40%/50% 45% 55% 50%;
-    display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#fff;
-    box-shadow:0 8px 18px rgba(0,0,0,.15);
-  }
-  .window-card.video .blob-icon{background:linear-gradient(135deg, var(--water), var(--membrane));}
-  .window-card.game .blob-icon{background:linear-gradient(135deg, var(--ember), var(--gold));}
-  .window-card h2{font-family:'Fraunces',serif; font-weight:700; font-size:1.25rem;}
-  .window-card p{font-size:.82rem; line-height:1.45; color:rgba(27,26,34,.68);}
-  .window-card .go{
-    margin-top:.2rem; font-family:'JetBrains Mono',monospace; font-size:.74rem; letter-spacing:.04em;
-    color:var(--ink); display:flex; align-items:center; gap:.4rem;
-  }
-  .window-card .go::after{content:'→'; transition:transform .2s;}
-  .window-card:hover .go::after{transform:translateX(4px);}
+  /* Alerta duplicados por ubicación (GPS) */
+  .duplicate-alert { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.65); display: flex; justify-content: center; align-items: flex-start; padding: 36px 16px; z-index: 20000; backdrop-filter: blur(5px); overflow-y: auto; box-sizing: border-box; }
+  .duplicate-alert-content { background: white; border-radius: 18px; padding: 24px 20px 20px; width: 100%; max-width: 400px; box-shadow: 0 16px 48px rgba(0,0,0,0.32); box-sizing: border-box; animation: fadeSlide 0.22s ease-out; }
+  .duplicate-alert-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .duplicate-alert-header .icon-bg { background: #fef2f2; border-radius: 50%; width: 52px; height: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+  .duplicate-alert-header h3 { font-weight: 800; font-size: 16px; color: #dc2626; margin: 0; }
+  .duplicate-alert-header .sub { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .duplicate-record { background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; }
+  .duplicate-record .time { font-weight: 700; font-size: 13px; color: #92400e; }
+  .duplicate-record .detail { font-size: 12px; margin-top: 3px; }
+  .duplicate-record .extra { font-size: 11px; color: #6b7280; }
+  .duplicate-record .reason { font-size: 11px; color: #b45309; background: rgba(245,158,11,0.12); padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; }
+  .duplicate-alert-warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 11px 13px; font-size: 12px; color: #991b1b; margin-bottom: 18px; line-height: 1.55; }
+  .duplicate-alert-buttons { display: flex; flex-direction: column; gap: 10px; }
+  .duplicate-alert-buttons .btn-continue { background: #dc2626; color: white; border: none; padding: 14px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .duplicate-alert-buttons .btn-continue:active { transform: scale(0.98); }
+  .duplicate-alert-buttons .btn-review { background: #f9fafb; color: #374151; border: 1.5px solid #d1d5db; padding: 12px; border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .duplicate-alert-buttons .btn-review:active { transform: scale(0.98); }
+  .duplicate-records-list { max-height: 260px; overflow-y: auto; margin-bottom: 14px; border-radius: 10px; border: 1px solid #f3f4f6; padding: 4px; }
 
-  /* ===================== WINDOW VIEWPORTS ===================== */
-  .window-view{
-    position:fixed; inset:0; display:none; flex-direction:column; background:var(--paper); z-index:10;
+  /* ── Alerta duplicados LOCALES (nueva) ── */
+  .dup-local-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.70); display: flex; justify-content: center;
+    align-items: flex-start; padding: 24px 14px; z-index: 40000;
+    backdrop-filter: blur(5px); overflow-y: auto; box-sizing: border-box;
   }
-  .window-view.active{display:flex;}
-  .window-topbar{
-    display:flex; align-items:center; gap:.8rem; padding:.6rem .9rem; border-bottom:1.5px solid var(--line);
-    background:rgba(255,255,255,0.7); backdrop-filter:blur(6px); flex-shrink:0;
+  .dup-local-box {
+    background: white; border-radius: 18px; padding: 22px 18px 20px;
+    width: 100%; max-width: 500px; box-shadow: 0 16px 48px rgba(0,0,0,0.32);
+    box-sizing: border-box; animation: fadeSlide 0.22s ease-out;
   }
-  .back-btn{
-    border:1.5px solid var(--line); background:#fff; cursor:pointer; border-radius:30px; padding:.4rem .9rem;
-    font-family:'JetBrains Mono',monospace; font-size:.74rem; display:flex; align-items:center; gap:.4rem;
-    transition:transform .15s; color:var(--ink);
+  .dup-local-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .dup-local-header .ico { background: #fef2f2; border-radius: 50%; width: 52px; height: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .dup-local-header h3 { font-weight: 800; font-size: 16px; color: #dc2626; margin: 0; line-height: 1.3; }
+  .dup-local-header .sub { font-size: 12px; color: #6b7280; margin-top: 3px; }
+  .dup-local-lista { max-height: 380px; overflow-y: auto; margin-bottom: 14px; }
+  .dup-local-par {
+    background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 10px;
   }
-  .back-btn:hover{transform:translateX(-2px);}
-  .window-topbar .wt-title{font-family:'Fraunces',serif; font-weight:700; font-size:.92rem; display:flex; align-items:center; gap:.4rem;}
-  .window-frame{flex:1; border:none; width:100%; height:100%; background:var(--paper);}
+  .dup-local-par-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .dup-local-par-num { font-weight: 700; font-size: 13px; color: #92400e; }
+  .dup-local-badge { color: white; font-size: 12px; font-weight: 700; padding: 3px 11px; border-radius: 20px; }
+  .dup-local-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .dup-local-reg { background: white; border-radius: 8px; padding: 8px; border: 1px solid #fde68a; font-size: 12px; }
+  .dup-local-reg-title { font-weight: 700; color: #374151; margin-bottom: 4px; font-size: 12px; }
+  .dup-local-reg-id { color: #9ca3af; font-size: 10px; font-family: monospace; }
+  .dup-local-reg-enc { color: #374151; }
+  .dup-local-reg-com { color: #374151; }
+  .dup-local-reg-ts { color: #9ca3af; font-size: 10px; }
+  .dup-local-campos-titulo { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+  .dup-local-tabla { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .dup-local-tabla th { padding: 3px 6px; text-align: left; color: #92400e; font-weight: 700; background: #fef3c7; }
+  .dup-local-tabla td { padding: 3px 6px; color: #374151; vertical-align: top; word-break: break-word; max-width: 120px; }
+  .dup-local-tabla tr:nth-child(even) td { background: #fffdf5; }
+  .dup-local-mas { font-size: 11px; color: #6b7280; margin-top: 4px; font-style: italic; }
+  .dup-local-aviso { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 11px 13px; font-size: 12px; color: #991b1b; margin-bottom: 16px; line-height: 1.6; }
+  .dup-local-btns { display: flex; flex-direction: column; gap: 10px; }
+  .dup-local-btn-enviar { background: #dc2626; color: white; border: none; padding: 14px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; width: 100%; }
+  .dup-local-btn-enviar:active { transform: scale(0.98); }
+  .dup-local-btn-cancelar { background: #f9fafb; color: #374151; border: 1.5px solid #d1d5db; padding: 12px; border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%; }
+  .dup-local-btn-cancelar:active { transform: scale(0.98); }
 </style>
 </head>
 <body>
-
-  <!-- ===================== LAUNCHER ===================== -->
-  <div id="launcher">
-    <div class="launcher-head">
-      <div class="eyebrow">Aprende los lípidos con el grupo 4</div>
-      <h1>Elige tu <em>experiencia</em></h1>
-      <p>Dos formas de explorar la bioquímica de los lípidos: míralos en 3D con una guía narrada, o pon a prueba lo aprendido en el laboratorio interactivo.</p>
-    </div>
-    <div class="window-grid">
-      <button class="window-card video" onclick="openWindow('video')">
-        <div class="blob-icon">🎬</div>
-        <h2>Video interactivo</h2>
-        <p>Recorre capítulos narrados con moléculas 3D que puedes rotar y explorar: estructura, tipos y funciones de los lípidos.</p>
-        <span class="go">Entrar</span>
-      </button>
-      <button class="window-card game" onclick="openWindow('game')">
-        <div class="blob-icon">🎮</div>
-        <h2>Juega y aprende</h2>
-        <p>LipidQuest: ensambla moléculas, clasifica polar/apolar, repara una membrana y responde el examen final del laboratorio.</p>
-        <span class="go">Jugar</span>
-      </button>
+<div id="toast"></div>
+<div id="consent-screen">
+  <div class="consent-logo">🦟</div>
+  <h1 class="consent-title">Encuesta de conocimientos, actitudes y prácticas (CAP) sobre el combate a la malaria y el dengue en comunidades en un contexto de cambio climático</h1>
+  <p class="consent-subtitle">World Vision / KOICA · Perú</p>
+  <div class="consent-box">
+    <strong>Consentimiento informado</strong><br><br>
+    World Vision y la Agencia de Cooperación Internacional de Corea (Koica) está realizando una encuesta para recopilar información que ayude a mejorar la atención relacionada con la malaria y el dengue en su comunidad, en un contexto de cambio climático.<br><br>
+    Su participación es completamente voluntaria. Toda la información que brinde se mantendrá confidencial, y ni su nombre ni los de sus familiares se utilizarán en ningún informe publicado a partir de esta encuesta. Agradecemos su tiempo y contribución para mejorar las estrategias implementadas por las autoridades de salud para prevenir enfermedades y muertes por malaria, dengue u otras enfermedades en este contexto de variabilidad y cambio climático.<br><br>
+    Luego, de haber leído el consentimiento informado, ¿desea participar en la encuesta?
+    <div class="consent-info">
+      <small>📊 La encuesta tomará aproximadamente 25 a 30 minutos</small><br>
+      <small>🔒 Datos anónimos y confidenciales</small><br>
+      <small>💾 Puedes guardar y continuar después</small>
     </div>
   </div>
-
-  <!-- ===================== VIDEO WINDOW ===================== -->
-  <div class="window-view" id="view-video">
-    <div class="window-topbar">
-      <button class="back-btn" onclick="closeWindow('video')">← Volver</button>
-      <div class="wt-title">🎬 Video interactivo</div>
-    </div>
-    <iframe class="window-frame" id="frame-video"></iframe>
+  <div class="consent-actions">
+    <button class="btn-consent-accept" onclick="acceptConsent()">✔ Acepto</button>
+    <button class="btn-consent-reject" onclick="rejectConsent()">X No acepto</button>
   </div>
+</div>
 
-  <!-- ===================== GAME WINDOW ===================== -->
-  <div class="window-view" id="view-game">
-    <div class="window-topbar">
-      <button class="back-btn" onclick="closeWindow('game')">← Volver</button>
-      <div class="wt-title">🎮 Juega y aprende</div>
+<div id="main-app" class="hidden">
+  <div id="app-header">
+    <div><div style="font-size:28px">🦟</div></div>
+    <div id="header-text" style="flex:1">
+      <h1>Encuesta CAP – Perú</h1>
+      <p id="section-indicator">Sección 0</p>
+      <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+      <div id="progress-label">0%</div>
     </div>
-    <iframe class="window-frame" id="frame-game"></iframe>
+    <button class="save-progress-btn" onclick="saveProgress()" title="Guardar progreso">💾</button>
   </div>
+  <div id="main"></div>
+  <div id="bottom-nav"><div id="bottom-nav-row"><button class="btn-prev-fixed" id="btn-prev-fixed" onclick="prevSection()">← Atrás</button></div></div>
+</div>
+
+<div id="complete-screen" class="hidden">
+  <div class="complete-icon">✅</div>
+  <h2 class="complete-title">¡Encuesta completada!</h2>
+  <p class="complete-sub">Los datos han sido guardados.</p>
+  <button style="width:100%;max-width:360px;padding:15px;margin-bottom:10px" onclick="newSurvey()">➕ Nueva encuesta</button>
+  <button style="width:100%;max-width:360px;padding:15px" onclick="showAdmin()">📋 Ver registros</button>
+</div>
+
+<div id="admin-screen" class="hidden">
+  <div class="admin-header"><h2>📋 Registros guardados</h2></div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button style="flex:1;padding:12px" onclick="exportAllCSV()">⬇️ Exportar todo (CSV)</button>
+    <button id="btn-send-all" style="flex:1;padding:12px;background:#1a7a4a;color:white" onclick="sendAllRecords()">📤 Enviar todo</button>
+    <button style="flex:1;padding:12px" onclick="clearAll()">🗑️ Borrar todo</button>
+  </div>
+  <div id="records-list"></div>
+</div>
+
+<div id="tab-bar" style="display:none">
+  <button class="tab-btn tab-nav" id="tab-prev" onclick="prevSection()"><span class="tab-icon">◀</span><span class="tab-label">Atrás</span></button>
+  <button class="tab-btn tab-nav" id="tab-next" onclick="nextSection()"><span class="tab-icon">▶</span><span class="tab-label">Siguiente</span></button>
+  <button class="tab-btn active" id="tab-survey" onclick="switchTab('survey')"><span class="tab-icon">📝</span><span class="tab-label">Encuesta</span></button>
+  <button class="tab-btn" id="tab-records" onclick="switchTab('records')"><span class="tab-icon">📋</span><span class="tab-label">Registros</span></button>
+</div>
 
 <script>
-  const VIDEO_HTML = "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>L\u00edpidos 3D \u00b7 funciones expandidas con descripci\u00f3n</title>\n  <style>\n    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');\n\n    :root {\n      --paper: #FBF6EC; --ink: #1B1A22; --gold: #E8A700; --ember: #D9531E;\n      --membrane: #3E7A5C; --water: #2D4A7A; --line: rgba(27,26,34,0.12);\n    }\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    html, body { height: 100%; background: var(--paper); color: var(--ink); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }\n    .display { font-family: 'Fraunces', serif; }\n    .mono { font-family: 'JetBrains Mono', monospace; }\n\n    .player {\n      position: relative; width: 100vw; height: 100vh; display: flex; flex-direction: column;\n      background: radial-gradient(circle at 10% 10%, rgba(232,167,0,0.10), transparent 40%),\n                  radial-gradient(circle at 90% 90%, rgba(45,74,122,0.08), transparent 40%), var(--paper);\n    }\n    .screen {\n      position: relative; flex: 1; overflow: hidden; display: flex; gap: 2.2rem; padding: 3vh 4vw; align-items: stretch;\n    }\n\n    /* ---- text pane ---- */\n    .text-pane { flex: 0.45; position: relative; min-width: 0; height: 100%; }\n    .scene {\n      position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: .85rem;\n      opacity: 0; pointer-events: none; transform: translateX(-26px); transition: opacity .5s ease, transform .5s ease;\n      overflow-y: auto; padding-right: 4px;\n    }\n    .scene.active { opacity: 1; pointer-events: auto; transform: translateX(0); }\n\n    /* Cap\u00edtulo 4: ocultar lista y lede, ajustar altura */\n    .scene.funcion-scene .func-list { display: none; }\n    .scene.funcion-scene .lede { display: none; }\n    .scene.funcion-scene { justify-content: flex-start; padding-top: 1rem; gap: 0.2rem; }\n    .scene.funcion-scene .eyebrow { margin-bottom: 0; }\n    .scene.funcion-scene h1.title { font-size: clamp(1.1rem, 1.6vw, 1.5rem); }\n\n    .eyebrow {\n      font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase;\n      color: var(--ember); display: flex; align-items: center; gap: .6rem;\n    }\n    .eyebrow::before { content: ''; width: 20px; height: 2px; background: var(--ember); display: inline-block; }\n    h1.title { font-size: clamp(1.5rem, 2.7vw, 2.3rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }\n    h1.title em { font-style: italic; color: var(--gold); -webkit-text-stroke: 0.4px var(--ink); }\n    p.lede { font-size: 0.92rem; line-height: 1.5; color: rgba(27,26,34,0.78); max-width: 480px; }\n\n    .legend-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .2rem; }\n    .legend-chip {\n      display: flex; align-items: center; gap: .4rem; background: #fff; border: 1.5px solid var(--line);\n      border-radius: 20px; padding: .3rem .7rem; font-size: .74rem; font-family: 'JetBrains Mono', monospace;\n    }\n    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }\n\n    .part-block {\n      display: flex; gap: .6rem; align-items: flex-start; padding: .55rem .7rem; border-radius: 10px; background: #fff;\n      border: 1.5px solid var(--line); font-size: .82rem; line-height: 1.35;\n    }\n    .part-block b { display: block; }\n    .part-dot { width: 11px; height: 11px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }\n\n    .func-list {\n      display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.2rem;\n      max-height: 55vh; overflow-y: auto;\n      padding-right: 4px;\n    }\n    .func-list::-webkit-scrollbar { width: 4px; }\n    .func-list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }\n    .func-item {\n      display: flex; gap: 0.7rem; align-items: flex-start; background: #fff; border: 1.5px solid var(--line);\n      border-radius: 10px; padding: 0.5rem 0.7rem;\n      transition: border-color 0.2s, box-shadow 0.2s;\n    }\n    .func-item.active-func { border-color: var(--gold); background: #FFFDF5; }\n    .func-num {\n      font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--ember); flex-shrink: 0; padding-top: 2px;\n    }\n    .func-item h4 { font-family: 'Fraunces', serif; font-size: .92rem; margin-bottom: .1rem; }\n    .func-item p { font-size: .76rem; color: rgba(27,26,34,.65); line-height: 1.35; }\n\n    .recap-line { position: relative; display: flex; flex-direction: column; gap: .6rem; margin-top: .4rem; }\n    .recap-step { display: flex; align-items: center; gap: .7rem; }\n    .recap-dot {\n      width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: var(--ink); font-family: 'Fraunces', serif;\n      font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: .85rem;\n    }\n    .recap-step span.lbl { font-size: 0.82rem; font-weight: 600; }\n    .restart-btn {\n      margin-top: .6rem; align-self: flex-start; background: var(--ink); color: var(--paper); border: none;\n      padding: .6rem 1.1rem; border-radius: 30px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem;\n      letter-spacing: .04em; display: flex; align-items: center; gap: .5rem;\n    }\n\n    /* ---- molecule pane ---- */\n    .mol-pane { flex: 1.55; height: 100%; display: flex; align-items: center; justify-content: center; }\n    .canvas-wrap {\n      position: relative; width: 100%; max-width: 560px; aspect-ratio: 1/1; max-height: 80vh;\n      background: #ffffff; border-radius: 22px; border: 1.5px solid var(--line); overflow: hidden;\n      box-shadow: 0 14px 36px rgba(27,26,34,0.10); touch-action: none;\n    }\n    /* Cap\u00edtulo 4: canvas-wrap se expande en altura */\n    .canvas-wrap.funcion-expand {\n      max-width: 100%; max-height: 100%; aspect-ratio: auto;\n      height: 100%; width: 100%; border-radius: 18px;\n    }\n    #gl { width: 100%; height: 100%; display: block; cursor: grab; }\n    #gl:active { cursor: grabbing; }\n    .hint {\n      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace;\n      font-size: 10.5px; color: rgba(27,26,34,.45); pointer-events: none;\n    }\n    .label-layer { position: absolute; inset: 0; pointer-events: none; display: none; }\n    .mol-label {\n      position: absolute; transform: translate(-50%, -130%); background: var(--ink); color: var(--paper);\n      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 3px 8px; border-radius: 6px; white-space: nowrap;\n      opacity: 0; transition: opacity .35s, left .12s linear, top .12s linear;\n    }\n    .mol-label.show { opacity: 1; }\n    .mol-label.head { background: var(--water); }\n    .mol-label.tail { background: var(--ember); }\n    .mol-label.glicerol { background: var(--membrane); }\n    .mol-label.anillos { background: var(--gold); color: var(--ink); }\n\n    .tipos-toggle {\n      position: absolute; top: 10px; left: 50%; transform: translateX(-50%); display: none; gap: .4rem;\n      background: rgba(255,255,255,0.9); border: 1.5px solid var(--line); border-radius: 30px; padding: 4px;\n      z-index: 10;\n    }\n    .tipos-toggle button {\n      border: none; background: none; padding: .35rem .7rem; border-radius: 20px; font-size: .72rem;\n      font-family: 'JetBrains Mono', monospace; cursor: pointer; color: var(--ink); opacity: .6;\n      transition: all .2s;\n    }\n    .tipos-toggle button.active { background: var(--ink); color: var(--paper); opacity: 1; }\n    #loadingMsg {\n      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: .8rem;\n      font-family: 'JetBrains Mono', monospace; color: rgba(27,26,34,.5); text-align: center; padding: 1rem;\n    }\n\n    /* ---- panel de funciones en esquina superior izquierda ---- */\n    .func-panel {\n      position: absolute; top: 12px; left: 12px; display: none; flex-direction: column;\n      gap: 4px; z-index: 20; background: rgba(255,255,255,0.92);\n      border-radius: 14px; padding: 8px 10px; border: 1.5px solid var(--line);\n      backdrop-filter: blur(8px); box-shadow: 0 8px 24px rgba(0,0,0,0.06);\n      max-width: 180px;\n    }\n    .func-panel.show { display: flex; }\n    .func-panel .panel-title {\n      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;\n      letter-spacing: 0.08em; text-transform: uppercase; color: rgba(27,26,34,0.4);\n      padding-bottom: 4px; border-bottom: 1px solid var(--line);\n      margin-bottom: 2px;\n    }\n    .func-btn-panel {\n      display: flex; align-items: center; gap: 6px; padding: 4px 8px;\n      border-radius: 8px; border: none; background: transparent;\n      font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem;\n      cursor: pointer; transition: all 0.2s ease; color: var(--ink);\n      width: 100%; text-align: left;\n    }\n    .func-btn-panel:hover { background: rgba(232,167,0,0.10); }\n    .func-btn-panel.active-func-btn {\n      background: var(--gold); color: var(--ink); font-weight: 600;\n    }\n    .func-btn-panel .num {\n      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;\n      opacity: 0.5; min-width: 18px;\n    }\n    .func-btn-panel.active-func-btn .num { opacity: 0.8; }\n    .func-btn-panel .label { font-size: 0.68rem; }\n\n    /* ---- descripci\u00f3n de funci\u00f3n dentro de la imagen ---- */\n    .func-desc-overlay {\n      position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);\n      background: rgba(27,26,34,0.82); backdrop-filter: blur(8px);\n      color: var(--paper); padding: 10px 20px; border-radius: 14px;\n      font-size: 0.82rem; max-width: 80%; text-align: center;\n      border: 1px solid rgba(255,255,255,0.1);\n      pointer-events: none; z-index: 15;\n      opacity: 0; transition: opacity 0.5s ease;\n      font-family: 'Space Grotesk', sans-serif;\n      line-height: 1.4;\n    }\n    .func-desc-overlay.show { opacity: 1; }\n    .func-desc-overlay .func-name { font-weight: 700; color: var(--gold); }\n    .func-desc-overlay .func-detail { opacity: 0.85; font-size: 0.75rem; }\n\n    /* ---- deck ---- */\n    .deck {\n      background: var(--ink); color: var(--paper); padding: 12px 22px 16px; display: flex; flex-direction: column; gap: 10px;\n    }\n    .scrubber { position: relative; height: 4px; background: rgba(251,246,236,0.18); border-radius: 4px; cursor: pointer; }\n    .scrubber-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: var(--gold); border-radius: 4px; }\n    .chapters { position: absolute; inset: 0; display: flex; justify-content: space-between; }\n    .chapter-dot {\n      width: 11px; height: 11px; margin-top: -3.5px; border-radius: 50%; background: var(--ink);\n      border: 2px solid rgba(251,246,236,0.35); cursor: pointer; transition: border-color .25s, transform .2s, background .25s; z-index: 2;\n    }\n    .chapter-dot.done { background: var(--gold); border-color: var(--gold); }\n    .chapter-dot.current { border-color: var(--paper); transform: scale(1.25); background: var(--ember); }\n    .controls-row { display: flex; align-items: center; gap: 16px; }\n    .btn {\n      background: none; border: none; color: var(--paper); cursor: pointer; display: flex; align-items: center; justify-content: center;\n      opacity: 0.85; transition: opacity .2s, transform .15s;\n    }\n    .btn:hover { opacity: 1; transform: scale(1.08); }\n    .btn svg { width: 18px; height: 18px; }\n    #playBtn { width: 38px; height: 38px; border-radius: 50%; background: var(--gold); color: var(--ink); }\n    #playBtn svg { width: 16px; height: 16px; }\n    .label-cluster {\n      flex: 1; display: flex; justify-content: space-between; align-items: center;\n      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; color: rgba(251,246,236,0.65);\n    }\n    .chapter-name { color: var(--paper); font-weight: 600; }\n\n    .family-highlight {\n      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.2rem;\n    }\n    .family-chip {\n      display: flex; align-items: center; gap: 0.4rem; background: #fff; border: 1.5px solid var(--line);\n      border-radius: 20px; padding: 0.3rem 0.7rem; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;\n    }\n    .family-chip .dot { width: 10px; height: 10px; border-radius: 50%; }\n    .family-chip .label { font-weight: 600; }\n\n    #familyPartIndicator {\n      background: #fff; border: 1.5px solid var(--line); border-radius: 10px; padding: 0.5rem 0.7rem; \n      font-size: 0.8rem; margin-top: 0.2rem; min-height: 3rem;\n      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;\n    }\n    .part-tag {\n      display: inline-block; padding: 0.15rem 0.6rem; border-radius: 12px; font-weight: 600;\n      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;\n    }\n    .part-tag.polar { background: var(--water); color: white; }\n    .part-tag.apolar { background: var(--ember); color: white; }\n    .part-tag.glicerol { background: var(--membrane); color: white; }\n    .part-tag.anillos { background: var(--gold); color: var(--ink); }\n\n    @media (max-width: 860px) {\n      .player { height: 100vh; }\n      .screen { flex-direction: column; padding: 1.2vh 4vw; gap: 0.8rem; height: calc(100vh - 104px); flex: none; overflow-y: auto; -webkit-overflow-scrolling: touch; align-items: stretch; }\n      .text-pane { height: auto; width: 100%; flex: none; position: relative; }\n      .scene { position: static !important; inset: auto !important; display: none !important; flex-direction: column; justify-content: flex-start; gap: 0.6rem; opacity: 1 !important; pointer-events: auto !important; transform: none !important; transition: none !important; overflow-y: visible !important; padding-top: 0.6rem; margin-bottom: 1.2rem; }\n      .scene.active { display: flex !important; }\n      .mol-pane { position: relative !important; height: 46vh; min-height: 280px; width: 100%; flex: none; margin-top: 0.4rem; }\n      .eyebrow { font-size: 0.66rem; }\n      h1.title { font-size: 1.05rem; line-height: 1.25; }\n      p.lede { font-size: 0.8rem; }\n      .func-list { max-height: none; }\n      .func-panel { max-width: 130px; top: 8px; left: 8px; padding: 6px 8px; }\n      .func-btn-panel { font-size: 0.6rem; padding: 3px 6px; }\n      .func-desc-overlay { font-size: 0.7rem; padding: 6px 12px; bottom: 40px; max-width: 90%; }\n      #familyPartIndicator { min-height: auto; }\n    }\n  </style>\n</head>\n<body>\n\n<div class=\"player\">\n  <div class=\"screen\" id=\"mainScreen\">\n\n    <div class=\"text-pane\" id=\"textPane\">\n\n      <\!-- 0 FORMACI\u00d3N -->\n      <section class=\"scene\" data-title=\"Formaci\u00f3n (C, H, O)\">\n        <div class=\"eyebrow\">Cap\u00edtulo 1</div>\n        <h1 class=\"title display\">Carbono, ox\u00edgeno e hidr\u00f3geno<br><em>se ensamblan</em> en 3D</h1>\n        <p class=\"lede\">Mira c\u00f3mo aparece primero el esqueleto de carbonos, despu\u00e9s los ox\u00edgenos del enlace \u00e9ster y al final los hidr\u00f3genos: as\u00ed nace un triglic\u00e9rido real.</p>\n        <div class=\"legend-row\">\n          <span class=\"legend-chip\"><span class=\"legend-dot\" style=\"background:#3a3a3a\"></span>Carbono</span>\n          <span class=\"legend-chip\"><span class=\"legend-dot\" style=\"background:#e8312a\"></span>Ox\u00edgeno</span>\n          <span class=\"legend-chip\"><span class=\"legend-dot\" style=\"background:#f2f2f2;border:1px solid #ccc\"></span>Hidr\u00f3geno</span>\n        </div>\n      </section>\n\n      <\!-- 1 PARTES -->\n      <section class=\"scene\" data-title=\"Las partes\">\n        <div class=\"eyebrow\">Cap\u00edtulo 2</div>\n        <h1 class=\"title display\">Un fosfol\u00edpido tiene<br><em>cabeza y cola</em></h1>\n        <p class=\"lede\">Gira la mol\u00e9cula: las etiquetas siguen a los \u00e1tomos reales en tiempo real.</p>\n        <div class=\"part-block\"><span class=\"part-dot\" style=\"background:var(--water)\"></span>\n          <div><b>Cabeza polar (hidrof\u00edlica)</b>Colina + grupo fosfato + glicerina. Le gusta el agua.</div></div>\n        <div class=\"part-block\"><span class=\"part-dot\" style=\"background:var(--ember)\"></span>\n          <div><b>Cola hidrof\u00f3bica</b>Dos \u00e1cidos grasos (uno saturado, uno insaturado). Rechaza el agua.</div></div>\n      </section>\n\n      <\!-- 2 TIPOS -->\n      <section class=\"scene\" data-title=\"Tipos de l\u00edpidos\">\n        <div class=\"eyebrow\">Cap\u00edtulo 3 \u00b7 familias</div>\n        <h1 class=\"title display\">Tres mol\u00e9culas reales,<br><em>tres familias</em></h1>\n        <p class=\"lede\">Selecciona cada mol\u00e9cula con los botones. Las <strong>partes</strong> se etiquetan y describen espec\u00edficamente.</p>\n        <div class=\"family-highlight\">\n          <div class=\"family-chip\" data-family=\"tri\"><span class=\"dot\" style=\"background:var(--membrane)\"></span><span class=\"label\">Triglic\u00e9rido</span></div>\n          <div class=\"family-chip\" data-family=\"phos\"><span class=\"dot\" style=\"background:var(--water)\"></span><span class=\"label\">Fosfol\u00edpido</span></div>\n          <div class=\"family-chip\" data-family=\"chol\"><span class=\"dot\" style=\"background:var(--gold)\"></span><span class=\"label\">Colesterol</span></div>\n        </div>\n        <div id=\"familyPartIndicator\">\n          <span style=\"font-weight:600; flex-shrink:0;\">Partes:</span>\n          <span id=\"partDesc\">Selecciona una mol\u00e9cula</span>\n        </div>\n      </section>\n\n      <\!-- 3 FUNCIONES -->\n      <section class=\"scene funcion-scene\" data-title=\"Funciones\">\n        <div class=\"eyebrow\">Cap\u00edtulo 4 \u00b7 funciones</div>\n        <h1 class=\"title display\">\u00bfPara qu\u00e9 los usa<br><em>el cuerpo humano</em>?</h1>\n        <p class=\"lede\" style=\"display:none;\">Selecciona una funci\u00f3n desde el panel superior izquierdo de la imagen 3D.</p>\n        <div class=\"func-list\" id=\"funcList\">\n          <div class=\"func-item active-func\" data-func=\"0\">\n            <div class=\"func-num mono\">01</div>\n            <div><h4>Protecci\u00f3n</h4><p>Amortiguan golpes y cubren \u00f3rganos internos.</p></div>\n          </div>\n          <div class=\"func-item\" data-func=\"1\">\n            <div class=\"func-num mono\">02</div>\n            <div><h4>Reserva de energ\u00eda</h4><p>Los triglic\u00e9ridos guardan m\u00e1s energ\u00eda a largo plazo que los carbohidratos.</p></div>\n          </div>\n          <div class=\"func-item\" data-func=\"2\">\n            <div class=\"func-num mono\">03</div>\n            <div><h4>Aislamiento t\u00e9rmico</h4><p>Regulan y conservan la temperatura corporal.</p></div>\n          </div>\n          <div class=\"func-item\" data-func=\"3\">\n            <div class=\"func-num mono\">04</div>\n            <div><h4>Membranas celulares</h4><p>Los fosfol\u00edpidos arman la bicapa que envuelve cada c\u00e9lula.</p></div>\n          </div>\n          <div class=\"func-item\" data-func=\"4\">\n            <div class=\"func-num mono\">05</div>\n            <div><h4>Hormonas y vitaminas</h4><p>El colesterol es la base de hormonas esteroides y la vitamina D.</p></div>\n          </div>\n        </div>\n      </section>\n\n      <\!-- 4 RESUMEN -->\n      <section class=\"scene\" data-title=\"Resumen\">\n        <div class=\"eyebrow\">Cierre</div>\n        <h1 class=\"title display\">De los \u00e1tomos<br><em>a la funci\u00f3n</em></h1>\n        <div class=\"recap-line\">\n          <div class=\"recap-step\"><div class=\"recap-dot\">1</div><span class=\"lbl\">C, H, O se ensamblan en 3D</span></div>\n          <div class=\"recap-step\"><div class=\"recap-dot\">2</div><span class=\"lbl\">Cabeza polar y cola hidrof\u00f3bica</span></div>\n          <div class=\"recap-step\"><div class=\"recap-dot\">3</div><span class=\"lbl\">Triglic\u00e9rido, fosfol\u00edpido, esteroide</span></div>\n          <div class=\"recap-step\"><div class=\"recap-dot\">4</div><span class=\"lbl\">Energ\u00eda, membranas, hormonas...</span></div>\n        </div>\n        <button class=\"restart-btn\" id=\"restartBtn\">\u21ba ver de nuevo</button>\n      </section>\n\n    </div>\n\n    <div class=\"mol-pane\">\n      <div class=\"canvas-wrap\" id=\"canvasWrap\">\n        <canvas id=\"gl\"></canvas>\n        <div id=\"loadingMsg\">cargando motor 3D\u2026</div>\n        <div class=\"label-layer\" id=\"labelLayer\">\n          <\!-- Fosfol\u00edpido -->\n          <div class=\"mol-label head\" id=\"lbl-colina\">Colina</div>\n          <div class=\"mol-label head\" id=\"lbl-fosfato\">Fosfato</div>\n          <div class=\"mol-label head\" id=\"lbl-glicerina\">Glicerina</div>\n          <div class=\"mol-label tail\" id=\"lbl-colaSat\">\u00c1cido graso saturado</div>\n          <div class=\"mol-label tail\" id=\"lbl-colaInsat\">\u00c1cido graso insaturado</div>\n          <\!-- Triglic\u00e9rido -->\n          <div class=\"mol-label glicerol\" id=\"lbl-glicerolTri\">Glicerol</div>\n          <div class=\"mol-label tail\" id=\"lbl-acidoGrasoTri\">\u00c1cido graso</div>\n          <\!-- Colesterol -->\n          <div class=\"mol-label anillos\" id=\"lbl-anillosChol\">4 anillos fusionados</div>\n          <div class=\"mol-label tail\" id=\"lbl-colaChol\">Cadena lateral</div>\n          <div class=\"mol-label head\" id=\"lbl-ohChol\">Grupo OH</div>\n        </div>\n        <div class=\"tipos-toggle\" id=\"tiposToggle\">\n          <button data-mol=\"tri\" class=\"active\">Triglic\u00e9rido</button>\n          <button data-mol=\"phos\">Fosfol\u00edpido</button>\n          <button data-mol=\"chol\">Colesterol</button>\n        </div>\n        \n        <\!-- Panel de funciones en esquina superior izquierda -->\n        <div class=\"func-panel\" id=\"funcPanel\">\n          <div class=\"panel-title\">\u25b8 funciones</div>\n          <button class=\"func-btn-panel active-func-btn\" data-func=\"0\">\n            <span class=\"num\">01</span>\n            <span class=\"label\">Protecci\u00f3n</span>\n          </button>\n          <button class=\"func-btn-panel\" data-func=\"1\">\n            <span class=\"num\">02</span>\n            <span class=\"label\">Energ\u00eda</span>\n          </button>\n          <button class=\"func-btn-panel\" data-func=\"2\">\n            <span class=\"num\">03</span>\n            <span class=\"label\">Aislamiento</span>\n          </button>\n          <button class=\"func-btn-panel\" data-func=\"3\">\n            <span class=\"num\">04</span>\n            <span class=\"label\">Membranas</span>\n          </button>\n          <button class=\"func-btn-panel\" data-func=\"4\">\n            <span class=\"num\">05</span>\n            <span class=\"label\">Hormonas</span>\n          </button>\n        </div>\n\n        <\!-- Descripci\u00f3n de la funci\u00f3n -->\n        <div class=\"func-desc-overlay show\" id=\"funcDescOverlay\">\n          <span class=\"func-name\">Protecci\u00f3n</span>\n          <span class=\"func-detail\">Amortiguan golpes y cubren \u00f3rganos internos.</span>\n        </div>\n        \n        <div class=\"hint\">\ud83d\uddb1\ufe0f arrastra para rotar \u00b7 rueda para zoom</div>\n      </div>\n    </div>\n\n  </div>\n\n  <div class=\"deck\">\n    <div class=\"scrubber\" id=\"scrubber\">\n      <div class=\"scrubber-fill\" id=\"scrubberFill\"></div>\n      <div class=\"chapters\" id=\"chapters\"></div>\n    </div>\n    <div class=\"controls-row\">\n      <button class=\"btn\" id=\"prevBtn\" title=\"Anterior\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M6 6h2v12H6zm3.5 6l8.5 6V6z\"/></svg></button>\n      <button class=\"btn\" id=\"playBtn\" title=\"Reproducir / Pausar\"><svg id=\"playIcon\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg></button>\n      <button class=\"btn\" id=\"nextBtn\" title=\"Siguiente\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M16 6h2v12h-2zM6 18l8.5-6L6 6z\"/></svg></button>\n      <div class=\"label-cluster\"><span class=\"chapter-name\" id=\"chapterName\">Formaci\u00f3n</span><span id=\"chapterIndex\">01 / 05</span></div>\n    </div>\n  </div>\n</div>\n\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"><\/script>\n<script>\nwindow.addEventListener('load', function(){\n  if(typeof THREE === 'undefined'){\n    document.getElementById('loadingMsg').textContent = 'No se pudo cargar el motor 3D (sin conexi\u00f3n).';\n    return;\n  }\n  document.getElementById('loadingMsg').style.display = 'none';\n\n  /* ===================== FUNCIONES: descripciones ===================== */\n  const FUNC_DESCS = [\n    { name: 'Protecci\u00f3n', detail: 'Amortiguan golpes y cubren \u00f3rganos internos.' },\n    { name: 'Energ\u00eda', detail: 'Los triglic\u00e9ridos guardan m\u00e1s energ\u00eda a largo plazo que los carbohidratos.' },\n    { name: 'Aislamiento t\u00e9rmico', detail: 'Regulan y conservan la temperatura corporal.' },\n    { name: 'Membranas celulares', detail: 'Los fosfol\u00edpidos arman la bicapa que envuelve cada c\u00e9lula.' },\n    { name: 'Hormonas y vitaminas', detail: 'El colesterol es la base de hormonas esteroides y la vitamina D.' }\n  ];\n\n  /* ===================== MOLECULE GEOMETRY GENERATORS ===================== */\n  function vec(x,y,z){ return new THREE.Vector3(x,y,z); }\n\n  function chainTail(origin, dirVec, perpVec, perp2Vec, n){\n    const atoms = [];\n    const bond = 0.78, amp = 0.42;\n    const dir = dirVec.clone().normalize(), perp = perpVec.clone().normalize(), perp2 = perp2Vec.clone().normalize();\n    for(let i=0;i<n;i++){\n      const sign = (i%2===0) ? 1 : -1;\n      const p = origin.clone()\n        .add(dir.clone().multiplyScalar(i*bond*0.92))\n        .add(perp.clone().multiplyScalar(sign*amp))\n        .add(perp2.clone().multiplyScalar(Math.sin(i*0.7)*0.18));\n      atoms.push({el:'C', pos:p});\n      const hPerp = perp2.clone().multiplyScalar(0.85).add(perp.clone().multiplyScalar(-sign*0.35));\n      atoms.push({el:'H', pos:p.clone().add(hPerp.clone().multiplyScalar(0.62))});\n      atoms.push({el:'H', pos:p.clone().add(hPerp.clone().multiplyScalar(-0.62)).add(dir.clone().multiplyScalar(0.05))});\n    }\n    return atoms;\n  }\n\n  function buildTriglyceride(){\n    const atoms = []; const push=(el,pos)=>atoms.push({el,pos});\n    const g1=vec(-0.5,0.15,0), g2=vec(0,0,0.15), g3=vec(0.5,0.15,-0.05);\n    const ig1 = atoms.length; push('C',g1); const ig2 = atoms.length; push('C',g2); const ig3 = atoms.length; push('C',g3);\n    push('H', g1.clone().add(vec(-0.1,0.4,0.3)));\n    push('H', g2.clone().add(vec(0.1,-0.4,0.3)));\n    push('H', g3.clone().add(vec(0.1,0.4,0.3)));\n    let acidIndices = [];\n    function addTail(gAtom, dir, perp, perp2, n){\n      const esterO = gAtom.clone().add(dir.clone().normalize().multiplyScalar(0.75));\n      push('O', esterO);\n      const carbonylC = esterO.clone().add(dir.clone().normalize().multiplyScalar(0.78));\n      const idxC = push('C', carbonylC);\n      push('O', carbonylC.clone().add(vec(0,0.7,0.2)));\n      const tailStart = carbonylC.clone().add(dir.clone().normalize().multiplyScalar(0.8));\n      const chain = chainTail(tailStart, dir, perp, perp2, n);\n      chain.forEach(a=>push(a.el,a.pos));\n      acidIndices.push(idxC);\n      return { start: esterO, end: chain.length>0 ? chain[chain.length-1].pos : tailStart };\n    }\n    addTail(g1, vec(-1,0.65,0.25), vec(0.3,0.7,-0.4), vec(0,0.2,0.95), 9);\n    addTail(g2, vec(0.1,1,-0.2), vec(0.85,0,0.4), vec(0,0.3,0.9), 8);\n    addTail(g3, vec(0.9,-0.55,0.15), vec(0.3,0.7,0.5), vec(-0.2,0.4,0.9), 9);\n    return { atoms, tags:{ glicerolTri: ig2, acidoGrasoTri: acidIndices.length>0 ? acidIndices[0] : 0 } };\n  }\n\n  function buildPhospholipid(){\n    const atoms = []; const push=(el,pos)=>{atoms.push({el,pos}); return atoms.length-1;};\n    const g1=vec(-0.5,0.15,0), g2=vec(0,0,0.15), g3=vec(0.5,0.15,-0.05);\n    push('C',g1); const ig2=push('C',g2); push('C',g3);\n    push('H', g1.clone().add(vec(-0.1,0.4,0.3)));\n    push('H', g2.clone().add(vec(0.1,-0.4,0.3)));\n    push('H', g3.clone().add(vec(0.1,0.4,0.3)));\n    function addTail(gAtom, dir, perp, perp2, n){\n      const esterO = gAtom.clone().add(dir.clone().normalize().multiplyScalar(0.75));\n      push('O', esterO);\n      const carbonylC = esterO.clone().add(dir.clone().normalize().multiplyScalar(0.78));\n      push('C', carbonylC);\n      push('O', carbonylC.clone().add(vec(0,0.7,0.2)));\n      const tailStart = carbonylC.clone().add(dir.clone().normalize().multiplyScalar(0.8));\n      let lastC=-1;\n      chainTail(tailStart, dir, perp, perp2, n).forEach(a=>{ const idx=push(a.el,a.pos); if(a.el==='C') lastC=idx; });\n      return lastC;\n    }\n    const colaSat = addTail(g1, vec(-1,0.6,0.2), vec(0.3,0.7,-0.4), vec(0,0.2,0.95), 9);\n    const colaInsat = addTail(g2, vec(0.1,1,-0.2), vec(0.85,0,0.4), vec(0,0.3,0.9), 8);\n\n    const dirHead = vec(0.85,-0.55,0.2);\n    const headO = g3.clone().add(dirHead.clone().normalize().multiplyScalar(0.75));\n    push('O', headO);\n    const P = headO.clone().add(dirHead.clone().normalize().multiplyScalar(0.8));\n    const iP = push('P', P);\n    push('O', P.clone().add(vec(0.5,0.4,0.4)));\n    push('O', P.clone().add(vec(-0.5,0.4,-0.3)));\n    const bridgeO = P.clone().add(dirHead.clone().normalize().multiplyScalar(0.8));\n    push('O', bridgeO);\n    const cA = bridgeO.clone().add(vec(0.2,0.75,0.1));\n    push('C', cA); push('H', cA.clone().add(vec(0.4,0.1,0.3))); push('H', cA.clone().add(vec(-0.4,0.1,-0.3)));\n    const cB = cA.clone().add(vec(0.1,0.78,-0.1));\n    push('C', cB); push('H', cB.clone().add(vec(0.4,0.1,0.3))); push('H', cB.clone().add(vec(-0.4,0.1,-0.3)));\n    const Npos = cB.clone().add(vec(0,0.8,0.2));\n    const iN = push('N', Npos);\n    [vec(0.65,0.5,0.3), vec(-0.65,0.5,0.3), vec(0,0.65,-0.65)].forEach(off=>{\n      const m = Npos.clone().add(off);\n      push('C', m);\n      push('H', m.clone().add(vec(0.3,0.3,0)));\n      push('H', m.clone().add(vec(-0.3,0.3,0)));\n      push('H', m.clone().add(vec(0,0.3,0.3)));\n    });\n    return { atoms, tags:{ colina:iN, fosfato:iP, glicerina:ig2, colaSat:colaSat, colaInsat:colaInsat } };\n  }\n\n  function buildCholesterol(){\n    const atoms = []; const push=(el,pos)=>atoms.push({el,pos});\n    const ringSizes=[6,6,6,5], radii=[0.85,0.85,0.85,0.7], centersX=[0,1.5,3.0,4.35];\n    let ringAfirst=null, ringDfirst=null, ohIdx=0;\n    centersX.forEach((cx,ri)=>{\n      const n=ringSizes[ri], r=radii[ri];\n      for(let i=0;i<n;i++){\n        const ang=(i/n)*Math.PI*2;\n        const x=cx+Math.cos(ang)*r, y=Math.sin(ang)*r*0.85, z=(i%2===0?0.16:-0.16);\n        const p=vec(x,y,z);\n        const idx = push('C', p);\n        if(ri===0 && i===0) ringAfirst = p;\n        if(ri===3 && i===0) ringDfirst = p;\n        const hDir=vec(Math.cos(ang), Math.sin(ang)*0.85, z*1.6).normalize();\n        push('H', p.clone().add(hDir.multiplyScalar(0.6)));\n      }\n    });\n    if(ringAfirst){\n      const oPos=ringAfirst.clone().add(vec(-0.8,-0.2,0.1));\n      ohIdx = push('O', oPos);\n      push('H', oPos.clone().add(vec(-0.5,0.1,0.1)));\n    }\n    if(ringDfirst){\n      chainTail(ringDfirst.clone().add(vec(0.8,0.1,0.1)), vec(1,0.3,0.1), vec(0,0.6,0.6), vec(0,0.3,-0.6), 5)\n        .forEach(a=>push(a.el,a.pos));\n    }\n    return { atoms, tags:{ anillosChol: 0, colaChol: atoms.length-1, ohChol: ohIdx } };\n  }\n\n  /* ===================== FUNCIONES 3D \u00b7 ESCENAS CONCEPTUALES ===================== */\n  function buildFunctionScene(funcIndex){\n    const group = new THREE.Group();\n    const colorPalette = [0xE8A700, 0xD9531E, 0x3E7A5C, 0x2D4A7A, 0x9B6B9B];\n    const color = colorPalette[funcIndex % colorPalette.length];\n    \n    if(funcIndex === 0){ // Protecci\u00f3n: capas conc\u00e9ntricas\n      for(let i=0; i<3; i++){\n        const r = 1.2 + i*0.35;\n        const sphere = new THREE.Mesh(\n          new THREE.SphereGeometry(r, 24, 18),\n          new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.25 + i*0.15, wireframe: false, roughness: 0.3, metalness: 0.1 })\n        );\n        sphere.position.y = 0;\n        group.add(sphere);\n        const ring = new THREE.Mesh(\n          new THREE.RingGeometry(r-0.05, r+0.05, 32),\n          new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.3 })\n        );\n        ring.rotation.x = Math.PI/2;\n        ring.position.y = 0;\n        group.add(ring);\n      }\n      for(let i=0; i<40; i++){\n        const theta = Math.random()*Math.PI*2;\n        const phi = Math.acos(2*Math.random()-1);\n        const r = 2.3 + Math.random()*0.8;\n        const dot = new THREE.Mesh(\n          new THREE.SphereGeometry(0.06, 6, 6),\n          new THREE.MeshBasicMaterial({ color: 0xffaa44 })\n        );\n        dot.position.set(r*Math.sin(phi)*Math.cos(theta), r*Math.cos(phi), r*Math.sin(phi)*Math.sin(theta));\n        group.add(dot);\n      }\n    }\n    else if(funcIndex === 1){ // Energ\u00eda\n      const core = new THREE.Mesh(\n        new THREE.SphereGeometry(1.0, 24, 18),\n        new THREE.MeshPhongMaterial({ color: color, emissive: 0xE8A700, emissiveIntensity: 0.3, roughness: 0.4 })\n      );\n      core.position.y = 0;\n      group.add(core);\n      for(let i=0; i<12; i++){\n        const ang = (i/12)*Math.PI*2;\n        const ray = new THREE.Mesh(\n          new THREE.CylinderGeometry(0.03, 0.08, 0.6, 6),\n          new THREE.MeshBasicMaterial({ color: 0xffdd44, transparent: true, opacity: 0.6 })\n        );\n        ray.position.set(Math.cos(ang)*1.3, (Math.random()-0.5)*0.8, Math.sin(ang)*1.3);\n        ray.rotation.z = Math.PI/2;\n        ray.rotation.y = -ang;\n        group.add(ray);\n      }\n      for(let i=0; i<8; i++){\n        const ang = (i/8)*Math.PI*2 + 0.3;\n        const orb = new THREE.Mesh(\n          new THREE.SphereGeometry(0.1, 8, 8),\n          new THREE.MeshBasicMaterial({ color: 0xffaa00 })\n        );\n        orb.position.set(Math.cos(ang)*1.8, Math.sin(ang*1.5)*0.4, Math.sin(ang)*1.8);\n        group.add(orb);\n      }\n    }\n    else if(funcIndex === 2){ // Aislamiento\n      for(let i=0; i<4; i++){\n        const r = 0.8 + i*0.3;\n        const sphere = new THREE.Mesh(\n          new THREE.SphereGeometry(r, 20, 16),\n          new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.15 + i*0.1, roughness: 0.6 })\n        );\n        sphere.position.y = 0;\n        group.add(sphere);\n      }\n      for(let i=0; i<3; i++){\n        const angOffset = i * 0.8;\n        for(let j=0; j<16; j++){\n          const ang = (j/16)*Math.PI*2 + angOffset;\n          const r = 1.6 + Math.sin(j*0.7 + i)*0.3;\n          const dot = new THREE.Mesh(\n            new THREE.SphereGeometry(0.04, 4, 4),\n            new THREE.MeshBasicMaterial({ color: 0xff8844, transparent: true, opacity: 0.5 })\n          );\n          dot.position.set(Math.cos(ang)*r, Math.sin(j*0.5 + i)*0.2, Math.sin(ang)*r);\n          group.add(dot);\n        }\n      }\n    }\n    else if(funcIndex === 3){ // Membranas\n      for(let layer=0; layer<2; layer++){\n        const yPos = layer === 0 ? 0.6 : -0.6;\n        for(let i=0; i<20; i++){\n          const ang = (i/20)*Math.PI*2;\n          const r = 1.2 + Math.sin(i*1.3)*0.15;\n          const head = new THREE.Mesh(\n            new THREE.SphereGeometry(0.13, 8, 8),\n            new THREE.MeshPhongMaterial({ color: 0x2D4A7A, emissive: 0x1a2a4a, emissiveIntensity: 0.2 })\n          );\n          head.position.set(Math.cos(ang)*r, yPos, Math.sin(ang)*r);\n          group.add(head);\n        }\n      }\n      for(let i=0; i<30; i++){\n        const ang = Math.random()*Math.PI*2;\n        const r = 0.3 + Math.random()*0.9;\n        const tail = new THREE.Mesh(\n          new THREE.CylinderGeometry(0.02, 0.05, 0.8 + Math.random()*0.4, 4),\n          new THREE.MeshPhongMaterial({ color: 0xD9531E, transparent: true, opacity: 0.6 })\n        );\n        tail.position.set(Math.cos(ang)*r, (Math.random()-0.5)*0.4, Math.sin(ang)*r);\n        tail.rotation.z = Math.PI/2 + (Math.random()-0.5)*0.3;\n        tail.rotation.y = -ang + (Math.random()-0.5)*0.2;\n        group.add(tail);\n      }\n      const core = new THREE.Mesh(\n        new THREE.SphereGeometry(0.3, 16, 12),\n        new THREE.MeshPhongMaterial({ color: 0x88aacc, transparent: true, opacity: 0.2, wireframe: true })\n      );\n      core.position.y = 0;\n      group.add(core);\n    }\n    else if(funcIndex === 4){ // Hormonas\n      for(let i=0; i<4; i++){\n        const ang = (i/4)*Math.PI*2 + 0.2;\n        const ring = new THREE.Mesh(\n          new THREE.TorusGeometry(0.45, 0.06, 8, 12),\n          new THREE.MeshPhongMaterial({ color: 0xE8A700, emissive: 0x886600, emissiveIntensity: 0.2 })\n        );\n        ring.position.set(Math.cos(ang)*0.7, Math.sin(ang*0.8)*0.15, Math.sin(ang)*0.7);\n        ring.rotation.x = Math.PI/2 + Math.sin(ang)*0.2;\n        ring.rotation.z = Math.cos(ang)*0.2;\n        group.add(ring);\n      }\n      for(let i=0; i<6; i++){\n        const ang = (i/6)*Math.PI*2 + 0.5;\n        const r = 1.4;\n        const mol = new THREE.Mesh(\n          new THREE.SphereGeometry(0.12, 8, 8),\n          new THREE.MeshPhongMaterial({ color: 0x9B6B9B, emissive: 0x663366, emissiveIntensity: 0.3 })\n        );\n        mol.position.set(Math.cos(ang)*r, Math.sin(i*1.1)*0.25, Math.sin(ang)*r);\n        group.add(mol);\n        const ray = new THREE.Mesh(\n          new THREE.CylinderGeometry(0.01, 0.01, 0.5, 4),\n          new THREE.MeshBasicMaterial({ color: 0xcc88cc, transparent: true, opacity: 0.4 })\n        );\n        ray.position.set(Math.cos(ang)*1.7, Math.sin(i*1.1)*0.25, Math.sin(ang)*1.7);\n        ray.rotation.z = Math.PI/2;\n        ray.rotation.y = -ang + 0.2;\n        group.add(ray);\n      }\n    }\n    return group;\n  }\n\n  /* ===================== THREE.JS SETUP ===================== */\n  const ATOM_STYLE = {\n    C:{color:0x3a3a3a, r:0.42}, H:{color:0xf2f2f2, r:0.26},\n    O:{color:0xe8312a, r:0.38}, N:{color:0x3050f0, r:0.40}, P:{color:0xff9419, r:0.46}\n  };\n  const geoCache = {}, matCache = {};\n  function getGeo(r){ if(!geoCache[r]) geoCache[r] = new THREE.SphereGeometry(r,16,12); return geoCache[r]; }\n  function getMat(c){ if(!matCache[c]) matCache[c] = new THREE.MeshPhongMaterial({color:c, shininess:90, specular:0x333333}); return matCache[c]; }\n\n  const canvas = document.getElementById('gl');\n  const canvasWrap = document.getElementById('canvasWrap');\n  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});\n  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));\n  const scene = new THREE.Scene();\n  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);\n  camera.position.set(0,0,8.5);\n  const group = new THREE.Group();\n  scene.add(group);\n  scene.add(new THREE.AmbientLight(0xffffff,0.6));\n  const dl1 = new THREE.DirectionalLight(0xffffff,0.85); dl1.position.set(5,6,7); scene.add(dl1);\n  const dl2 = new THREE.DirectionalLight(0xffffff,0.35); dl2.position.set(-6,-3,-4); scene.add(dl2);\n\n  function resizeCanvas(){\n    const rect = canvasWrap.getBoundingClientRect();\n    renderer.setSize(rect.width, rect.height, false);\n    camera.aspect = rect.width / rect.height;\n    camera.updateProjectionMatrix();\n  }\n  window.addEventListener('resize', resizeCanvas);\n  resizeCanvas();\n\n  let currentMeshes = [];\n  let currentTags = {};\n  let buildStartTime = 0;\n  const clock = new THREE.Clock();\n  let currentMolType = 'tri';\n  let isFunctionScene = false;\n  let currentFuncIndex = 0;\n\n  function loadMolecule(data, molType){\n    isFunctionScene = false;\n    currentMolType = molType || 'tri';\n    while(group.children.length) group.remove(group.children[0]);\n    let cx=0,cy=0,cz=0;\n    data.atoms.forEach(a=>{cx+=a.pos.x; cy+=a.pos.y; cz+=a.pos.z;});\n    const cnt = data.atoms.length || 1;\n    cx/=cnt; cy/=cnt; cz/=cnt;\n    const meshes = [];\n    data.atoms.forEach(a=>{\n      const style = ATOM_STYLE[a.el];\n      const mesh = new THREE.Mesh(getGeo(style.r), getMat(style.color));\n      const target = new THREE.Vector3(a.pos.x-cx, a.pos.y-cy, a.pos.z-cz);\n      const rnd = ()=> (Math.random()-0.5)*7;\n      const from = new THREE.Vector3(target.x+rnd(), target.y+rnd(), target.z+rnd());\n      let baseDelay = a.el==='C' ? 0 : (a.el==='O'||a.el==='P'||a.el==='N' ? 0.85 : 1.6);\n      mesh.userData = { from, target, delay: baseDelay + Math.random()*0.35 };\n      mesh.position.copy(from);\n      mesh.scale.setScalar(0.001);\n      group.add(mesh);\n      meshes.push(mesh);\n    });\n    currentMeshes = meshes;\n    currentTags = {};\n    if(data.tags){ Object.entries(data.tags).forEach(([name,idx])=>{ if(idx>=0) currentTags[name]=meshes[idx]; }); }\n    buildStartTime = clock.getElapsedTime();\n    updatePartDescription(molType);\n    document.getElementById('tiposToggle').style.display = (activeChapter === 2) ? 'flex' : 'none';\n    document.getElementById('funcPanel').classList.remove('show');\n    canvasWrap.classList.remove('funcion-expand');\n    document.getElementById('mainScreen').classList.remove('funcion-layout');\n    document.getElementById('funcDescOverlay').classList.remove('show');\n  }\n\n  function loadFunctionScene(funcIndex){\n    isFunctionScene = true;\n    currentFuncIndex = funcIndex;\n    while(group.children.length) group.remove(group.children[0]);\n    const funcGroup = buildFunctionScene(funcIndex);\n    const box = new THREE.Box3().setFromObject(funcGroup);\n    const size = box.getSize(new THREE.Vector3());\n    const maxDim = Math.max(size.x, size.y, size.z);\n    const scale = 2.8 / maxDim;\n    funcGroup.scale.setScalar(scale);\n    const center = box.getCenter(new THREE.Vector3());\n    funcGroup.position.sub(center.clone().multiplyScalar(scale));\n    group.add(funcGroup);\n    currentMeshes = [];\n    currentTags = {};\n    buildStartTime = clock.getElapsedTime();\n    document.getElementById('tiposToggle').style.display = 'none';\n    document.getElementById('funcPanel').classList.add('show');\n    canvasWrap.classList.add('funcion-expand');\n    document.getElementById('mainScreen').classList.add('funcion-layout');\n    \n    // Actualizar descripci\u00f3n\n    const desc = FUNC_DESCS[funcIndex];\n    document.getElementById('funcDescOverlay').innerHTML = \n      `<span class=\"func-name\">${desc.name}</span> <span class=\"func-detail\">${desc.detail}</span>`;\n    document.getElementById('funcDescOverlay').classList.add('show');\n    \n    // actualizar botones del panel\n    document.querySelectorAll('.func-btn-panel').forEach(btn => {\n      btn.classList.toggle('active-func-btn', parseInt(btn.dataset.func) === funcIndex);\n    });\n    document.querySelectorAll('.func-item').forEach((el, idx) => {\n      el.classList.toggle('active-func', idx === funcIndex);\n    });\n    // forzar resize despu\u00e9s de cambio de layout\n    setTimeout(resizeCanvas, 50);\n  }\n\n  /* drag + zoom */\n  let dragging=false, lastX=0, lastY=0;\n  canvas.addEventListener('pointerdown', e=>{ dragging=true; lastX=e.clientX; lastY=e.clientY; canvas.setPointerCapture(e.pointerId); });\n  canvas.addEventListener('pointermove', e=>{\n    if(!dragging) return;\n    const dx=e.clientX-lastX, dy=e.clientY-lastY;\n    group.rotation.y += dx*0.007;\n    group.rotation.x += dy*0.007;\n    lastX=e.clientX; lastY=e.clientY;\n  });\n  window.addEventListener('pointerup', ()=> dragging=false);\n  canvas.addEventListener('wheel', e=>{\n    e.preventDefault();\n    camera.position.z = Math.min(14, Math.max(4, camera.position.z + e.deltaY*0.01));\n  }, {passive:false});\n\n  function updatePartsLabels(){\n    const rect = canvasWrap.getBoundingClientRect();\n    Object.entries(currentTags).forEach(([name, mesh])=>{\n      const v = new THREE.Vector3();\n      mesh.getWorldPosition(v);\n      v.project(camera);\n      const x = (v.x*0.5+0.5)*rect.width;\n      const y = (1-(v.y*0.5+0.5))*rect.height;\n      const el = document.getElementById('lbl-'+name);\n      if(el){ el.style.left = x+'px'; el.style.top = y+'px'; el.classList.add('show'); }\n    });\n  }\n\n  let lastT = 0, activeChapter = 0;\n  function animate(){\n    requestAnimationFrame(animate);\n    const t = clock.getElapsedTime();\n    const dt = Math.min(0.05, t-lastT); lastT = t;\n    \n    if(!isFunctionScene){\n      currentMeshes.forEach(m=>{\n        const ud = m.userData;\n        const elapsed = t - buildStartTime - ud.delay;\n        const prog = Math.max(0, Math.min(1, elapsed/1.0));\n        const eased = 1 - Math.pow(1-prog,3);\n        m.position.lerpVectors(ud.from, ud.target, eased);\n        m.scale.setScalar(0.001 + 0.999*eased);\n      });\n    } else {\n      group.rotation.y += dt * 0.15;\n      group.position.y = Math.sin(t*0.4)*0.1;\n    }\n    \n    if(!dragging && !isFunctionScene) group.rotation.y += dt*0.26;\n    renderer.render(scene, camera);\n    if((activeChapter === 1 || activeChapter === 2) && !isFunctionScene) updatePartsLabels();\n  }\n  animate();\n\n  /* ====== family part description ====== */\n  function updatePartDescription(molType){\n    const desc = document.getElementById('partDesc');\n    const indicator = document.getElementById('familyPartIndicator');\n    indicator.querySelectorAll('.part-tag').forEach(el => el.remove());\n    let html = '';\n    if(molType === 'tri'){\n      html = '<span class=\"part-tag glicerol\">Glicerol</span> + <span class=\"part-tag apolar\">3 \u00e1cidos grasos</span>';\n      desc.innerHTML = html + ' <span style=\"opacity:0.6; font-size:0.75rem;\">(reserva de energ\u00eda)</span>';\n    } else if(molType === 'phos'){\n      html = '<span class=\"part-tag polar\">Cabeza polar</span> (colina + fosfato + glicerina) + <span class=\"part-tag apolar\">2 colas hidrof\u00f3bicas</span>';\n      desc.innerHTML = html + ' <span style=\"opacity:0.6; font-size:0.75rem;\">(membranas)</span>';\n    } else if(molType === 'chol'){\n      html = '<span class=\"part-tag anillos\">4 anillos fusionados</span> + <span class=\"part-tag apolar\">cadena lateral</span> + <span class=\"part-tag polar\">OH</span>';\n      desc.innerHTML = html + ' <span style=\"opacity:0.6; font-size:0.75rem;\">(hormonas, vitamina D)</span>';\n    } else {\n      desc.textContent = 'Selecciona una mol\u00e9cula';\n    }\n  }\n\n  function updateLabelsVisibility(molType){\n    const allLabels = document.querySelectorAll('.mol-label');\n    allLabels.forEach(el => el.style.display = 'none');\n    const prefix = molType === 'tri' ? 'lbl-glicerolTri,lbl-acidoGrasoTri' :\n                   molType === 'phos' ? 'lbl-colina,lbl-fosfato,lbl-glicerina,lbl-colaSat,lbl-colaInsat' :\n                   'lbl-anillosChol,lbl-colaChol,lbl-ohChol';\n    const ids = prefix.split(',');\n    ids.forEach(id => {\n      const el = document.getElementById(id);\n      if(el) el.style.display = 'block';\n    });\n  }\n\n  /* ====== PANEL DE FUNCIONES (esquina superior izquierda) ====== */\n  document.querySelectorAll('.func-btn-panel').forEach(btn => {\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      const idx = parseInt(this.dataset.func);\n      loadFunctionScene(idx);\n      document.querySelectorAll('.func-item').forEach((el, i) => {\n        el.classList.toggle('active-func', i === idx);\n      });\n    });\n  });\n\n  /* ====== LISTA LATERAL DE FUNCIONES (oculta en cap\u00edtulo 4) ====== */\n  document.querySelectorAll('.func-item').forEach(item => {\n    item.addEventListener('click', function(){\n      const idx = parseInt(this.dataset.func);\n      loadFunctionScene(idx);\n      document.querySelectorAll('.func-btn-panel').forEach(btn => {\n        btn.classList.toggle('active-func-btn', parseInt(btn.dataset.func) === idx);\n      });\n    });\n  });\n\n  /* tipos toggle */\n  document.querySelectorAll('#tiposToggle button').forEach(btn=>{\n    btn.addEventListener('click', ()=>{\n      const which = btn.dataset.mol;\n      let data;\n      if(which==='tri') data = buildTriglyceride();\n      else if(which==='phos') data = buildPhospholipid();\n      else if(which==='chol') data = buildCholesterol();\n      loadMolecule(data, which);\n      document.querySelectorAll('#tiposToggle button').forEach(b=>b.classList.toggle('active', b===btn));\n      updateLabelsVisibility(which);\n      setTimeout(()=>{ if(activeChapter === 2) updatePartsLabels(); }, 300);\n    });\n  });\n\n  function onChapterChange(i){\n    document.getElementById('labelLayer').style.display = (i===1 || i===2) ? 'block' : 'none';\n    document.querySelectorAll('.mol-label').forEach(l=>l.classList.remove('show'));\n    document.getElementById('tiposToggle').style.display = (i===2) ? 'flex' : 'none';\n    document.getElementById('funcPanel').classList.remove('show');\n    canvasWrap.classList.remove('funcion-expand');\n    document.getElementById('mainScreen').classList.remove('funcion-layout');\n    document.getElementById('funcDescOverlay').classList.remove('show');\n    activeChapter = i;\n    \n    if(i===3){ // funciones\n      isFunctionScene = true;\n      loadFunctionScene(0);\n      document.querySelectorAll('.func-item').forEach((el, idx) => {\n        el.classList.toggle('active-func', idx === 0);\n      });\n      document.getElementById('tiposToggle').style.display = 'none';\n      document.getElementById('funcPanel').classList.add('show');\n      canvasWrap.classList.add('funcion-expand');\n      document.getElementById('mainScreen').classList.add('funcion-layout');\n      const desc = FUNC_DESCS[0];\n      document.getElementById('funcDescOverlay').innerHTML = \n        `<span class=\"func-name\">${desc.name}</span> <span class=\"func-detail\">${desc.detail}</span>`;\n      document.getElementById('funcDescOverlay').classList.add('show');\n      setTimeout(resizeCanvas, 50);\n      return;\n    }\n    \n    if(i===0) { \n      const data = buildTriglyceride(); loadMolecule(data, 'tri'); \n      document.getElementById('tiposToggle').style.display = 'none';\n      updateLabelsVisibility('tri');\n    }\n    else if(i===1) { \n      const data = buildPhospholipid(); loadMolecule(data, 'phos'); \n      document.getElementById('tiposToggle').style.display = 'none';\n      updateLabelsVisibility('phos');\n    }\n    else if(i===2){\n      const data = buildTriglyceride(); loadMolecule(data, 'tri');\n      document.querySelectorAll('#tiposToggle button').forEach(b=>b.classList.toggle('active', b.dataset.mol==='tri'));\n      document.getElementById('tiposToggle').style.display = 'flex';\n      updateLabelsVisibility('tri');\n      setTimeout(()=>{ if(activeChapter === 2) updatePartsLabels(); }, 300);\n    }\n    else { \n      const data = buildTriglyceride(); loadMolecule(data, 'tri');\n      document.getElementById('tiposToggle').style.display = 'none';\n      updateLabelsVisibility('tri');\n    }\n  }\n  \n  // inicializar\n  const initData = buildTriglyceride();\n  loadMolecule(initData, 'tri');\n  updateLabelsVisibility('tri');\n\n  /* ===================== PLAYER / CHAPTER DECK ===================== */\n  const scenes = Array.from(document.querySelectorAll('.text-pane .scene'));\n  const total = scenes.length;\n  let current = 0, playing = false, timer = null, rafId = null, progressStart = 0;\n  const DURATION = 9000;\n\n  const scrubberFill = document.getElementById('scrubberFill');\n  const chaptersWrap = document.getElementById('chapters');\n  const chapterName = document.getElementById('chapterName');\n  const chapterIndex = document.getElementById('chapterIndex');\n  const playBtn = document.getElementById('playBtn');\n  const playIcon = document.getElementById('playIcon');\n  const prevBtn = document.getElementById('prevBtn');\n  const nextBtn = document.getElementById('nextBtn');\n  const scrubber = document.getElementById('scrubber');\n  const restartBtn = document.getElementById('restartBtn');\n  const PAUSE_ICON = '<path d=\"M6 5h4v14H6zm8 0h4v14h-4z\"/>';\n  const PLAY_ICON = '<path d=\"M8 5v14l11-7z\"/>';\n\n  scenes.forEach((s,i)=>{\n    const dot = document.createElement('div');\n    dot.className = 'chapter-dot';\n    dot.title = s.dataset.title;\n    dot.addEventListener('click', e=>{ e.stopPropagation(); pause(); goTo(i); });\n    chaptersWrap.appendChild(dot);\n  });\n  const dots = Array.from(chaptersWrap.children);\n\n  function render(){\n    scenes.forEach((s,i)=> s.classList.toggle('active', i===current));\n    dots.forEach((d,i)=>{ d.classList.toggle('current', i===current); d.classList.toggle('done', i<current); });\n    chapterName.textContent = scenes[current].dataset.title;\n    chapterIndex.textContent = String(current+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');\n    scrubberFill.style.transition = 'none';\n    scrubberFill.style.width = (current/(total-1)*100) + '%';\n    void scrubberFill.offsetWidth;\n    scrubberFill.style.transition = '';\n    onChapterChange(current);\n  }\n  function goTo(i){ current = Math.max(0, Math.min(total-1,i)); render(); if(playing) scheduleNext(); }\n  function next(){ if(current<total-1) goTo(current+1); else pause(); }\n  function prev(){ goTo(Math.max(0,current-1)); }\n  function scheduleNext(){\n    clearTimeout(timer); cancelAnimationFrame(rafId);\n    progressStart = performance.now();\n    animateProgress();\n    timer = setTimeout(()=>{ if(playing) next(); }, DURATION);\n  }\n  function animateProgress(){\n    const segStart = current/(total-1)*100, segEnd = Math.min(total-1,current+1)/(total-1)*100;\n    function step(ts){\n      if(!playing) return;\n      const t = Math.min(1, (ts-progressStart)/DURATION);\n      scrubberFill.style.transition='none';\n      scrubberFill.style.width = (segStart + (segEnd-segStart)*t) + '%';\n      if(t<1 && current<total-1) rafId = requestAnimationFrame(step);\n    }\n    rafId = requestAnimationFrame(step);\n  }\n  function play(){ if(current===total-1) goTo(0); playing=true; playIcon.innerHTML=PAUSE_ICON; scheduleNext(); }\n  function pause(){ playing=false; playIcon.innerHTML=PLAY_ICON; clearTimeout(timer); cancelAnimationFrame(rafId); }\n  function toggle(){ playing ? pause() : play(); }\n\n  playBtn.addEventListener('click', toggle);\n  nextBtn.addEventListener('click', ()=>{ pause(); next(); });\n  prevBtn.addEventListener('click', ()=>{ pause(); prev(); });\n  restartBtn.addEventListener('click', ()=>{ goTo(0); play(); });\n  scrubber.addEventListener('click', e=>{\n    const rect = scrubber.getBoundingClientRect();\n    const ratio = (e.clientX-rect.left)/rect.width;\n    pause(); goTo(Math.round(ratio*(total-1)));\n  });\n  document.addEventListener('keydown', e=>{\n    if(e.code==='Space'){ e.preventDefault(); toggle(); }\n    if(e.code==='ArrowRight'){ pause(); next(); }\n    if(e.code==='ArrowLeft'){ pause(); prev(); }\n  });\n\n  render();\n});\n<\/script>\n</body>\n</html>";
-  const GAME_HTML = "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\">\n<title>LipidQuest \u00b7 El laboratorio de los l\u00edpidos</title>\n<style>\n  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');\n\n  :root{\n    --paper:#FBF6EC; --ink:#1B1A22; --gold:#E8A700; --ember:#D9531E;\n    --membrane:#3E7A5C; --water:#2D4A7A; --line: rgba(27,26,34,0.14);\n    --green:#3E7A5C; --red:#D9531E;\n  }\n  *{box-sizing:border-box;margin:0;padding:0;}\n  html,body{min-height:100%;background:var(--paper);color:var(--ink);font-family:'Space Grotesk',sans-serif;}\n  body{\n    background:\n      radial-gradient(circle at 8% 8%, rgba(232,167,0,0.10), transparent 38%),\n      radial-gradient(circle at 92% 14%, rgba(45,74,122,0.09), transparent 40%),\n      radial-gradient(circle at 50% 100%, rgba(62,122,92,0.08), transparent 45%),\n      var(--paper);\n    min-height:100vh; display:flex; justify-content:center;\n  }\n  .display{font-family:'Fraunces',serif;}\n  .mono{font-family:'JetBrains Mono',monospace;}\n\n  .app{width:100%; max-width:920px; min-height:100vh; display:flex; flex-direction:column;}\n\n  /* ---------- topbar ---------- */\n  .topbar{\n    display:flex; align-items:center; justify-content:space-between; gap:1rem;\n    padding:.9rem 1.2rem; border-bottom:1.5px solid var(--line); background:rgba(255,255,255,0.55);\n    position:sticky; top:0; z-index:30; backdrop-filter:blur(6px); flex-wrap:wrap;\n  }\n  .brand{font-family:'Fraunces',serif; font-weight:700; font-size:1.05rem; display:flex; align-items:baseline; gap:.5rem;}\n  .brand span{font-family:'JetBrains Mono',monospace; font-size:.68rem; color:rgba(27,26,34,.5); font-weight:400;}\n  .progress-dots{display:flex; gap:7px; align-items:center;}\n  .progress-dots .dot{\n    width:11px; height:11px; border-radius:50%; background:#fff; border:2px solid var(--line); transition:all .25s;\n  }\n  .progress-dots .dot.current{border-color:var(--ember); background:var(--ember); transform:scale(1.2);}\n  .progress-dots .dot.done{border-color:var(--gold); background:var(--gold);}\n  .hud{display:flex; align-items:center; gap:.7rem;}\n  .score-pill{\n    background:var(--ink); color:var(--paper); padding:.35rem .8rem; border-radius:20px;\n    font-family:'JetBrains Mono',monospace; font-size:.78rem; display:flex; align-items:center; gap:.35rem;\n  }\n  .icon-btn{\n    width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line); background:#fff;\n    cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; transition:transform .15s;\n  }\n  .icon-btn:hover{transform:scale(1.08);}\n\n  /* ---------- stage ---------- */\n  .stage{flex:1; display:flex; padding:2.2rem 1.2rem 3rem;}\n  .screen-panel{display:none; width:100%; flex-direction:column; gap:1.1rem; animation:fadeIn .45s ease;}\n  .screen-panel.active{display:flex;}\n  @keyframes fadeIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}\n\n  .eyebrow{\n    font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;\n    color:var(--ember); display:flex; align-items:center; gap:.55rem;\n  }\n  .eyebrow::before{content:'';width:18px;height:2px;background:var(--ember);display:inline-block;}\n  h1.title{font-size:clamp(1.5rem,3.4vw,2.2rem); font-weight:700; line-height:1.12; letter-spacing:-0.01em;}\n  h1.title em{font-style:italic; color:var(--gold); -webkit-text-stroke:.4px var(--ink);}\n  p.lede{font-size:.94rem; line-height:1.55; color:rgba(27,26,34,.78); max-width:640px;}\n  .card{\n    background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:1.1rem 1.3rem;\n    box-shadow:0 10px 26px rgba(27,26,34,.06);\n  }\n  .btn{\n    border:none; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.78rem; letter-spacing:.03em;\n    padding:.7rem 1.3rem; border-radius:30px; display:inline-flex; align-items:center; gap:.5rem; transition:transform .15s, opacity .15s;\n  }\n  .btn:hover{transform:translateY(-1px);}\n  .btn:active{transform:translateY(0px) scale(.98);}\n  .btn-primary{background:var(--ink); color:var(--paper);}\n  .btn-gold{background:var(--gold); color:var(--ink); font-weight:600;}\n  .btn-outline{background:#fff; border:1.5px solid var(--line); color:var(--ink);}\n  .btn:disabled{opacity:.4; cursor:not-allowed; transform:none;}\n\n  /* ---------- START ---------- */\n  #screen-start{align-items:flex-start; justify-content:center; min-height:60vh;}\n  .start-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:1.6rem; width:100%; align-items:center;}\n  .lipid-hero{display:flex; justify-content:center; align-items:center;}\n  .blob{\n    width:230px; height:230px; border-radius:46% 54% 60% 40%/50% 45% 55% 50%;\n    background:linear-gradient(135deg, var(--water), var(--membrane));\n    display:flex; align-items:center; justify-content:center; font-size:5rem; box-shadow:0 18px 40px rgba(45,74,122,.25);\n    animation:morph 7s ease-in-out infinite;\n  }\n  @keyframes morph{\n    0%,100%{border-radius:46% 54% 60% 40%/50% 45% 55% 50%;}\n    50%{border-radius:60% 40% 45% 55%/40% 60% 40% 60%;}\n  }\n  .start-list{display:flex; flex-direction:column; gap:.55rem; margin-top:.3rem;}\n  .start-list .item{display:flex; gap:.6rem; align-items:flex-start; font-size:.85rem;}\n  .start-list .num{font-family:'JetBrains Mono',monospace; color:var(--ember); font-size:.74rem; padding-top:2px;}\n  @media(max-width:760px){ .start-grid{grid-template-columns:1fr;} .lipid-hero{order:-1;} }\n\n  /* ---------- LEVEL 1 builder ---------- */\n  .build-station{display:flex; flex-direction:column; gap:1rem;}\n  .molecule-row{display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;}\n  .backbone-card{\n    background:var(--membrane); color:#fff; border-radius:14px; padding:.9rem 1.1rem; min-width:120px; text-align:center;\n    font-family:'Fraunces',serif; font-weight:600; font-size:.92rem; box-shadow:0 8px 18px rgba(62,122,92,.3);\n  }\n  .connector{width:26px; height:2px; background:var(--line);}\n  .slot{\n    width:120px; min-height:64px; border-radius:12px; border:2px dashed var(--line); background:#fff;\n    display:flex; align-items:center; justify-content:center; text-align:center; font-size:.74rem; padding:.4rem;\n    transition:all .2s; color:rgba(27,26,34,.4);\n  }\n  .slot.filled{border-style:solid; color:#fff; font-weight:600;}\n  .slot.filled.tail{background:var(--ember); border-color:var(--ember);}\n  .slot.filled.head{background:var(--water); border-color:var(--water);}\n  .slot.filled.ring{background:var(--gold); border-color:var(--gold); color:var(--ink);}\n  .slot.shake{animation:shake .35s;}\n  @keyframes shake{\n    0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);}\n  }\n  .tile-pool{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.4rem;}\n  .tile{\n    background:#fff; border:1.5px solid var(--line); border-radius:30px; padding:.55rem 1rem; cursor:pointer;\n    font-size:.78rem; font-family:'JetBrains Mono',monospace; transition:all .18s; display:flex; align-items:center; gap:.4rem;\n  }\n  .tile:hover{border-color:var(--ink);}\n  .tile.selected{background:var(--ink); color:var(--paper); transform:scale(1.05);}\n  .tile.used{opacity:.25; pointer-events:none;}\n  .tile .dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}\n  .tile.tail .dot{background:var(--ember);}\n  .tile.head .dot{background:var(--water);}\n  .tile.ring .dot{background:var(--gold);}\n  .fact-box{\n    background:#FFFDF5; border:1.5px solid var(--gold); border-radius:14px; padding:.9rem 1.1rem; font-size:.84rem;\n    display:none; gap:.6rem; align-items:flex-start;\n  }\n  .fact-box.show{display:flex;}\n\n  /* ---------- LEVEL 2 sorting ---------- */\n  .sort-wrap{display:flex; flex-direction:column; gap:1rem; align-items:center;}\n  .sort-hud{display:flex; justify-content:space-between; width:100%; max-width:480px; align-items:center; font-size:.82rem;}\n  .hearts{display:flex; gap:3px; font-size:1rem;}\n  .track{\n    position:relative; width:100%; max-width:480px; height:340px; background:#fff; border:1.5px solid var(--line);\n    border-radius:16px; overflow:hidden; box-shadow:0 10px 26px rgba(27,26,34,.06);\n  }\n  .track .waterline{position:absolute; left:0; right:0; bottom:60px; height:2px; background:repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 16px);}\n  .falling-item{\n    position:absolute; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--paper);\n    padding:.6rem 1rem; border-radius:12px; font-size:.82rem; text-align:center; max-width:80%;\n    box-shadow:0 8px 18px rgba(0,0,0,.18);\n  }\n  .sort-buttons{display:flex; gap:.8rem; width:100%; max-width:480px;}\n  .sort-buttons .btn{flex:1; justify-content:center; padding:.85rem 1rem; font-size:.82rem;}\n  .btn-polar{background:var(--water); color:#fff;}\n  .btn-apolar{background:var(--ember); color:#fff;}\n\n  /* ---------- LEVEL 3 membrane ---------- */\n  .membrane-wrap{display:flex; flex-direction:column; align-items:center; gap:1rem;}\n  .membrane-box{\n    background:linear-gradient(180deg, rgba(45,74,122,.08), rgba(45,74,122,.08) 18%, #fff 18%, #fff 82%, rgba(45,74,122,.08) 82%);\n    border:1.5px solid var(--line); border-radius:16px; padding:1.4rem 1rem; width:100%; max-width:520px;\n  }\n  .membrane-row{display:flex; justify-content:center; gap:10px; margin:.3rem 0;}\n  .lipid-tile{display:flex; flex-direction:column; align-items:center; cursor:pointer; transition:transform .25s; padding:4px;}\n  .lipid-tile .head{width:24px; height:24px; border-radius:50%; background:var(--water); border:2px solid #fff; box-shadow:0 0 0 1px var(--line); margin-bottom:1px;}\n  .lipid-tile .tails{display:flex; gap:3px;}\n  .lipid-tile .tail{width:4px; height:36px; background:var(--ember); border-radius:2px;}\n  .lipid-tile.flipped{transform:scaleY(-1);}\n  .lipid-tile.correct{outline:3px solid var(--green); outline-offset:3px; border-radius:8px;}\n  .lipid-tile.incorrect{outline:3px solid var(--red); outline-offset:3px; border-radius:8px; animation:shake .35s;}\n  .membrane-caption{display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:rgba(27,26,34,.45); max-width:520px; width:100%;}\n\n  /* ---------- LEVEL 4 quiz ---------- */\n  .quiz-wrap{display:flex; flex-direction:column; gap:1rem;}\n  .timer-bar{height:6px; background:var(--line); border-radius:6px; overflow:hidden; max-width:520px;}\n  .timer-fill{height:100%; background:var(--gold); width:100%; transition:width .1s linear;}\n  .quiz-q{font-family:'Fraunces',serif; font-size:1.15rem; font-weight:600; max-width:600px;}\n  .quiz-options{display:flex; flex-direction:column; gap:.6rem; max-width:600px;}\n  .opt-btn{\n    text-align:left; background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:.75rem 1rem;\n    font-size:.86rem; cursor:pointer; transition:all .15s; display:flex; gap:.6rem; align-items:flex-start;\n  }\n  .opt-btn:hover{border-color:var(--ink);}\n  .opt-btn.correct{background:rgba(62,122,92,.12); border-color:var(--green); font-weight:600;}\n  .opt-btn.incorrect{background:rgba(217,83,30,.10); border-color:var(--red);}\n  .opt-btn[disabled]{cursor:default;}\n  .opt-letter{font-family:'JetBrains Mono',monospace; font-size:.74rem; opacity:.5; min-width:16px;}\n  .quiz-explain{\n    font-size:.82rem; background:#FFFDF5; border:1.5px solid var(--gold); border-radius:12px; padding:.7rem 1rem;\n    display:none; max-width:600px;\n  }\n  .quiz-explain.show{display:block;}\n  .quiz-progress{font-family:'JetBrains Mono',monospace; font-size:.72rem; color:rgba(27,26,34,.5);}\n\n  /* ---------- END ---------- */\n  #screen-end{align-items:center; text-align:center; gap:1.4rem;}\n  .medal{font-size:4rem;}\n  .breakdown{display:flex; flex-direction:column; gap:.5rem; width:100%; max-width:420px;}\n  .breakdown .row{display:flex; justify-content:space-between; font-size:.84rem; border-bottom:1px dashed var(--line); padding-bottom:.4rem;}\n  .total-row{font-weight:700; font-family:'Fraunces',serif; font-size:1.1rem;}\n\n  .toast{\n    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--paper);\n    padding:.6rem 1.1rem; border-radius:30px; font-size:.8rem; font-family:'JetBrains Mono',monospace; opacity:0;\n    transition:all .3s; z-index:50; pointer-events:none;\n  }\n  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}\n\n  @media(max-width:560px){\n    .topbar{padding:.7rem .8rem;} .stage{padding:1.4rem .8rem 2rem;}\n    .slot{width:90px;} .backbone-card{min-width:90px; font-size:.8rem;}\n  }\n</style>\n</head>\n<body>\n<div class=\"app\" id=\"app\">\n\n  <header class=\"topbar\">\n    <div class=\"brand\">\ud83e\uddea LipidQuest <span>laboratorio interactivo de l\u00edpidos</span></div>\n    <div class=\"progress-dots\" id=\"progressDots\"></div>\n    <div class=\"hud\">\n      <div class=\"score-pill mono\">\u2605 <span id=\"scoreDisplay\">0</span></div>\n      <button class=\"icon-btn\" id=\"muteBtn\" title=\"M\u00fasica\">\ud83d\udd08</button>\n    </div>\n  </header>\n\n  <main class=\"stage\" id=\"stage\">\n\n    <\!-- START -->\n    <section class=\"screen-panel active\" id=\"screen-start\">\n      <div class=\"start-grid\">\n        <div>\n          <div class=\"eyebrow\">Misi\u00f3n cient\u00edfica</div>\n          <h1 class=\"title display\">Construye, clasifica y domina<br><em>el mundo de los l\u00edpidos</em></h1>\n          <p class=\"lede\">Eres un nuevo investigador en el laboratorio celular. En cuatro retos vas a ensamblar mol\u00e9culas reales, clasificar sus partes, levantar una membrana celular y poner a prueba lo aprendido. Cada acierto suma puntos \u2014 y sonido.</p>\n          <div class=\"start-list\">\n            <div class=\"item\"><span class=\"num\">01</span><span><b>Arma la mol\u00e9cula</b> \u2014 ensambla un triglic\u00e9rido y un fosfol\u00edpido pieza por pieza.</span></div>\n            <div class=\"item\"><span class=\"num\">02</span><span><b>Polar o apolar</b> \u2014 clasifica partes antes de que caigan.</span></div>\n            <div class=\"item\"><span class=\"num\">03</span><span><b>Levanta la membrana</b> \u2014 orienta cada fosfol\u00edpido para formar la bicapa.</span></div>\n            <div class=\"item\"><span class=\"num\">04</span><span><b>Examen final</b> \u2014 trivia cronometrada sobre funciones de los l\u00edpidos.</span></div>\n          </div>\n          <button class=\"btn btn-gold\" id=\"startBtn\" style=\"margin-top:1.1rem;\">\u25b6 Empezar misi\u00f3n</button>\n        </div>\n        <div class=\"lipid-hero\"><div class=\"blob\">\ud83e\uddec</div></div>\n      </div>\n    </section>\n\n    <\!-- LEVEL 1 -->\n    <section class=\"screen-panel\" id=\"screen-level1\">\n      <div class=\"eyebrow\">Reto 1 \u00b7 ensamblaje</div>\n      <h1 class=\"title display\">Arma <em id=\"molTargetName\">el triglic\u00e9rido</em></h1>\n      <p class=\"lede\" id=\"molInstructions\">Toca una pieza del banco y luego toca la posici\u00f3n vac\u00eda donde encaje. Algunas piezas son intrusas de otras mol\u00e9culas \u2014 \u00a1no encajar\u00e1n!</p>\n      <div class=\"card build-station\">\n        <div class=\"molecule-row\" id=\"moleculeRow\"></div>\n        <div class=\"tile-pool\" id=\"tilePool\"></div>\n      </div>\n      <div class=\"fact-box\" id=\"factBox\">\n        <span>\ud83d\udca1</span>\n        <div>\n          <b id=\"factTitle\"></b>\n          <p id=\"factText\" style=\"font-size:.82rem; margin-top:.2rem; color:rgba(27,26,34,.75);\"></p>\n          <button class=\"btn btn-primary\" id=\"factContinueBtn\" style=\"margin-top:.6rem;\">Continuar \u2192</button>\n        </div>\n      </div>\n    </section>\n\n    <\!-- LEVEL 2 -->\n    <section class=\"screen-panel\" id=\"screen-level2\">\n      <div class=\"eyebrow\">Reto 2 \u00b7 clasificaci\u00f3n</div>\n      <h1 class=\"title display\">\u00bfEs <em>polar</em> o <em>apolar</em>?</h1>\n      <p class=\"lede\">Cada pieza cae hacia el agua. Decide r\u00e1pido si \"ama\" el agua (polar/hidrof\u00edlica) o la \"rechaza\" (apolar/hidrof\u00f3bica) antes de que toque el fondo.</p>\n      <div class=\"sort-wrap\">\n        <div class=\"sort-hud\">\n          <div class=\"hearts mono\" id=\"heartsDisplay\">\u2764\ufe0f\u2764\ufe0f\u2764\ufe0f</div>\n          <div class=\"mono\" id=\"sortProgress\">0 / 10</div>\n        </div>\n        <div class=\"track\" id=\"track\">\n          <div class=\"waterline\"></div>\n        </div>\n        <div class=\"sort-buttons\">\n          <button class=\"btn btn-polar\" id=\"polarBtn\">\ud83d\udca7 Polar (hidrof\u00edlico)</button>\n          <button class=\"btn btn-apolar\" id=\"apolarBtn\">\ud83d\udee2 Apolar (hidrof\u00f3bico)</button>\n        </div>\n      </div>\n    </section>\n\n    <\!-- LEVEL 3 -->\n    <section class=\"screen-panel\" id=\"screen-level3\">\n      <div class=\"eyebrow\">Reto 3 \u00b7 arquitectura celular</div>\n      <h1 class=\"title display\">Levanta la <em>bicapa lip\u00eddica</em></h1>\n      <p class=\"lede\">Toca cada fosfol\u00edpido para girarlo. Las cabezas (azules) deben mirar siempre hacia el agua, afuera de la membrana; las colas (naranjas) deben mirarse entre s\u00ed, escondidas del agua.</p>\n      <div class=\"membrane-wrap\">\n        <div class=\"membrane-caption\"><span>\ud83d\udca7 agua extracelular</span><span>\ud83d\udca7 agua intracelular</span></div>\n        <div class=\"membrane-box\">\n          <div class=\"membrane-row\" id=\"rowTop\"></div>\n          <div class=\"membrane-row\" id=\"rowBottom\"></div>\n        </div>\n        <button class=\"btn btn-gold\" id=\"checkMembraneBtn\">Verificar membrana</button>\n      </div>\n      <div class=\"fact-box\" id=\"membraneFact\">\n        <span>\ud83e\uddeb</span>\n        <div>\n          <b>\u00a1Membrana estable!</b>\n          <p style=\"font-size:.82rem; margin-top:.2rem; color:rgba(27,26,34,.75);\">As\u00ed es exactamente como se organiza la membrana de cada una de tus c\u00e9lulas: una bicapa de fosfol\u00edpidos con las colas hidrof\u00f3bicas escondidas en el centro y las cabezas hidrof\u00edlicas mirando al agua, dentro y fuera de la c\u00e9lula.</p>\n          <button class=\"btn btn-primary\" id=\"membraneContinueBtn\" style=\"margin-top:.6rem;\">Ir al examen final \u2192</button>\n        </div>\n      </div>\n    </section>\n\n    <\!-- LEVEL 4 -->\n    <section class=\"screen-panel\" id=\"screen-level4\">\n      <div class=\"eyebrow\">Reto 4 \u00b7 examen final</div>\n      <h1 class=\"title display\">Trivia de <em>los l\u00edpidos</em></h1>\n      <div class=\"quiz-wrap\">\n        <div class=\"quiz-progress\" id=\"quizProgress\">Pregunta 1 / 8</div>\n        <div class=\"timer-bar\"><div class=\"timer-fill\" id=\"timerFill\"></div></div>\n        <div class=\"quiz-q\" id=\"quizQuestion\"></div>\n        <div class=\"quiz-options\" id=\"quizOptions\"></div>\n        <div class=\"quiz-explain\" id=\"quizExplain\"></div>\n        <button class=\"btn btn-primary\" id=\"nextQBtn\" style=\"display:none; align-self:flex-start;\">Siguiente \u2192</button>\n      </div>\n    </section>\n\n    <\!-- END -->\n    <section class=\"screen-panel\" id=\"screen-end\">\n      <div class=\"medal\" id=\"medalEmoji\">\ud83e\udd47</div>\n      <div class=\"eyebrow\" style=\"justify-content:center;\">Misi\u00f3n completada</div>\n      <h1 class=\"title display\" id=\"endTitle\">Eres un investigador <em>de oro</em></h1>\n      <p class=\"lede\" id=\"endSubtitle\" style=\"text-align:center;\">Resumen de tu desempe\u00f1o en el laboratorio:</p>\n      <div class=\"breakdown card\" id=\"breakdown\"></div>\n      <div style=\"display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center;\">\n        <button class=\"btn btn-gold\" id=\"replayBtn\">\u21ba Repetir misi\u00f3n</button>\n      </div>\n    </section>\n\n  </main>\n</div>\n\n<div class=\"toast\" id=\"toast\"></div>\n\n<script>\n(function(){\n  \"use strict\";\n  const $ = s => document.querySelector(s);\n  const $$ = s => Array.from(document.querySelectorAll(s));\n\n  /* ===================== AUDIO ENGINE ===================== */\n  let actx = null, musicOn = false, musicNodes = null;\n  function ensureAudio(){\n    if(!actx){\n      try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ actx = null; }\n    }\n    if(actx && actx.state === 'suspended') actx.resume();\n  }\n  function tone(freq, dur, type, vol, delay){\n    if(!actx) return;\n    type = type || 'sine'; vol = vol===undefined?0.22:vol; delay = delay||0;\n    const t0 = actx.currentTime + delay;\n    const osc = actx.createOscillator(); const gain = actx.createGain();\n    osc.type = type; osc.frequency.setValueAtTime(freq, t0);\n    gain.gain.setValueAtTime(0, t0);\n    gain.gain.linearRampToValueAtTime(vol, t0+0.012);\n    gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);\n    osc.connect(gain); gain.connect(actx.destination);\n    osc.start(t0); osc.stop(t0+dur+0.02);\n  }\n  function playClick(){ ensureAudio(); tone(620,0.06,'square',0.13); }\n  function playPop(){ ensureAudio(); tone(700,0.07,'sine',0.18); tone(1100,0.07,'sine',0.14,0.05); }\n  function playCorrect(){ ensureAudio(); tone(523,0.1,'sine',0.2); tone(659,0.1,'sine',0.2,0.08); tone(784,0.16,'sine',0.22,0.16); }\n  function playWrong(){ ensureAudio(); tone(220,0.18,'sawtooth',0.16); tone(160,0.22,'sawtooth',0.14,0.07); }\n  function playLevelComplete(){\n    ensureAudio();\n    [523,659,784,1047].forEach((f,i)=> tone(f,0.22,'triangle',0.2,i*0.1));\n  }\n  function playLifeLost(){ ensureAudio(); tone(140,0.22,'square',0.18); }\n  function toggleMusic(){\n    musicOn = !musicOn;\n    $('#muteBtn').textContent = musicOn ? '\ud83d\udd0a' : '\ud83d\udd08';\n    ensureAudio();\n    if(!actx) return;\n    if(musicOn){\n      const master = actx.createGain(); master.gain.value = 0.05; master.connect(actx.destination);\n      const o1 = actx.createOscillator(); o1.type='sine'; o1.frequency.value=220;\n      const o2 = actx.createOscillator(); o2.type='sine'; o2.frequency.value=277;\n      const lfo = actx.createOscillator(); lfo.type='sine'; lfo.frequency.value=0.12;\n      const lfoGain = actx.createGain(); lfoGain.gain.value=0.025;\n      lfo.connect(lfoGain); lfoGain.connect(master.gain);\n      o1.connect(master); o2.connect(master);\n      o1.start(); o2.start(); lfo.start();\n      musicNodes = {o1,o2,lfo,master};\n    } else if(musicNodes){\n      try{ musicNodes.o1.stop(); musicNodes.o2.stop(); musicNodes.lfo.stop(); }catch(e){}\n      musicNodes = null;\n    }\n  }\n  $('#muteBtn').addEventListener('click', toggleMusic);\n\n  /* ===================== STATE ===================== */\n  const state = {\n    score:0,\n    level1Score:0, level2Score:0, level3Score:0, level4Score:0,\n    screens: ['start','level1','level2','level3','level4','end']\n  };\n  function addScore(n){ state.score += n; $('#scoreDisplay').textContent = state.score; }\n  function toast(msg){\n    const t = $('#toast'); t.textContent = msg; t.classList.add('show');\n    clearTimeout(t._tm); t._tm = setTimeout(()=>t.classList.remove('show'), 1700);\n  }\n\n  /* progress dots (levels 1-4) */\n  const dotsWrap = $('#progressDots');\n  for(let i=1;i<=4;i++){ const d=document.createElement('div'); d.className='dot'; d.dataset.lvl=i; dotsWrap.appendChild(d); }\n  function updateDots(activeScreen){\n    const lvlIndex = {level1:1, level2:2, level3:3, level4:4}[activeScreen] || 0;\n    $$('.progress-dots .dot').forEach(d=>{\n      const n = parseInt(d.dataset.lvl);\n      d.classList.toggle('current', n===lvlIndex);\n      d.classList.toggle('done', n<lvlIndex || activeScreen==='end');\n    });\n  }\n  function showScreen(id){\n    $$('.screen-panel').forEach(s=>s.classList.remove('active'));\n    $('#screen-'+id).classList.add('active');\n    updateDots(id);\n    window.scrollTo({top:0, behavior:'smooth'});\n  }\n\n  $('#startBtn').addEventListener('click', ()=>{ ensureAudio(); playClick(); showScreen('level1'); startLevel1(); });\n\n  /* ===================== LEVEL 1 : MOLECULE BUILDER ===================== */\n  const MOLECULES = [\n    {\n      name:'el triglic\u00e9rido', backbone:'Glicerol',\n      slots:[{type:'tail'},{type:'tail'},{type:'tail'}],\n      pool:[\n        {type:'tail', label:'\u00c1cido graso'}, {type:'tail', label:'\u00c1cido graso'}, {type:'tail', label:'\u00c1cido graso'},\n        {type:'head', label:'Fosfato + colina'}\n      ],\n      fact:{\n        title:'\u00a1Triglic\u00e9rido completo!',\n        text:'Tres \u00e1cidos grasos enlazados a un glicerol forman la principal reserva de energ\u00eda del cuerpo: cada gramo de grasa aporta cerca de 9 kcal, m\u00e1s del doble que un carbohidrato.'\n      }\n    },\n    {\n      name:'el fosfol\u00edpido', backbone:'Glicerina',\n      slots:[{type:'tail'},{type:'tail'},{type:'head'}],\n      pool:[\n        {type:'tail', label:'\u00c1cido graso (cola)'}, {type:'tail', label:'\u00c1cido graso (cola)'},\n        {type:'head', label:'Fosfato + colina (cabeza)'}, {type:'ring', label:'Anillo de colesterol'}\n      ],\n      fact:{\n        title:'\u00a1Fosfol\u00edpido completo!',\n        text:'Con una cabeza polar y dos colas apolares, esta mol\u00e9cula es anfip\u00e1tica: por eso millones de ellas se organizan solas en una bicapa cuando est\u00e1n en agua, formando la membrana de cada c\u00e9lula.'\n      }\n    }\n  ];\n  let molIndex = 0;\n  let selectedTile = null;\n\n  function startLevel1(){ molIndex = 0; renderMolecule(); }\n\n  function renderMolecule(){\n    const mol = MOLECULES[molIndex];\n    $('#molTargetName').textContent = mol.name;\n    $('#factBox').classList.remove('show');\n    selectedTile = null;\n\n    const row = $('#moleculeRow'); row.innerHTML = '';\n    const backbone = document.createElement('div');\n    backbone.className = 'backbone-card display';\n    backbone.textContent = mol.backbone;\n    row.appendChild(backbone);\n\n    mol.slots.forEach((slot,i)=>{\n      const conn = document.createElement('div'); conn.className='connector'; row.appendChild(conn);\n      const el = document.createElement('div');\n      el.className = 'slot'; el.dataset.index = i; el.dataset.type = slot.type;\n      el.textContent = '?';\n      el.addEventListener('click', ()=> onSlotClick(el, slot));\n      row.appendChild(el);\n    });\n\n    const pool = $('#tilePool'); pool.innerHTML = '';\n    const shuffled = mol.pool.map((p,i)=>({...p, id:i})).sort(()=>Math.random()-0.5);\n    shuffled.forEach(p=>{\n      const t = document.createElement('div');\n      t.className = 'tile ' + p.type;\n      t.dataset.id = p.id; t.dataset.type = p.type;\n      t.innerHTML = '<span class=\"dot\"></span>' + p.label;\n      t.addEventListener('click', ()=> onTileClick(t));\n      pool.appendChild(t);\n    });\n  }\n\n  function onTileClick(tileEl){\n    if(tileEl.classList.contains('used')) return;\n    ensureAudio(); playClick();\n    $$('.tile').forEach(t=>t.classList.remove('selected'));\n    tileEl.classList.add('selected');\n    selectedTile = tileEl;\n  }\n\n  function onSlotClick(slotEl, slotDef){\n    if(slotEl.classList.contains('filled')) return;\n    if(!selectedTile){ toast('Primero toca una pieza del banco \u2935'); return; }\n    if(selectedTile.dataset.type === slotDef.type){\n      playPop();\n      slotEl.classList.add('filled', slotDef.type);\n      slotEl.textContent = selectedTile.textContent.trim();\n      selectedTile.classList.add('used');\n      selectedTile.classList.remove('selected');\n      const usedSel = selectedTile; selectedTile = null;\n      addScore(20); state.level1Score += 20;\n      checkMoleculeComplete();\n    } else {\n      playWrong();\n      addScore(-5); state.level1Score -= 5;\n      slotEl.classList.add('shake');\n      setTimeout(()=>slotEl.classList.remove('shake'), 350);\n      toast('Esa pieza no encaja ah\u00ed \u274c');\n    }\n  }\n\n  function checkMoleculeComplete(){\n    const slots = $$('#moleculeRow .slot');\n    if(slots.every(s=>s.classList.contains('filled'))){\n      setTimeout(()=>{\n        playLevelComplete();\n        const mol = MOLECULES[molIndex];\n        $('#factTitle').textContent = mol.fact.title;\n        $('#factText').textContent = mol.fact.text;\n        $('#factBox').classList.add('show');\n      }, 350);\n    }\n  }\n\n  $('#factContinueBtn').addEventListener('click', ()=>{\n    ensureAudio(); playClick();\n    molIndex++;\n    if(molIndex < MOLECULES.length){\n      renderMolecule();\n    } else {\n      showScreen('level2'); startLevel2();\n    }\n  });\n\n  /* ===================== LEVEL 2 : SORTING GAME ===================== */\n  const SORT_ITEMS = [\n    {label:'Cabeza de fosfato', cat:'polar'},\n    {label:'Cola de \u00e1cido graso', cat:'apolar'},\n    {label:'Colina', cat:'polar'},\n    {label:'Cadena de hidrocarburos', cat:'apolar'},\n    {label:'Glicerina unida a fosfato', cat:'polar'},\n    {label:'Anillo esteroide del colesterol', cat:'apolar'},\n    {label:'Grupo hidroxilo (\u2013OH) del colesterol', cat:'polar'},\n    {label:'Triglic\u00e9rido completo', cat:'apolar'},\n    {label:'\u00c1cido graso insaturado (cola)', cat:'apolar'},\n    {label:'Grupo fosfato libre', cat:'polar'}\n  ];\n  let sortQueue = [], sortIdx = 0, lives = 3, sortStreak = 0, fallTimer = null, fallStart = 0, fallDuration = 4200, currentFallEl = null, answered = false;\n\n  function startLevel2(){\n    sortQueue = SORT_ITEMS.slice().sort(()=>Math.random()-0.5);\n    sortIdx = 0; lives = 3; sortStreak = 0; fallDuration = 4200;\n    updateHearts(); updateSortProgress();\n    spawnNext();\n  }\n  function updateHearts(){ $('#heartsDisplay').textContent = '\u2764\ufe0f'.repeat(Math.max(0,lives)) + '\ud83d\udda4'.repeat(3-Math.max(0,lives)); }\n  function updateSortProgress(){ $('#sortProgress').textContent = Math.min(sortIdx, sortQueue.length) + ' / ' + sortQueue.length; }\n\n  function spawnNext(){\n    if(lives<=0){ finishLevel2(); return; }\n    if(sortIdx >= sortQueue.length){ finishLevel2(); return; }\n    updateSortProgress();\n    answered = false;\n    const item = sortQueue[sortIdx];\n    const track = $('#track');\n    track.querySelectorAll('.falling-item').forEach(e=>e.remove());\n    const el = document.createElement('div');\n    el.className = 'falling-item';\n    el.textContent = item.label;\n    el.style.top = '-10px';\n    track.appendChild(el);\n    currentFallEl = el;\n    fallStart = performance.now();\n    cancelAnimationFrame(fallTimer);\n    animateFall();\n  }\n  function animateFall(){\n    const track = $('#track');\n    const maxTop = track.clientHeight - 60;\n    function step(ts){\n      if(answered) return;\n      const t = Math.min(1, (ts-fallStart)/fallDuration);\n      currentFallEl.style.top = (t*maxTop) + 'px';\n      if(t>=1){ handleAnswer(null); return; }\n      fallTimer = requestAnimationFrame(step);\n    }\n    fallTimer = requestAnimationFrame(step);\n  }\n  function handleAnswer(chosenCat){\n    if(answered) return;\n    answered = true;\n    cancelAnimationFrame(fallTimer);\n    const item = sortQueue[sortIdx];\n    const correct = chosenCat === item.cat;\n    if(correct){\n      playCorrect();\n      sortStreak++;\n      const bonus = 10 + sortStreak*2;\n      addScore(bonus); state.level2Score += bonus;\n      toast('\u00a1Correcto! +' + bonus);\n      fallDuration = Math.max(2000, fallDuration - 120);\n    } else {\n      playWrong(); playLifeLost();\n      sortStreak = 0; lives--;\n      updateHearts();\n      toast(chosenCat===null ? '\u00a1Se te escap\u00f3! Era ' + (item.cat==='polar'?'polar':'apolar') : 'No era correcto. Era ' + (item.cat==='polar'?'polar':'apolar'));\n    }\n    if(currentFallEl) currentFallEl.style.opacity = '0';\n    sortIdx++;\n    setTimeout(spawnNext, 550);\n  }\n  $('#polarBtn').addEventListener('click', ()=>{ ensureAudio(); handleAnswer('polar'); });\n  $('#apolarBtn').addEventListener('click', ()=>{ ensureAudio(); handleAnswer('apolar'); });\n\n  function finishLevel2(){\n    cancelAnimationFrame(fallTimer);\n    playLevelComplete();\n    showScreen('level3'); startLevel3();\n  }\n\n  /* ===================== LEVEL 3 : MEMBRANE BUILDER ===================== */\n  let membraneTiles = [];\n  function startLevel3(){\n    membraneTiles = [];\n    $('#rowTop').innerHTML = ''; $('#rowBottom').innerHTML = '';\n    buildRow('rowTop', 4, 'top');\n    buildRow('rowBottom', 4, 'bottom');\n  }\n  function buildRow(containerId, count, row){\n    const container = $('#'+containerId);\n    for(let i=0;i<count;i++){\n      const flipped = Math.random() < 0.5;\n      const el = document.createElement('div');\n      el.className = 'lipid-tile' + (flipped ? ' flipped' : '');\n      el.dataset.row = row; el.dataset.flipped = flipped ? '1':'0';\n      el.innerHTML = '<div class=\"head\"></div><div class=\"tails\"><div class=\"tail\"></div><div class=\"tail\"></div></div>';\n      el.addEventListener('click', ()=>{\n        ensureAudio(); playClick();\n        const isFlipped = el.dataset.flipped === '1';\n        el.dataset.flipped = isFlipped ? '0' : '1';\n        el.classList.toggle('flipped');\n        el.classList.remove('correct','incorrect');\n      });\n      container.appendChild(el);\n      membraneTiles.push(el);\n    }\n  }\n  $('#checkMembraneBtn').addEventListener('click', ()=>{\n    ensureAudio();\n    let allCorrect = true;\n    membraneTiles.forEach(el=>{\n      const flipped = el.dataset.flipped === '1';\n      const correctFlip = el.dataset.row === 'bottom'; // top must be unflipped, bottom must be flipped\n      const ok = flipped === correctFlip;\n      el.classList.remove('correct','incorrect');\n      el.classList.add(ok ? 'correct' : 'incorrect');\n      if(!ok) allCorrect = false;\n    });\n    if(allCorrect){\n      playLevelComplete();\n      addScore(150); state.level3Score += 150;\n      $('#membraneFact').classList.add('show');\n      $('#checkMembraneBtn').style.display = 'none';\n    } else {\n      playWrong();\n      toast('Casi... revisa los bordes en rojo y vuelve a intentar');\n    }\n  });\n  $('#membraneContinueBtn').addEventListener('click', ()=>{\n    ensureAudio(); playClick();\n    showScreen('level4'); startLevel4();\n  });\n\n  /* ===================== LEVEL 4 : QUIZ ===================== */\n  const QUIZ = [\n    { q:'\u00bfCu\u00e1l es la funci\u00f3n principal de los triglic\u00e9ridos en el cuerpo?', opts:['Formar hormonas','Reserva de energ\u00eda a largo plazo','Formar las membranas celulares','Transmitir impulsos nerviosos'], correct:1,\n      ex:'Los triglic\u00e9ridos almacenan m\u00e1s energ\u00eda por gramo que los carbohidratos o las prote\u00ednas, por eso son la reserva energ\u00e9tica principal del cuerpo.' },\n    { q:'\u00bfQu\u00e9 tipo de l\u00edpido forma la bicapa de las membranas celulares?', opts:['Colesterol','Triglic\u00e9rido','Fosfol\u00edpido','Gluc\u00f3geno'], correct:2,\n      ex:'Gracias a su cabeza polar y sus colas apolares (es decir, ser anfip\u00e1tico), el fosfol\u00edpido se autoensambla en una bicapa.' },\n    { q:'El colesterol es precursor de...', opts:['Vitaminas del complejo B','Hormonas esteroides y vitamina D','Glucosa sangu\u00ednea','Prote\u00ednas musculares'], correct:1,\n      ex:'A partir del colesterol el cuerpo sintetiza hormonas esteroides (como el cortisol y las hormonas sexuales) y vitamina D.' },\n    { q:'La cabeza de un fosfol\u00edpido es...', opts:['Hidrof\u00f3bica','Hidrof\u00edlica','Neutra, no interact\u00faa con el agua','Inexistente'], correct:1,\n      ex:'La cabeza, con su grupo fosfato, es polar e hidrof\u00edlica: le atrae el agua.' },\n    { q:'\u00bfCu\u00e1ntas kilocalor\u00edas aporta aproximadamente 1 gramo de grasa?', opts:['4 kcal','7 kcal','9 kcal','12 kcal'], correct:2,\n      ex:'1 gramo de grasa aporta cerca de 9 kcal, m\u00e1s del doble que 1 gramo de carbohidratos o prote\u00ednas (4 kcal).' },\n    { q:'El tejido adiposo bajo la piel cumple principalmente la funci\u00f3n de...', opts:['Transporte de ox\u00edgeno','Aislamiento t\u00e9rmico y protecci\u00f3n','Replicaci\u00f3n celular','Digesti\u00f3n de prote\u00ednas'], correct:1,\n      ex:'La grasa subcut\u00e1nea amortigua golpes y conserva el calor corporal, funcionando como aislante t\u00e9rmico.' },\n    { q:'\u00bfQu\u00e9 estructura tiene el colesterol que NO tienen los triglic\u00e9ridos?', opts:['Una cola de \u00e1cidos grasos','Cuatro anillos fusionados','Un glicerol','Un enlace \u00e9ster'], correct:1,\n      ex:'El colesterol pertenece a la familia de los esteroides: su caracter\u00edstica distintiva son los cuatro anillos de carbono fusionados.' },\n    { q:'En la bicapa lip\u00eddica, las colas hidrof\u00f3bicas se orientan...', opts:['Hacia el agua exterior','Hacia el interior, lejos del agua','Hacia afuera de la c\u00e9lula','En cualquier direcci\u00f3n al azar'], correct:1,\n      ex:'Las colas apolares se esconden en el centro de la membrana, lejos del agua, mientras las cabezas polares quedan expuestas a ambos lados.' }\n  ];\n  let qIdx = 0, qTimer = null, qStreak = 0, qStart = 0;\n  const Q_TIME = 15000;\n\n  function startLevel4(){ qIdx = 0; qStreak = 0; renderQuestion(); }\n\n  function renderQuestion(){\n    if(qIdx >= QUIZ.length){ finishQuiz(); return; }\n    const q = QUIZ[qIdx];\n    $('#quizProgress').textContent = 'Pregunta ' + (qIdx+1) + ' / ' + QUIZ.length;\n    $('#quizQuestion').textContent = q.q;\n    $('#quizExplain').classList.remove('show');\n    $('#nextQBtn').style.display = 'none';\n    const opts = $('#quizOptions'); opts.innerHTML = '';\n    const letters = ['A','B','C','D'];\n    q.opts.forEach((opt,i)=>{\n      const b = document.createElement('button');\n      b.className = 'opt-btn';\n      b.innerHTML = '<span class=\"opt-letter mono\">'+letters[i]+'</span><span>'+opt+'</span>';\n      b.addEventListener('click', ()=> answerQuiz(i, b));\n      opts.appendChild(b);\n    });\n    qStart = performance.now();\n    cancelAnimationFrame(qTimer);\n    animateTimer();\n  }\n  function animateTimer(){\n    function step(ts){\n      const t = Math.min(1, (ts-qStart)/Q_TIME);\n      $('#timerFill').style.width = ((1-t)*100) + '%';\n      if(t>=1){ answerQuiz(-1, null); return; }\n      qTimer = requestAnimationFrame(step);\n    }\n    qTimer = requestAnimationFrame(step);\n  }\n  function answerQuiz(choice, btnEl){\n    cancelAnimationFrame(qTimer);\n    const q = QUIZ[qIdx];\n    $$('#quizOptions .opt-btn').forEach((b,i)=>{\n      b.disabled = true;\n      if(i===q.correct) b.classList.add('correct');\n      else if(i===choice) b.classList.add('incorrect');\n    });\n    if(choice === q.correct){\n      const timeLeft = Math.max(0, Q_TIME - (performance.now()-qStart));\n      qStreak++;\n      const pts = 50 + Math.floor(timeLeft/1000)*3 + qStreak*5;\n      playCorrect();\n      addScore(pts); state.level4Score += pts;\n      toast('\u00a1Correcto! +' + pts);\n    } else {\n      qStreak = 0;\n      playWrong();\n      toast(choice===-1 ? '\u00a1Se acab\u00f3 el tiempo!' : 'Respuesta incorrecta');\n    }\n    $('#quizExplain').textContent = '\ud83d\udca1 ' + q.ex;\n    $('#quizExplain').classList.add('show');\n    $('#nextQBtn').style.display = 'inline-flex';\n  }\n  $('#nextQBtn').addEventListener('click', ()=>{\n    ensureAudio(); playClick();\n    qIdx++; renderQuestion();\n  });\n\n  function finishQuiz(){\n    playLevelComplete();\n    showScreen('end'); renderEnd();\n  }\n\n  /* ===================== END SCREEN ===================== */\n  function renderEnd(){\n    const total = state.score;\n    let medal = '\ud83e\udd49', title = 'investigador de bronce', subtitle='Buen primer paso en el laboratorio. \u00a1Repite la misi\u00f3n y mejora tu marca!';\n    if(total >= 700){ medal='\ud83e\udd47'; title='investigador de oro'; subtitle='Dominas la bioqu\u00edmica de los l\u00edpidos como un verdadero experto del laboratorio.'; }\n    else if(total >= 420){ medal='\ud83e\udd48'; title='investigador de plata'; subtitle='Muy buen desempe\u00f1o: conoces bien las mol\u00e9culas y sus funciones.'; }\n    $('#medalEmoji').textContent = medal;\n    $('#endTitle').innerHTML = 'Eres un <em>'+title+'</em>';\n    $('#endSubtitle').textContent = subtitle;\n    const bd = $('#breakdown');\n    bd.innerHTML =\n      '<div class=\"row\"><span>\ud83e\udde9 Reto 1 \u00b7 Ensamblaje</span><span class=\"mono\">'+state.level1Score+'</span></div>' +\n      '<div class=\"row\"><span>\ud83d\udca7 Reto 2 \u00b7 Polar / apolar</span><span class=\"mono\">'+state.level2Score+'</span></div>' +\n      '<div class=\"row\"><span>\ud83e\uddeb Reto 3 \u00b7 Membrana</span><span class=\"mono\">'+state.level3Score+'</span></div>' +\n      '<div class=\"row\"><span>\ud83d\udccb Reto 4 \u00b7 Examen final</span><span class=\"mono\">'+state.level4Score+'</span></div>' +\n      '<div class=\"row total-row\"><span>Total</span><span class=\"mono\">'+total+'</span></div>';\n    spawnConfetti();\n  }\n  function spawnConfetti(){\n    const emojis = ['\ud83e\uddec','\u2728','\ud83e\udd73','\ud83d\udc9b','\ud83d\udfe0'];\n    for(let i=0;i<24;i++){\n      const s = document.createElement('div');\n      s.textContent = emojis[Math.floor(Math.random()*emojis.length)];\n      s.style.position='fixed'; s.style.left = Math.random()*100+'vw'; s.style.top='-30px';\n      s.style.fontSize = (14+Math.random()*16)+'px'; s.style.zIndex='60'; s.style.pointerEvents='none';\n      s.style.transition = 'transform 2.4s ease-in, opacity 2.4s ease-in';\n      document.body.appendChild(s);\n      requestAnimationFrame(()=>{\n        s.style.transform = 'translateY(' + (window.innerHeight+60) + 'px) rotate('+(Math.random()*360)+'deg)';\n        s.style.opacity = '0';\n      });\n      setTimeout(()=> s.remove(), 2600);\n    }\n  }\n\n  $('#replayBtn').addEventListener('click', ()=>{\n    ensureAudio(); playClick();\n    state.score = 0; state.level1Score=0; state.level2Score=0; state.level3Score=0; state.level4Score=0;\n    $('#scoreDisplay').textContent = 0;\n    showScreen('start');\n  });\n\n  updateDots('start');\n})();\n<\/script>\n</body>\n</html>\n";
+if (!window.navigator.vibrate) { window.navigator.vibrate = function() { return false; }; }
 
-  let loaded = { video:false, game:false };
+function customAlert(message) {
+  return new Promise((resolve) => {
+    const existingAlert = document.querySelector('.custom-alert');
+    if (existingAlert) existingAlert.remove();
+    const overlay = document.createElement('div');
+    overlay.className = 'custom-alert';
+    const content = document.createElement('div');
+    content.className = 'custom-alert-content';
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'custom-alert-message';
+    msgDiv.innerText = message;
+    const button = document.createElement('button');
+    button.className = 'custom-alert-button';
+    button.innerText = 'Aceptar';
+    button.onclick = () => { overlay.remove(); resolve(); };
+    content.appendChild(msgDiv);
+    content.appendChild(button);
+    overlay.appendChild(content);
+    document.body.appendChild(overlay);
+  });
+}
+window.alert = function(message) { customAlert(message); };
 
-  function openWindow(which){
-    const frame = document.getElementById('frame-'+which);
-    if(!loaded[which]){
-      frame.srcdoc = (which === 'video') ? VIDEO_HTML : GAME_HTML;
-      loaded[which] = true;
+// ── Variables globales ──────────────────────────────────────────────────────
+let currentSection = 0, answers = {}, editingId = null;
+let surveyFinished = false;
+const TOTAL_SECTIONS = 11;
+const SECTION_NAMES = ['Sec.0','Sec.A','Sec.B','Sec.C','Sec.M','Sec.F','Sec.D','Sec.H','Sec.I','Sec.G','Sec.E'];
+
+let i1TimerInterval = null;
+let i1TimeLeft = 10;
+let i1Locked = false;
+let i1AnswerSelected = false;
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoF4CS9MwNHZ7xpejCOgaU_j7wTFZ1lfohOV3u46FDSJPP_bh8MjGsDwbUoq5U-IkL/exec";
+const CSV_URL_DUPLICADOS = "https://script.google.com/macros/s/AKfycbypTvpNB0GafPHPgYp1mEAlE0do-D2QO2Xlfxq9CED7FE0uoec0SsdX8Q-F5WYJOfek4g/exec";
+let _csvCache = null;
+let _csvLastFetched = null;
+let _ubicVerifTimerGPS = null;
+let _ubicVerifTimerManual = null;
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── VERIFICACIÓN DE DUPLICADOS LOCALES (NUEVA) ────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+const DUP_IGNORAR = new Set([
+  'id','timestamp','_sent','_sentDate','consent',
+  'ubicacion_lat','ubicacion_lng','ubicacion_precision',
+  'ubicacion_error','ubicacion_direccion','S0_ubic','ubicacion_manual',
+  'S0_enc','S0_email','S0_cod','encuesta_finalizada_temprano','razon_finalizacion'
+]);
+
+function calcularSimilitudRegistros(recA, recB) {
+  const todasClaves = new Set([...Object.keys(recA), ...Object.keys(recB)]);
+  let comparadas = 0, iguales = 0;
+  const distintas = [];
+
+  for (const k of todasClaves) {
+    if (DUP_IGNORAR.has(k)) continue;
+    const vA = String(recA[k] ?? '').trim();
+    const vB = String(recB[k] ?? '').trim();
+    if (vA === '' && vB === '') continue;
+    comparadas++;
+    if (vA === vB) {
+      iguales++;
+    } else {
+      distintas.push({ campo: k, valA: vA, valB: vB });
     }
-    document.getElementById('launcher').style.display = 'none';
-    document.getElementById('view-'+which).classList.add('active');
   }
-  function closeWindow(which){
-    document.getElementById('view-'+which).classList.remove('active');
-    document.getElementById('launcher').style.display = 'flex';
+
+  if (comparadas === 0) return { pct: 0, iguales: 0, comparadas: 0, distintas: [] };
+  return {
+    pct: Math.round((iguales / comparadas) * 100),
+    iguales, comparadas, distintas
+  };
+}
+
+function encontrarParesDuplicados(records, umbral) {
+  umbral = umbral || 80;
+  const pares = [];
+  for (let i = 0; i < records.length; i++) {
+    for (let j = i + 1; j < records.length; j++) {
+      const sim = calcularSimilitudRegistros(records[i], records[j]);
+      if (sim.pct >= umbral) {
+        pares.push({
+          idxA: i, idxB: j,
+          recA: records[i], recB: records[j],
+          similitud: sim.pct,
+          iguales: sim.iguales,
+          comparadas: sim.comparadas,
+          distintas: sim.distintas
+        });
+      }
+    }
   }
+  // Ordenar de mayor a menor similitud
+  pares.sort(function(a, b) { return b.similitud - a.similitud; });
+  return pares;
+}
+
+function badgeColorDup(pct) {
+  if (pct >= 97) return '#7f1d1d';
+  if (pct >= 93) return '#dc2626';
+  if (pct >= 88) return '#d97706';
+  return '#92400e';
+}
+
+function mostrarAlertaDuplicadosLocales(pares, onEnviar, onCancelar) {
+  const prev = document.getElementById('cap-dup-local');
+  if (prev) prev.remove();
+  if (window.navigator && window.navigator.vibrate) window.navigator.vibrate([200,80,200]);
+
+  const overlay = document.createElement('div');
+  overlay.id = 'cap-dup-local';
+  overlay.className = 'dup-local-overlay';
+
+  // Construir filas de pares
+  let filasPares = '';
+  pares.forEach(function(par, idx) {
+    const encA  = par.recA['S0_enc'] || 'Sin nombre';
+    const encB  = par.recB['S0_enc'] || 'Sin nombre';
+    const comA  = par.recA['A2'] || '—';
+    const comB  = par.recB['A2'] || '—';
+    const tsA   = par.recA['timestamp'] || '—';
+    const tsB   = par.recB['timestamp'] || '—';
+    const idA   = (par.recA['id'] || '—').toString().substring(0, 12);
+    const idB   = (par.recB['id'] || '—').toString().substring(0, 12);
+    const color = badgeColorDup(par.similitud);
+
+    // Tabla de campos distintos (máx 6)
+    const maxCampos = 6;
+    let filasTabla = '';
+    const distMostrar = par.distintas.slice(0, maxCampos);
+    distMostrar.forEach(function(d) {
+      const etiq = d.campo.length > 45 ? d.campo.substring(0, 45) + '…' : d.campo;
+      const vA   = d.valA.length > 35 ? d.valA.substring(0, 35) + '…' : (d.valA || '—');
+      const vB   = d.valB.length > 35 ? d.valB.substring(0, 35) + '…' : (d.valB || '—');
+      filasTabla += '<tr><td style="padding:3px 5px;color:#6b7280;word-break:break-word;">' + etiq + '</td>'
+                  + '<td style="padding:3px 5px;word-break:break-word;">' + vA + '</td>'
+                  + '<td style="padding:3px 5px;word-break:break-word;">' + vB + '</td></tr>';
+    });
+    const masDistintas = par.distintas.length > maxCampos
+      ? '<div class="dup-local-mas">… y ' + (par.distintas.length - maxCampos) + ' campo(s) más distintos</div>'
+      : '';
+
+    filasPares += '<div class="dup-local-par">'
+      + '<div class="dup-local-par-header">'
+      +   '<span class="dup-local-par-num">Par #' + (idx + 1) + '</span>'
+      +   '<span class="dup-local-badge" style="background:' + color + ';">' + par.similitud + '% similar</span>'
+      + '</div>'
+      + '<div class="dup-local-grid">'
+      +   '<div class="dup-local-reg">'
+      +     '<div class="dup-local-reg-title">Registro A</div>'
+      +     '<div class="dup-local-reg-id">ID: ' + idA + '…</div>'
+      +     '<div class="dup-local-reg-enc">👤 ' + encA + '</div>'
+      +     '<div class="dup-local-reg-com">🏘️ ' + comA + '</div>'
+      +     '<div class="dup-local-reg-ts">🕐 ' + tsA + '</div>'
+      +   '</div>'
+      +   '<div class="dup-local-reg">'
+      +     '<div class="dup-local-reg-title">Registro B</div>'
+      +     '<div class="dup-local-reg-id">ID: ' + idB + '…</div>'
+      +     '<div class="dup-local-reg-enc">👤 ' + encB + '</div>'
+      +     '<div class="dup-local-reg-com">🏘️ ' + comB + '</div>'
+      +     '<div class="dup-local-reg-ts">🕐 ' + tsB + '</div>'
+      +   '</div>'
+      + '</div>'
+      + '<div class="dup-local-campos-titulo">Campos distintos (' + par.distintas.length + ' de ' + par.comparadas + ' comparados):</div>'
+      + '<div style="overflow-x:auto;">'
+      +   '<table class="dup-local-tabla">'
+      +     '<thead><tr>'
+      +       '<th>Campo</th><th>Reg. A</th><th>Reg. B</th>'
+      +     '</tr></thead>'
+      +     '<tbody>' + filasTabla + '</tbody>'
+      +   '</table>'
+      + '</div>'
+      + masDistintas
+      + '</div>';
+  });
+
+  overlay.innerHTML = '<div class="dup-local-box">'
+    + '<div class="dup-local-header">'
+    +   '<div class="ico">⚠️</div>'
+    +   '<div>'
+    +     '<h3>Registros muy similares</h3>'
+    +     '<div class="sub">' + pares.length + ' par(es) con similitud ≥ 80% detectado(s)</div>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="dup-local-lista">' + filasPares + '</div>'
+    + '<div class="dup-local-aviso">'
+    +   '⚠️ Verifique si estos pares son <strong>duplicados accidentales</strong> o '
+    +   '<strong>viviendas distintas con respuestas similares</strong>.<br>'
+    +   'Si son duplicados, cancele y elimine el registro sobrante desde la pantalla de registros antes de enviar.'
+    + '</div>'
+    + '<div class="dup-local-btns">'
+    +   '<button class="dup-local-btn-enviar" id="dup-local-btn-ok">✔ Entendido — enviar de todas formas</button>'
+    +   '<button class="dup-local-btn-cancelar" id="dup-local-btn-cancel">← Cancelar y revisar registros</button>'
+    + '</div>'
+    + '</div>';
+
+  document.body.appendChild(overlay);
+
+  document.getElementById('dup-local-btn-ok').onclick = function() {
+    overlay.remove();
+    onEnviar();
+  };
+  document.getElementById('dup-local-btn-cancel').onclick = function() {
+    overlay.remove();
+    onCancelar();
+  };
+}
+
+// ── Función de envío real (extraída para reutilizar) ──────────────────────
+async function _ejecutarEnvio(unsent, allRecordsRef) {
+  showToast('Enviando ' + unsent.length + ' registro(s)…');
+  let successCount = 0;
+  for (let rec of unsent) {
+    let result = await sendRecordToSheet(rec);
+    if (result.success) {
+      rec._sent = true;
+      rec._sentDate = getLocalTimestamp();
+      successCount++;
+    } else {
+      console.warn('Fallo al enviar:', rec.id);
+    }
+  }
+  // Actualizar localStorage
+  let stored = getRecords();
+  for (let i = 0; i < stored.length; i++) {
+    let updated = allRecordsRef.find(function(r) { return r.id === stored[i].id; });
+    if (updated) stored[i] = updated;
+  }
+  localStorage.setItem('cap_records', JSON.stringify(stored));
+  renderRecords();
+  showToast('✅ Enviados ' + successCount + ' de ' + unsent.length + ' registros.');
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── VERIFICACIÓN DE UBICACIÓN DUPLICADA (GPS/TEXTO) ──────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+async function fetchCSVData() {
+  const CACHE_MS = 5 * 60 * 1000;
+  const ahora = Date.now();
+  if (_csvCache && _csvLastFetched && (ahora - _csvLastFetched < CACHE_MS)) return _csvCache;
+  let text = null;
+  for (let intento = 0; intento < 2; intento++) {
+    try {
+      if (intento > 0) await new Promise(r => setTimeout(r, 1500));
+      const resp = await fetch(CSV_URL_DUPLICADOS + '?nocache=' + Date.now());
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      text = await resp.text();
+      if (text && text.trim().length > 0) break;
+    } catch(e) { console.warn('[DupUbic] Intento ' + (intento+1) + ' falló:', e.message); }
+  }
+  if (!text) { if (typeof showToast === 'function') showToast('⚠️ No se pudo verificar duplicados (sin conexión)'); return null; }
+  _csvCache = _parseCSV(text);
+  _csvLastFetched = Date.now();
+  return _csvCache;
+}
+
+function _parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = _parseCSVLine(lines[0]);
+  return lines.slice(1).map(line => {
+    const vals = _parseCSVLine(line);
+    const row = {};
+    headers.forEach((h, i) => { row[h.trim()] = (vals[i] || '').trim(); });
+    return row;
+  });
+}
+
+function _parseCSVLine(line) {
+  const out = []; let inQ = false; let cur = '';
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+    else if (ch === ',' && !inQ) { out.push(cur); cur = ''; }
+    else cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+
+function _haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const toRad = x => x * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function _similTexto(a, b) {
+  if (!a || !b) return 0;
+  const tok = s => new Set(s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w => w.length > 2));
+  const sA = tok(a), sB = tok(b);
+  if (!sA.size || !sB.size) return 0;
+  const inter = [...sA].filter(w => sB.has(w)).length;
+  return inter / new Set([...sA, ...sB]).size;
+}
+
+async function verificarUbicacionDuplicada() {
+  let latA = parseFloat(answers['ubicacion_lat'] ?? '');
+  let lngA = parseFloat(answers['ubicacion_lng'] ?? '');
+  const txtA = (answers['S0_ubic'] || answers['ubicacion_direccion'] || '').trim();
+if ((isNaN(latA) || isNaN(lngA)) && txtA) {
+    // Formato Google Maps: "-10.9876, -65.4321"
+    const mCoord = txtA.match(/(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)/);
+    if (mCoord) {
+      const cLat = parseFloat(mCoord[1]);
+      const cLng = parseFloat(mCoord[2]);
+      // Validar rangos geográficos válidos
+      if (cLat >= -90 && cLat <= 90 && cLng >= -180 && cLng <= 180) {
+        latA = cLat;
+        lngA = cLng;
+      }
+    }
+  }
+const tieneGPS = !isNaN(latA) && !isNaN(lngA);
+if (!tieneGPS && txtA.length < 6) return;
+showToast('🔍 Verificando si esta ubicación ya fue encuestada…');
+const datos = await fetchCSVData();
+if (!datos || !datos.length) return;
+const getCol = (row, cols) => { for (const c of cols) if (row[c] !== undefined && row[c] !== '') return row[c]; return ''; };
+const COL_LAT  = ['ubicacion_lat','Ubicación - Latitud','Ubicación – Latitud'];
+const COL_LNG  = ['ubicacion_lng','Ubicación - Longitud','Ubicación – Longitud'];
+const COL_UBIC = ['S0_ubic','ubicacion_manual','Ubicación:','Ubicación Google Maps (manual)'];
+const COL_TS   = ['timestamp','Fecha y hora'];
+const COL_ENC  = ['S0_enc','Nombre del encuestador:'];
+const COL_COM  = ['A2','Nombre de la comunidad, pueblo, barrio (OTBS) o asentamiento humano'];
+const COL_ZONA = ['S0_zona'];
+const COL_DIST = ['S0_dist'];
+const duplicados = [];
+for (const row of datos) {
+  let latF = parseFloat(getCol(row, COL_LAT)), lngF = parseFloat(getCol(row, COL_LNG));
+  // Intentar extraer coordenadas del texto de ubicación del CSV
+  const txtF = getCol(row, COL_UBIC);
+  if (isNaN(latF) || isNaN(lngF)) {
+    const formats = [
+      txtF.match(/(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)/),
+      txtF.match(/(?:Lat:\s*)?(-?\d+\.\d+)[,\s]+(?:Lng:\s*)?(-?\d+\.\d+)/),
+      txtF.match(/lat[:\s]+(-?\d+\.\d+)[\s,]+(?:lng|lon)[:\s]+(-?\d+\.\d+)/i)
+    ];
+    for (const m of formats) {
+      if (m) { latF = parseFloat(m[1]); lngF = parseFloat(m[2]); break; }
+    }
+  }
+  let esDup = false, razon = '';
+  // Comparar GPS contra GPS (incluye cuando el encuestador pegó coords en el campo manual)
+  if (tieneGPS && !isNaN(latF) && !isNaN(lngF)) {
+    const metros = _haversine(latA, lngA, latF, lngF);
+    if (metros < 5) { esDup = true; razon = '📍 GPS: a ' + Math.round(metros) + ' m de distancia'; }
+  }
+  // Comparar GPS actual contra texto del CSV (por si el CSV tiene solo texto)
+  if (!esDup && tieneGPS && txtF && txtF.length > 5) {
+    const mTxt = txtF.match(/(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)/);
+    if (mTxt) {
+      const latTxt = parseFloat(mTxt[1]), lngTxt = parseFloat(mTxt[2]);
+      if (!isNaN(latTxt) && !isNaN(lngTxt)) {
+        const metros = _haversine(latA, lngA, latTxt, lngTxt);
+        if (metros < 5) { esDup = true; razon = '📍 Coords en texto: a ' + Math.round(metros) + ' m'; }
+      }
+    }
+  }
+  // Comparar texto contra texto como último recurso
+  if (!esDup && txtA && txtF && txtA.length > 5 && txtF.length > 5) {
+    const sim = _similTexto(txtA, txtF);
+    if (sim >= 0.40) { esDup = true; razon = '🔤 Texto: ' + Math.round(sim*100) + '% de coincidencia'; }
+  }
+  if (esDup && getCol(row, COL_TS)) {
+    duplicados.push({ ts: getCol(row, COL_TS), enc: getCol(row, COL_ENC), com: getCol(row, COL_COM), zona: getCol(row, COL_ZONA), dist: getCol(row, COL_DIST), razon });
+  }
+}
+  if (duplicados.length > 0) _mostrarAlertaDuplicadosUbic(duplicados);
+}
+
+function _mostrarAlertaDuplicadosUbic(duplicados) {
+  const prev = document.getElementById('cap-alerta-dup');
+  if (prev) prev.remove();
+  if (window.navigator && window.navigator.vibrate) window.navigator.vibrate([250,100,250]);
+  const overlay = document.createElement('div');
+  overlay.id = 'cap-alerta-dup';
+  overlay.className = 'duplicate-alert';
+  const filas = duplicados.map(d => {
+    const meta = [d.zona, d.dist].filter(Boolean).join(' · ');
+    return '<div class="duplicate-record">'
+      + '<div class="time">🕐 ' + d.ts + '</div>'
+      + (d.enc ? '<div class="detail">👤 ' + d.enc + '</div>' : '')
+      + (d.com ? '<div class="detail">🏘️ ' + d.com + '</div>' : '')
+      + (meta ? '<div class="extra">📌 ' + meta + '</div>' : '')
+      + '<span class="reason">' + d.razon + '</span>'
+      + '</div>';
+  }).join('');
+  overlay.innerHTML = '<div class="duplicate-alert-content">'
+    + '<div class="duplicate-alert-header"><div class="icon-bg">⚠️</div>'
+    + '<div><h3>Ubicación ya registrada</h3><div class="sub">' + duplicados.length + ' encuesta(s) previa(s) en este lugar</div></div></div>'
+    + '<div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Registros encontrados:</div>'
+    + '<div class="duplicate-records-list">' + filas + '</div>'
+    + '<div class="duplicate-alert-warning">⚠️ Verifique que no está duplicando una encuesta ya registrada.<br>Si es una <strong>vivienda diferente</strong>, puede continuar normalmente.</div>'
+    + '<div class="duplicate-alert-buttons">'
+    + '<button class="btn-continue" onclick="document.getElementById(\'cap-alerta-dup\').remove()">✔ Entendido — continuar de todos modos</button>'
+    + '<button class="btn-review" onclick="document.getElementById(\'cap-alerta-dup\').remove();window.scrollTo({top:0,behavior:\'smooth\'})">← Volver y revisar la ubicación</button>'
+    + '</div></div>';
+  document.body.appendChild(overlay);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── UTILIDADES ────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+function vibrateOnError() { if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(200); }
+function showErrorAndVibrate(message) { showToast(message); vibrateOnError(); }
+
+function updateConnectionStatus() {
+  let statusDiv = document.getElementById('connection-status');
+  if (!statusDiv) { statusDiv = document.createElement('div'); statusDiv.id = 'connection-status'; document.body.appendChild(statusDiv); }
+  statusDiv.style.background = navigator.onLine ? '#16a34a' : '#dc2626';
+  statusDiv.style.color = 'white';
+  statusDiv.textContent = navigator.onLine ? '🟢 Online' : '🔴 Offline';
+}
+window.addEventListener('online', () => { updateConnectionStatus(); showToast('Conexión restablecida'); });
+window.addEventListener('offline', () => { updateConnectionStatus(); showToast('Sin conexión - Los datos se guardarán localmente'); });
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); if (!document.getElementById('consent-screen').classList.contains('hidden')) return; nextSection(); }
+  if (e.key === 'ArrowLeft'  && (e.ctrlKey || e.metaKey)) { e.preventDefault(); if (!document.getElementById('consent-screen').classList.contains('hidden')) return; prevSection(); }
+  if (e.key === 's'          && (e.ctrlKey || e.metaKey)) { e.preventDefault(); if (!document.getElementById('consent-screen').classList.contains('hidden')) return; saveProgress(); }
+});
+
+function saveProgress() {
+  const progress = { currentSection, answers, timestamp: new Date().toISOString() };
+  localStorage.setItem('survey_progress', JSON.stringify(progress));
+  showToast('✅ Progreso guardado. Puedes continuar después');
+}
+
+function loadProgress() {
+  const saved = localStorage.getItem('survey_progress');
+  if (saved) {
+    const progress = JSON.parse(saved);
+    if (confirm('¿Deseas continuar donde lo dejaste?')) {
+      currentSection = progress.currentSection;
+      answers = progress.answers;
+      renderSection();
+      showToast('Progreso cargado exitosamente');
+      return true;
+    } else { localStorage.removeItem('survey_progress'); }
+  }
+  return false;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── ENVÍO A GOOGLE SHEETS ────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+async function sendRecordToSheet(record) {
+  try {
+    let recordCopy = JSON.parse(JSON.stringify(record));
+    const tieneGps = recordCopy.ubicacion_lat && recordCopy.ubicacion_lat !== '' && recordCopy.ubicacion_lng && recordCopy.ubicacion_lng !== '';
+    if (tieneGps) { recordCopy.ubicacion_manual = ''; } else { recordCopy.ubicacion_manual = recordCopy.S0_ubic || ''; }
+    delete recordCopy['ubicacion_precision']; delete recordCopy['ubicacion_error'];
+    delete recordCopy['ubicacion_direccion']; delete recordCopy['S0_ubic'];
+    let processed = processRadioOtherAnswers(recordCopy);
+    processed = processMultipleChoiceAnswers(processed);
+    if (!processed.timestamp) processed.timestamp = getLocalTimestamp();
+    const payload = { accion: "GUARDAR_REGISTROS", registros: [processed] };
+    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    return { success: true };
+  } catch (error) { console.error("Error:", error); return { success: false, error: error.message }; }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── sendAllRecords CON VERIFICACIÓN DE DUPLICADOS LOCALES ────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+async function sendAllRecords() {
+  let records = getRecords();
+  let unsent = records.filter(r => !r._sent);
+
+  if (unsent.length === 0) { showToast('📭 No hay registros pendientes por enviar.'); return; }
+  if (!navigator.onLine) { showToast('⚠️ No hay conexión a internet. Conéctate y vuelve a intentar.'); return; }
+
+  // ── Verificar duplicados entre TODOS los registros locales ──
+  const pares = encontrarParesDuplicados(records, 80);
+
+  if (pares.length > 0) {
+    // Hay sospechosos → mostrar alerta
+    mostrarAlertaDuplicadosLocales(
+      pares,
+      async function() { await _ejecutarEnvio(unsent, records); },
+      function() { showToast('Envío cancelado. Revisa y elimina los duplicados.'); switchTab('records'); }
+    );
+    return;
+  }
+
+  // Sin duplicados → enviar directo
+  await _ejecutarEnvio(unsent, records);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── NAVEGACIÓN Y CONSENTIMIENTO ──────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+function acceptConsent() {
+  document.getElementById('consent-screen').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+  document.getElementById('tab-bar').style.display = 'flex';
+  answers = { timestamp: getLocalTimestamp(), consent: 'Acepto' };
+  delete answers['ubicacion_lat']; delete answers['ubicacion_lng'];
+  delete answers['ubicacion_precision']; delete answers['ubicacion_direccion'];
+  delete answers['ubicacion_error'];
+  const loaded = loadProgress();
+  if (!loaded) { obtenerUbicacion(); renderSection(); }
+}
+
+function rejectConsent() { showToast('Encuesta rechazada – avanza a la siguiente vivienda según el salto (k=5 casas)'); }
+function prevSection() { if(currentSection > 0){ currentSection--; renderSection(); scrollToTop(); } }
+
+function validateB3Value() {
+  const b2Value = answers['B2'], b3Value = parseInt(answers['B3']);
+  if (b2Value === undefined || b3Value === undefined || isNaN(b3Value)) return { valid: true, message: '' };
+  switch(b2Value) {
+    case 'No tiene educación': case 'No sabe': if (b3Value !== 0) return { valid: false, message: 'Para "No tiene educación" o "No sabe", B3 debe ser igual a 0' }; break;
+    case 'Primaria incompleta': if (b3Value >= 6) return { valid: false, message: 'Para "Primaria incompleta", B3 debe ser menor a 6' }; break;
+    case 'Primaria completa': if (b3Value !== 6) return { valid: false, message: 'Para "Primaria completa", B3 debe ser igual a 6' }; break;
+    case 'Secundaria incompleta': if (b3Value <= 6) return { valid: false, message: 'Para "Secundaria incompleta", B3 debe ser mayor a 6' }; break;
+    case 'Secundaria completa': if (b3Value !== 12) return { valid: false, message: 'Para "Secundaria completa", B3 debe ser igual a 12' }; break;
+    case 'Superior técnico completo': case 'Superior técnico incompleto': case 'Superior universitaria completa': case 'Superior universitaria incompleta':
+      if (b3Value <= 12) return { valid: false, message: 'Para educación superior, B3 debe ser mayor a 12' }; break;
+  }
+  return { valid: true, message: '' };
+}
+
+function validateB3InRealTime() {
+  const validation = validateB3Value();
+  const b3Input = document.querySelector('[data-qid="B3"] input');
+  const b3Block = document.querySelector('[data-qid="B3"]');
+  if (b3Input) {
+    if (!validation.valid) {
+      b3Input.classList.add('field-error');
+      if (b3Block) b3Block.classList.add('has-error');
+      let errorSpan = b3Input.parentElement.querySelector('.b3-error-msg');
+      if (!errorSpan) { errorSpan = document.createElement('div'); errorSpan.className = 'error-msg b3-error-msg'; b3Input.parentElement.appendChild(errorSpan); }
+      errorSpan.textContent = '⚠️ ' + validation.message;
+    } else {
+      b3Input.classList.remove('field-error');
+      if (b3Block) b3Block.classList.remove('has-error');
+      const errorSpan = b3Input.parentElement.querySelector('.b3-error-msg');
+      if (errorSpan) errorSpan.remove();
+    }
+  }
+  return validation.valid;
+}
+
+function validateC5Selection() {
+  const c5Options = ['Leña o carbón','Gas','Electricidad','Otro'];
+  let count = 0;
+  for (let opt of c5Options) { if (answers[`C5_${opt}`] === true) count++; }
+  if (count < 1 || count > 2) return { valid: false, count };
+  return { valid: true, count };
+}
+
+function checkSameSex() {
+  const a6 = answers['A6'], a8 = answers['A8'];
+  if (a6 && a8 && a6 === a8 && a8 !== 'No tiene cónyuge') { showToast('⚠️ Atención: El sexo del jefe de hogar y del cónyuge son iguales. Por favor verifique.'); vibrateOnError(); }
+}
+
+let d1SelectedImpacts = [];
+
+function updateD1OrderUI() {
+  const selectedOptions = [];
+  const d1OptionsList = ['Sequía (ríos secos / mermante)','Lluvias irregulares','Inundaciones (crecientes)','Ola de calor','Incendios','Derrumbes','Ganancia agrícola inusualmente baja (mala cosecha)','Ganancia inusualmente baja de actividad económica no agrícola'];
+  for (let opt of d1OptionsList) { if (answers[`D1_${opt}`] === true) selectedOptions.push(opt); }
+  if (answers['D1_Otro'] === true && answers['D1_otro'] && answers['D1_otro'].trim() !== '') selectedOptions.push(`Otro: ${answers['D1_otro']}`);
+  d1SelectedImpacts = selectedOptions;
+  const numImpacts = selectedOptions.length;
+  const orderContainer = document.getElementById('d1-order-container');
+  if (orderContainer) {
+    if (numImpacts >= 1 && numImpacts <= 3) {
+      orderContainer.classList.remove('hidden');
+      const orderRadiosDiv = document.getElementById('d1-order-radios');
+      if (orderRadiosDiv) {
+        orderRadiosDiv.innerHTML = '';
+        for (let i = 0; i < numImpacts; i++) {
+          const posicion = i === 0 ? 'Primer impacto (1°)' : (i === 1 ? 'Segundo impacto (2°)' : 'Tercer impacto (3°)');
+          const orderItem = document.createElement('div');
+          orderItem.className = 'order-item';
+          orderItem.innerHTML = `<span style="font-weight:600;min-width:130px;">${posicion}:</span><select class="order-select" data-position="${i}" onchange="updateD1OrderValue()"><option value="">Seleccione...</option>${selectedOptions.map(opt => `<option value="${opt.replace(/"/g,'&quot;')}">${opt}</option>`).join('')}</select>`;
+          orderRadiosDiv.appendChild(orderItem);
+        }
+        if (answers['D1_order_1'] && numImpacts >= 1) { const s = orderRadiosDiv.querySelector('.order-select[data-position="0"]'); if (s) s.value = answers['D1_order_1'] || ''; }
+        if (answers['D1_order_2'] && numImpacts >= 2) { const s = orderRadiosDiv.querySelector('.order-select[data-position="1"]'); if (s) s.value = answers['D1_order_2'] || ''; }
+        if (answers['D1_order_3'] && numImpacts >= 3) { const s = orderRadiosDiv.querySelector('.order-select[data-position="2"]'); if (s) s.value = answers['D1_order_3'] || ''; }
+        updateD1OrderValue();
+      }
+    } else {
+      orderContainer.classList.add('hidden');
+      delete answers['D1_order_1']; delete answers['D1_order_2']; delete answers['D1_order_3'];
+      answers['D1_1'] = '';
+      const orderTextInput = document.getElementById('d1_order_text');
+      if (orderTextInput) orderTextInput.value = '';
+    }
+  }
+}
+
+function updateD1OrderValue() {
+  const selects = document.querySelectorAll('#d1-order-radios .order-select');
+  delete answers['D1_order_1']; delete answers['D1_order_2']; delete answers['D1_order_3'];
+  selects.forEach((sel, i) => { if (sel && sel.value && sel.value !== '') answers[`D1_order_${i+1}`] = sel.value; });
+  const orderParts = [];
+  for (let i = 0; i < selects.length; i++) {
+    const value = answers[`D1_order_${i+1}`];
+    if (value && value !== '') orderParts.push((i===0?'1°':i===1?'2°':'3°') + '. ' + value);
+  }
+  answers['D1_1'] = orderParts.join(', ');
+  const orderTextInput = document.getElementById('d1_order_text');
+  if (orderTextInput) orderTextInput.value = answers['D1_1'];
+}
+
+function validateConditionalSection(parentId, requiredIds, sectionName) {
+  if (answers[parentId] === 'Sí') {
+    for (let requiredId of requiredIds) {
+      if (!answers[requiredId] || answers[requiredId] === '' || answers[requiredId] === undefined) {
+        showErrorAndVibrate(`⚠️ Al responder "Sí" en ${parentId}, debe responder ${requiredId} (${sectionName}).`);
+        const reqBlock = document.querySelector(`[data-qid="${requiredId}"]`);
+        if (reqBlock) { reqBlock.classList.add('has-error'); const input = reqBlock.querySelector('input'); if (input) input.classList.add('field-error'); }
+        return false;
+      } else {
+        const reqBlock = document.querySelector(`[data-qid="${requiredId}"]`);
+        if (reqBlock) { reqBlock.classList.remove('has-error'); const input = reqBlock.querySelector('input'); if (input) input.classList.remove('field-error'); }
+      }
+    }
+  }
+  return true;
+}
+
+function nextSection() {
+  if (currentSection === 1) {
+    const a1Value = answers['A1'];
+    if (a1Value !== undefined && a1Value !== '' && parseInt(a1Value) <= 1) { showErrorAndVibrate('❌ Tiempo de residencia ≤ 1 año. Encuesta finalizada según protocolo.'); returnToConsent(); return; }
+    const a4_1=parseFloat(answers['A4_1'])||0, a4_2=parseFloat(answers['A4_2'])||0;
+    const a4_3=parseFloat(answers['A4_3'])||0, a4_4=parseFloat(answers['A4_4'])||0;
+    const a4_5=parseFloat(answers['A4_5'])||0, a4_6=parseFloat(answers['A4_6'])||0;
+    if ((a4_1+a4_2) !== (a4_3+a4_4+a4_5+a4_6)) {
+      const diferencia = Math.abs((a4_1+a4_2) - (a4_3+a4_4+a4_5+a4_6));
+      showErrorAndVibrate(`❌ La suma de hombres y mujeres (${a4_1+a4_2}) no coincide con la suma de los demás grupos etarios (${a4_3+a4_4+a4_5+a4_6}). Falta ${diferencia} persona(s).`);
+      return;
+    }
+  }
+  if (currentSection === 2) { const validation = validateB3Value(); if (!validation.valid) { showErrorAndVibrate('❌ B3 - ' + validation.message); return; } }
+  if (currentSection === 3) {
+    const c5Validation = validateC5Selection();
+    if (!c5Validation.valid) { showErrorAndVibrate(c5Validation.count < 1 ? '⚠️ Debe seleccionar al menos 1 combustible' : '⚠️ Solo puede seleccionar máximo 2 combustibles'); return; }
+  }
+  if (currentSection === 6) {
+    let selectedCount = 0;
+    const d1Options = ['Sequía (ríos secos / mermante)','Lluvias irregulares','Inundaciones (crecientes)','Ola de calor','Incendios','Derrumbes','Ganancia agrícola inusualmente baja (mala cosecha)','Ganancia inusualmente baja de actividad económica no agrícola'];
+    for (let opt of d1Options) if (answers[`D1_${opt}`] === true) selectedCount++;
+    if (answers['D1_Otro'] === true) selectedCount++;
+    if (selectedCount === 0) { showErrorAndVibrate('⚠️ Debe seleccionar al menos un impacto del cambio climático'); return; }
+    if (selectedCount > 3) { showErrorAndVibrate('⚠️ Solo puede seleccionar máximo 3 impactos del cambio climático'); return; }
+    if (selectedCount >= 1) {
+      let ordenCompleto = true;
+      if (selectedCount >= 1 && (!answers['D1_order_1'] || answers['D1_order_1'] === '')) ordenCompleto = false;
+      if (selectedCount >= 2 && (!answers['D1_order_2'] || answers['D1_order_2'] === '')) ordenCompleto = false;
+      if (selectedCount >= 3 && (!answers['D1_order_3'] || answers['D1_order_3'] === '')) ordenCompleto = false;
+      if (!ordenCompleto) { showErrorAndVibrate('⚠️ Por favor complete el orden de los impactos seleccionados'); return; }
+    }
+  }
+  if (currentSection === 7) {
+    if (answers['H14'] === 'Sí') { const h15_1Value = answers['H15_1']; if (!h15_1Value || h15_1Value === '') { showErrorAndVibrate('⚠️ Al responder "Sí" en H14, debe responder H15.1'); return; } }
+    const conditionalValidations = [
+      { parent:'H6_1', required:['H6_2','H6_3','H6_4'], name:'Formación en malaria o dengue' },
+      { parent:'H7_1', required:['H7_2','H7_3','H7_4'], name:'Formación sobre cambio climático' },
+      { parent:'H8_1', required:['H8_2','H8_3','H8_4'], name:'Visitas de trabajadores comunitarios de salud' },
+      { parent:'H9_1', required:['H9_2','H9_3','H9_4'], name:'Programa de limpieza local' },
+      { parent:'H10_1', required:['H10_2','H10_3','H10_4'], name:'Campaña local de limpieza' },
+      { parent:'H11_1', required:['H11_2','H11_3','H11_4'], name:'Instalación de mosquiteros' },
+      { parent:'H12_1', required:['H12_2','H12_3','H12_4'], name:'Fumigación o uso del abate' },
+      { parent:'H13_1', required:['H13_2','H13_3','H13_4'], name:'Reunión comunitaria' },
+      { parent:'H15_1', required:['H15_2','H15_3','H15_4'], name:'Cooperativa agrícola' },
+      { parent:'H16_1', required:['H16_2','H16_3','H16_4'], name:'Grupo de ahorro y crédito' },
+      { parent:'H17_1', required:['H17_2','H17_3','H17_4'], name:'Grupo de mujeres' },
+      { parent:'H18_1', required:['H18_2','H18_3','H18_4'], name:'Grupo juvenil' },
+      { parent:'H19_1', required:['H19_2','H19_3','H19_4'], name:'Comité de salud' },
+      { parent:'H20_1', required:['H20_2','H20_3','H20_4'], name:'Grupo comunitario de limpieza' }
+    ];
+    for (let val of conditionalValidations) { if (!validateConditionalSection(val.parent, val.required, val.name)) return; }
+  }
+  if (currentSection === 8) {
+    if (answers['I1_1'] && answers['I1_1'] !== '') {
+      const i2Value = answers['I2'];
+      if (!i2Value || i2Value === '' || i2Value === undefined) {
+        showErrorAndVibrate('⚠️ Al responder el Grupo A (Agua potable), debe especificar la disponibilidad diaria de agua (I2).');
+        const i2Block = document.querySelector('[data-qid="I2"]');
+        if (i2Block) { i2Block.classList.add('has-error'); const input = i2Block.querySelector('input'); if (input) input.classList.add('field-error'); }
+        return;
+      }
+    }
+    if (answers['I1_1'] && answers['I1_1'] !== '' && answers['I1_2'] && answers['I1_2'] !== '') { showErrorAndVibrate('⚠️ Solo puede responder Grupo A o Grupo B en I1, no ambos'); return; }
+    if (answers['I1_1'] === 'Otro' && answers['I1_1_otro'] && answers['I1_1_otro'].trim() !== '') answers['I1_1'] = `Otro: ${answers['I1_1_otro'].trim()}`;
+    if (answers['I1_2'] === 'Otro' && answers['I1_2_otro'] && answers['I1_2_otro'].trim() !== '') answers['I1_2'] = `Otro: ${answers['I1_2_otro'].trim()}`;
+  }
+  const sections = buildFullSections();
+  const sec = sections[currentSection];
+  if (sec) {
+    for (const q of sec.questions) {
+      if (q.type === 'radio' && q.hasOther && answers[q.id] === 'Otro') {
+        const otherValue = answers[`${q.id}_otro`];
+        if (!otherValue || otherValue.trim() === '') { showErrorAndVibrate(`⚠️ Por favor especifique "Otro" en: ${q.text}`); const oi = document.getElementById(`other_input_${q.id}`); if (oi) { oi.classList.add('field-error'); oi.focus(); } return; }
+        else { const oi = document.getElementById(`other_input_${q.id}`); if (oi) oi.classList.remove('field-error'); answers[q.id] = `Otro: ${otherValue.trim()}`; }
+      }
+      if (q.type === 'checkbox' && q.hasOther && answers[`${q.id}_Otro`] === true) {
+        const otherValue = answers[`${q.id}_otro`];
+        if (!otherValue || otherValue.trim() === '') { showErrorAndVibrate(`⚠️ Por favor especifique "Otro" en: ${q.text}`); const oi = document.getElementById(`other_input_${q.id}`); if (oi) { oi.classList.add('field-error'); oi.focus(); } return; }
+        else { const oi = document.getElementById(`other_input_${q.id}`); if (oi) oi.classList.remove('field-error'); }
+      }
+    }
+  }
+  if (!validateSection()) return;
+  if (currentSection < TOTAL_SECTIONS - 1) { currentSection++; renderSection(); scrollToTop(); }
+  else { finishSurvey(); }
+}
+
+function returnToConsent() {
+  try {
+    const partialAnswers = { ...answers, timestamp: getLocalTimestamp(), id: Date.now().toString(), encuesta_finalizada_temprano: true, razon_finalizacion: 'Tiempo de residencia ≤ 1 año (A1)' };
+    let records = getRecords(); records.push(partialAnswers); localStorage.setItem('cap_records', JSON.stringify(records));
+  } catch(e) { console.log('Error guardando respuesta parcial:', e); }
+  answers = {}; currentSection = 0; editingId = null; surveyFinished = false; resetI1TimerGlobal();
+  localStorage.removeItem('survey_progress');
+  document.getElementById('main-app').classList.add('hidden');
+  document.getElementById('complete-screen').classList.add('hidden');
+  document.getElementById('admin-screen').classList.add('hidden');
+  document.getElementById('tab-bar').style.display = 'none';
+  document.getElementById('consent-screen').classList.remove('hidden');
+  const existingMsg = document.querySelector('.early-exit-message');
+  if (existingMsg) existingMsg.remove();
+  const consentBox = document.querySelector('.consent-box');
+  if (consentBox) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'early-exit-message';
+    msgDiv.style.cssText = 'background:rgba(220,38,38,0.2);border-left:4px solid #dc2626;border-radius:8px;padding:12px;margin-top:15px;font-size:13px;';
+    msgDiv.innerHTML = '⚠️ <strong>Importante:</strong> La encuesta anterior finalizó porque el tiempo de residencia era ≤ 1 año. Por favor, avance a la siguiente vivienda según el protocolo (salto de k=5 casas).';
+    consentBox.appendChild(msgDiv);
+  }
+  showToast('Volviendo a pantalla de consentimiento...');
+}
+
+function scrollToTop() { window.scrollTo({top:0, behavior:'smooth'}); }
+
+function updateProgress() {
+  let pct = Math.round((currentSection/(TOTAL_SECTIONS-1))*100);
+  document.getElementById('progress-bar').style.width = pct+'%';
+  document.getElementById('progress-label').textContent = pct+'%';
+  document.getElementById('section-indicator').textContent = SECTION_NAMES[currentSection];
+  const prevBtn = document.getElementById('btn-prev-fixed');
+  if (currentSection === 0) { prevBtn.style.opacity = '0.5'; prevBtn.disabled = true; }
+  else { prevBtn.style.opacity = '1'; prevBtn.disabled = false; }
+  prevBtn.style.display = 'flex';
+}
+
+function setAnswer(id, val) {
+  if (id === 'S0_ubic' && val.trim().length > 5) { clearTimeout(_ubicVerifTimerManual); _ubicVerifTimerManual = setTimeout(() => verificarUbicacionDuplicada(), 900); }
+  answers[id] = val;
+  if (id.endsWith('_otro')) {
+    const inputElement = document.querySelector(`#other_input_${id.replace('_otro','')}`);
+    if (inputElement && val.trim() !== '') inputElement.classList.remove('field-error');
+    if (id === 'D1_otro') setTimeout(() => updateD1OrderUI(), 50);
+  }
+  if (id === 'S0_email' && val !== '') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailInput = document.querySelector(`[data-qid="${id}"] input`);
+    if (emailInput) emailInput.style.borderColor = !emailRegex.test(val) ? 'var(--red)' : 'var(--green-light)';
+  }
+  if (id === 'A1') {
+    const value = parseInt(val);
+    const a1Input = document.querySelector(`[data-qid="${id}"] input`);
+    if (a1Input) {
+      if (!isNaN(value) && value <= 1 && value > 0) { a1Input.style.borderColor = 'var(--amber)'; showToast('⚠️ Atención: Si lleva 1 año o menos, la encuesta finalizará'); }
+      else if (value > 0) a1Input.style.borderColor = 'var(--green-light)';
+    }
+  }
+  if (id === 'B3') setTimeout(() => validateB3InRealTime(), 100);
+  if (id === 'A6' || id === 'A8') checkSameSex();
+  if (id === 'S0_dist') { setTimeout(() => updateA2Options(), 50); delete answers['A2']; renderSection(true); }
+}
+
+function enforceMaxSelections(questionId, maxSelections) {
+  const questionBlock = document.querySelector(`[data-qid="${questionId}"]`);
+  if (!questionBlock) return;
+  const checkboxes = questionBlock.querySelectorAll('input[type="checkbox"]');
+  let selectedCount = 0;
+  checkboxes.forEach(cb => { if (cb.checked) selectedCount++; });
+  if (selectedCount >= maxSelections) {
+    checkboxes.forEach(cb => { if (!cb.checked) { cb.disabled = true; const parent = cb.closest('.option-item'); if (parent) parent.classList.add('disabled'); } });
+    if (selectedCount === maxSelections) showToast('⚠️ Máximo ' + maxSelections + ' opciones permitidas');
+  } else {
+    checkboxes.forEach(cb => { cb.disabled = false; const parent = cb.closest('.option-item'); if (parent) parent.classList.remove('disabled'); });
+  }
+}
+
+function selectI1(id, val, el) {
+  if (i1Locked) { showErrorAndVibrate('⏰ El tiempo para cambiar de opción ha finalizado'); return; }
+  if (answers[id] === val) return;
+  answers[id] = val;
+  if (id === 'I1_1') {
+    answers['I1_2'] = undefined;
+    const i1_2Block = document.querySelector('[data-qid="I1_2"]');
+    if (i1_2Block) { i1_2Block.querySelectorAll('.option-item').forEach(item => { item.classList.remove('selected'); const radio = item.querySelector('input'); if (radio) radio.checked = false; }); }
+  } else if (id === 'I1_2') {
+    answers['I1_1'] = undefined;
+    const i1_1Block = document.querySelector('[data-qid="I1_1"]');
+    if (i1_1Block) { i1_1Block.querySelectorAll('.option-item').forEach(item => { item.classList.remove('selected'); const radio = item.querySelector('input'); if (radio) radio.checked = false; }); }
+  }
+  if (el.closest('.options-list')) el.closest('.options-list').querySelectorAll('.option-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  const radio = el.querySelector('input');
+  if (radio) radio.checked = true;
+  renderSection(true);
+  if (i1AnswerSelected) resetI1Timer(); else { i1AnswerSelected = true; startI1Timer(); }
+}
+
+function startI1Timer() {
+  if (i1TimerInterval) clearInterval(i1TimerInterval);
+  i1TimeLeft = 10; updateTimerDisplay();
+  const bar = document.querySelector('.timer-bar'); if (bar) bar.style.width = '100%';
+  i1TimerInterval = setInterval(() => {
+    if (i1TimeLeft > 0) {
+      i1TimeLeft--; updateTimerDisplay();
+      const barEl = document.querySelector('.timer-bar'); if (barEl) barEl.style.width = `${(i1TimeLeft/10)*100}%`;
+      if (i1TimeLeft === 0) { clearInterval(i1TimerInterval); i1TimerInterval = null; i1Locked = true; lockI1Options(); const barF = document.querySelector('.timer-bar'); if (barF) barF.style.background = '#16a34a'; showToast('✅ Respuesta confirmada. Ahora puedes continuar'); }
+    }
+  }, 1000);
+}
+
+function resetI1Timer() {
+  if (i1Locked) return;
+  if (i1TimerInterval) clearInterval(i1TimerInterval);
+  i1TimeLeft = 10; updateTimerDisplay();
+  const bar = document.querySelector('.timer-bar'); if (bar) bar.style.width = '100%';
+  i1TimerInterval = setInterval(() => {
+    if (i1TimeLeft > 0) {
+      i1TimeLeft--; updateTimerDisplay();
+      const barEl = document.querySelector('.timer-bar'); if (barEl) barEl.style.width = `${(i1TimeLeft/10)*100}%`;
+      if (i1TimeLeft === 0) { clearInterval(i1TimerInterval); i1TimerInterval = null; i1Locked = true; lockI1Options(); const barF = document.querySelector('.timer-bar'); if (barF) barF.style.background = '#16a34a'; showToast('✅ Respuesta confirmada. Ahora puedes continuar'); }
+    }
+  }, 1000);
+}
+
+function resetI1TimerGlobal() { if (i1TimerInterval) clearInterval(i1TimerInterval); i1Locked = false; i1AnswerSelected = false; i1TimeLeft = 10; }
+function updateTimerDisplay() { const timerElement = document.getElementById('i1-timer-display'); if (timerElement) timerElement.textContent = i1Locked ? 'Confirmado' : i1TimeLeft + ' segundos'; }
+
+function lockI1Options() {
+  const i1_1Block = document.querySelector('[data-qid="I1_1"]');
+  const i1_2Block = document.querySelector('[data-qid="I1_2"]');
+  const selectedA = answers['I1_1'], selectedB = answers['I1_2'];
+  const selectedGroup = selectedA ? 'A' : (selectedB ? 'B' : null);
+  if (i1_1Block) { const options = i1_1Block.querySelectorAll('.option-item'); options.forEach(opt => { opt.classList.add('disabled'); const optText = opt.querySelector('.option-text'); if (selectedGroup === 'B' || (selectedGroup === 'A' && optText && optText.textContent !== selectedA)) opt.style.display = 'none'; }); }
+  if (i1_2Block) { const options = i1_2Block.querySelectorAll('.option-item'); options.forEach(opt => { opt.classList.add('disabled'); const optText = opt.querySelector('.option-text'); if (selectedGroup === 'A' || (selectedGroup === 'B' && optText && optText.textContent !== selectedB)) opt.style.display = 'none'; }); }
+  if (selectedGroup === 'A') answers['I1_2'] = undefined;
+  else if (selectedGroup === 'B') answers['I1_1'] = undefined;
+}
+
+function selectRadio(id, val, el) {
+  if (id === 'I1_1' || id === 'I1_2') { selectI1(id, val, el); renderSection(true); return; }
+  const previousValue = answers[id];
+  answers[id] = val;
+  if (id === 'B2') {
+    if (val === 'No tiene educación' || val === 'No sabe') { answers['B3'] = 0; const b3Input = document.querySelector('[data-qid="B3"] input'); if (b3Input) b3Input.value = 0; }
+    setTimeout(() => validateB3InRealTime(), 100);
+  }
+  if (el.closest('.options-list')) el.closest('.options-list').querySelectorAll('.option-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  const otherInput = document.getElementById(`other_input_${id}`);
+  if (otherInput) {
+    if (val === 'Otro') { otherInput.classList.add('visible'); otherInput.value = answers[`${id}_otro`] || ''; }
+    else { otherInput.classList.remove('visible'); answers[`${id}_otro`] = ''; otherInput.value = ''; }
+  }
+  const conditionalParents = ['A3','A8','B4','B6','B7','B13_1_1','B13_2_1','B13_3_1','C3','M3','F5','F7_1','F7_2','F17','H1','H5','H14','H6_1','H7_1','H8_1','H9_1','H10_1','H11_1','H12_1','H13_1','H15_1','H16_1','H17_1','H18_1','H19_1','H20_1','I1_1','I1_2','I3','H15_3','H16_3','H17_3','H18_3','H19_3','H20_3'];
+  if (conditionalParents.includes(id) && previousValue !== val) renderSection(true);
+  if (id === 'A6' || id === 'A8') checkSameSex();
+}
+
+function toggleCheck(id, val, el) {
+  if (id === 'F9' && val === 'Ninguno (pasar a la F14)') {
+    const todasLasOpciones = ['Fiebre (calentura)','Sudor frío','Escalofríos (chucho)','Diarrea','Tos','Dolor muscular','Mareos','Otro'];
+    for (let opt of todasLasOpciones) {
+      const otraKey = `${id}_${opt}`;
+      if (answers[otraKey] === true) { answers[otraKey] = false; document.querySelectorAll('.option-item').forEach(elem => { const span = elem.querySelector('.option-text'); if (span && span.textContent === opt) { elem.classList.remove('selected'); const chk = elem.querySelector('input'); if (chk) chk.checked = false; } }); }
+    }
+  }
+  if (id === 'F9' && val !== 'Ninguno (pasar a la F14)') {
+    const ningunoKey = `${id}_Ninguno (pasar a la F14)`;
+    if (answers[ningunoKey] === true) { answers[ningunoKey] = false; document.querySelectorAll('.option-item').forEach(elem => { const span = elem.querySelector('.option-text'); if (span && span.textContent === 'Ninguno (pasar a la F14)') { elem.classList.remove('selected'); const chk = elem.querySelector('input'); if (chk) chk.checked = false; } }); }
+  }
+  let key = `${id}_${val}`;
+  answers[key] = !answers[key];
+  el.classList.toggle('selected', !!answers[key]);
+  let chk = el.querySelector('input'); if (chk) chk.checked = !!answers[key];
+  if (val === 'Otro') {
+    const otherInput = document.getElementById(`other_input_${id}`);
+    if (otherInput) {
+      if (answers[key]) { otherInput.classList.add('visible'); otherInput.value = answers[`${id}_otro`] || ''; otherInput.focus(); }
+      else { otherInput.classList.remove('visible'); answers[`${id}_otro`] = ''; otherInput.value = ''; }
+    }
+  }
+  if (id === 'C5') setTimeout(() => enforceMaxSelections('C5', 2), 50);
+  if (id === 'D1') setTimeout(() => { enforceMaxSelections('D1', 3); updateD1OrderUI(); }, 50);
+  if (id === 'F6') setTimeout(() => enforceMaxSelections('F6', 2), 50);
+  if (id === 'F9') setTimeout(() => enforceMaxSelections('F9', 3), 50);
+  if (id === 'F9' || id === 'D1') renderSection(true);
+}
+
+function setLikert(id, val, el) { answers[id]=val; let wrap=el.closest('.likert-wrap'); if(wrap) wrap.querySelectorAll('.likert-btn').forEach(b=>b.classList.remove('selected')); el.classList.add('selected'); }
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function addTooltipToQuestion(questionId, tooltipText) {
+  const questionBlock = document.querySelector(`[data-qid="${questionId}"]`);
+  if (questionBlock) { const label = questionBlock.querySelector('.question-label'); if (label && !label.querySelector('.tooltip-icon')) { const tooltip = document.createElement('span'); tooltip.className = 'tooltip-icon'; tooltip.innerHTML = 'ⓘ'; tooltip.title = tooltipText; label.appendChild(tooltip); } }
+}
+
+function updateSectionProgress() {
+  const sections = buildFullSections();
+  const sec = sections[currentSection];
+  if (!sec) return;
+  let totalQuestions = 0, answeredQuestions = 0;
+  sec.questions.forEach(q => { if (q.type === 'subtitle') return; if (!isVisible(q.id)) return; totalQuestions++; if (hasAnswered({ id: q.id, type: q.type })) answeredQuestions++; });
+  const progressText = `${answeredQuestions}/${totalQuestions} respondidas`;
+  let progressElem = document.querySelector('.section-progress');
+  const header = document.querySelector('.section-title');
+  if (progressElem) { progressElem.textContent = progressText; }
+  else if (header) { const prog = document.createElement('span'); prog.className = 'section-progress'; prog.textContent = progressText; header.appendChild(prog); }
+}
+
+function isVisible(id) {
+  const a = answers;
+  switch(id) {
+    case 'A3_1': return a['A3'] === 'Sí';
+    case 'A9': return a['A8'] !== 'No tiene cónyuge';
+    case 'B4_1': return a['B4'] === 'Sí';
+    case 'B6_1': return a['B6'] === 'Sí';
+    case 'B7_1': return a['B7'] === 'Sí';
+    case 'B13_1_2': return a['B13_1_1'] === 'Sí';
+    case 'B13_2_2': return a['B13_2_1'] === 'Sí';
+    case 'B13_3_2': return a['B13_3_1'] === 'Sí';
+    case 'C3_1': return a['C3'] === 'Sí';
+    case 'C4': return a['C3'] !== 'Sí';
+    case 'M4': return a['M3'] === 'No';
+    case 'M5': return a['M3'] === 'Sí';
+    case 'F6': case 'F7_1': return a['F5'] === 'Sí';
+    case 'F7_2': return a['F5'] === 'Sí' && (a['F7_1'] === 'Sí, malaria' || a['F7_1'] === 'Sí, dengue');
+    case 'F8':
+      if (a['F5'] !== 'Sí') return false;
+      if (a['F7_1'] === 'No' || a['F7_1'] === 'No sé') return true;
+      if ((a['F7_1'] === 'Sí, malaria' || a['F7_1'] === 'Sí, dengue') && (a['F7_2'] === '2 a 5 días (Pasar a F8)' || a['F7_2'] === 'Más de 5 días (Pasar a F8)')) return true;
+      return false;
+    case 'F9':
+      if (a['F5'] !== 'Sí') return false;
+      if (a['F7_1'] === 'No' || a['F7_1'] === 'No sé') return true;
+      if ((a['F7_1'] === 'Sí, malaria' || a['F7_1'] === 'Sí, dengue') && (a['F7_2'] === 'Menos de 3 horas (Pasar a F9)' || a['F7_2'] === 'Más de 3 horas, pero menos de 6 horas (Pasar a F9)' || a['F7_2'] === 'Más de 6 horas, pero menos de 1 día (Pasar a F9)')) return true;
+      return false;
+    case 'F10': case 'F11': case 'F12': case 'F13':
+      if (a['F5'] !== 'Sí') return false;
+      return a['F9_Ninguno (pasar a la F14)'] !== true;
+    case 'F14': case 'F15': return true;
+    case 'F18': return a['F17'] === 'No';
+    case 'F19': return a['F17'] === 'Sí';
+    case 'H2': return a['H1'] === 'Sí';
+    case 'subtitle_h6': case 'H6_1': return a['H5'] === 'Sí';
+    case 'H6_2': case 'H6_3': case 'H6_4': return a['H5'] === 'Sí' && a['H6_1'] === 'Sí';
+    case 'subtitle_h7': case 'H7_1': return a['H5'] === 'Sí';
+    case 'H7_2': case 'H7_3': case 'H7_4': return a['H5'] === 'Sí' && a['H7_1'] === 'Sí';
+    case 'subtitle_h8': case 'H8_1': return a['H5'] === 'Sí';
+    case 'H8_2': case 'H8_3': case 'H8_4': return a['H5'] === 'Sí' && a['H8_1'] === 'Sí';
+    case 'subtitle_h9': case 'H9_1': return a['H5'] === 'Sí';
+    case 'H9_2': case 'H9_3': case 'H9_4': return a['H5'] === 'Sí' && a['H9_1'] === 'Sí';
+    case 'subtitle_h10': case 'H10_1': return a['H5'] === 'Sí';
+    case 'H10_2': case 'H10_3': case 'H10_4': return a['H5'] === 'Sí' && a['H10_1'] === 'Sí';
+    case 'subtitle_h11': case 'H11_1': return a['H5'] === 'Sí';
+    case 'H11_2': case 'H11_3': case 'H11_4': return a['H5'] === 'Sí' && a['H11_1'] === 'Sí';
+    case 'subtitle_h12': case 'H12_1': return a['H5'] === 'Sí';
+    case 'H12_2': case 'H12_3': case 'H12_4': return a['H5'] === 'Sí' && a['H12_1'] === 'Sí';
+    case 'subtitle_h13': case 'H13_1': return a['H5'] === 'Sí';
+    case 'H13_2': case 'H13_3': case 'H13_4': return a['H5'] === 'Sí' && a['H13_1'] === 'Sí';
+    case 'subtitle_h15': case 'H15_1': return a['H14'] === 'Sí';
+    case 'H15_2': case 'H15_3': return a['H14'] === 'Sí' && a['H15_1'] === 'Sí';
+    case 'H15_4': return a['H14'] === 'Sí' && a['H15_1'] === 'Sí' && a['H15_3'] !== 'No lo sé (pase a la H16)';
+    case 'subtitle_h16': case 'H16_1': return a['H14'] === 'Sí';
+    case 'H16_2': case 'H16_3': return a['H14'] === 'Sí' && a['H16_1'] === 'Sí';
+    case 'H16_4': return a['H14'] === 'Sí' && a['H16_1'] === 'Sí' && a['H16_3'] !== 'No lo sé (pase a la H17)';
+    case 'subtitle_h17': case 'H17_1': return a['H14'] === 'Sí';
+    case 'H17_2': case 'H17_3': return a['H14'] === 'Sí' && a['H17_1'] === 'Sí';
+    case 'H17_4': return a['H14'] === 'Sí' && a['H17_1'] === 'Sí' && a['H17_3'] !== 'No lo sé (pase a la H18)';
+    case 'subtitle_h18': case 'H18_1': return a['H14'] === 'Sí';
+    case 'H18_2': case 'H18_3': return a['H14'] === 'Sí' && a['H18_1'] === 'Sí';
+    case 'H18_4': return a['H14'] === 'Sí' && a['H18_1'] === 'Sí' && a['H18_3'] !== 'No lo sé (pase a la H19)';
+    case 'subtitle_h19': case 'H19_1': return a['H14'] === 'Sí';
+    case 'H19_2': case 'H19_3': return a['H14'] === 'Sí' && a['H19_1'] === 'Sí';
+    case 'H19_4': return a['H14'] === 'Sí' && a['H19_1'] === 'Sí' && a['H19_3'] !== 'No lo sé (pase a la H20)';
+    case 'subtitle_h20': case 'H20_1': return a['H14'] === 'Sí';
+    case 'H20_2': case 'H20_3': return a['H14'] === 'Sí' && a['H20_1'] === 'Sí';
+    case 'H20_4': return a['H14'] === 'Sí' && a['H20_1'] === 'Sí' && a['H20_3'] !== 'No lo sé';
+    case 'I1_1': return true;
+    case 'I1_2': return true;
+    case 'I2': return a['I1_1'] !== undefined && a['I1_1'] !== '';
+    case 'I3': return a['I1_2'] !== undefined && a['I1_2'] !== '';
+    case 'I4': return a['I1_2'] !== undefined && a['I1_2'] !== '' && a['I3'] === 'No hay instalaciones en el predio ni en la casa (pase a la I4)';
+    case 'I5': return a['I1_2'] !== undefined && a['I1_2'] !== '' && a['I3'] === 'No hay instalaciones en el predio ni en la casa (pase a la I4)';
+    case 'D1_1': {
+      const opcionesD1 = ['Sequía (ríos secos / mermante)','Lluvias irregulares','Inundaciones (crecientes)','Ola de calor','Incendios','Derrumbes','Ganancia agrícola inusualmente baja (mala cosecha)','Ganancia inusualmente baja de actividad económica no agrícola'];
+      let haySeleccion = opcionesD1.some(opt => a[`D1_${opt}`] === true);
+      if (!haySeleccion && a['D1_Otro'] === true && a['D1_otro'] && a['D1_otro'].trim() !== '') haySeleccion = true;
+      return haySeleccion;
+    }
+    default: return true;
+  }
+}
+
+function isRequiredField(id, type) {
+  const optional = new Set(['S0_cod','A9','B4_1','B6_1','B7_1','B13_1_2','B13_2_2','B13_3_2','C3_1','C4','M4','M5','F6','F7_1','F7_2','F8','F9','F10','F11','F12','F13','F18','F19','H2','H6_1','H6_2','H6_3','H6_4','H7_1','H7_2','H7_3','H7_4','H8_1','H8_2','H8_3','H8_4','H9_1','H9_2','H9_3','H9_4','H10_1','H10_2','H10_3','H10_4','H11_1','H11_2','H11_3','H11_4','H12_1','H12_2','H12_3','H12_4','H13_1','H13_2','H13_3','H13_4','H15_1','H15_2','H15_3','H15_4','H16_1','H16_2','H16_3','H16_4','H17_1','H17_2','H17_3','H17_4','H18_1','H18_2','H18_3','H18_4','H19_1','H19_2','H19_3','H19_4','H20_1','H20_2','H20_3','H20_4','I2','A7']);
+  const explicit = new Set(['S0_enc','S0_email','S0_cod','S0_zona','S0_dist','A1','A2','A3','A4_1','A4_2','A4_3','A4_4','A4_5','A4_6','A5','A6','A7','A8','A10','B1','B2','B3','B4','B6','B7','B9','B10','B11','B12_1_1','B12_1_2','B12_2_1','B12_2_2','B12_3_1','B12_3_2','B12_4_1','B12_4_2','B12_5_1','B12_5_2','B13_1_1','B13_2_1','B13_3_1','C2','C3','C5','C6','C7','C8','C9','C10_1','C10_2','C10_3','C10_4','C10_5','C10_6','C10_7','C10_8','M1','M2','M3','M6','M7','M8','M9_1','M9_2','M9_3','F1','F2','F3','F4','F5','F15','F16_1','F16_2','F17','D1','D2','D3','D4','D5','D6','D7','D8','H1','H3','H4','H5','H14','I6','I7','I8','I9','I10','G1','G2','G3','G4','G5','E1','E2','E3','E4','B5','B8','C1','D1_1']);
+  const conditionalRequired = new Set(['A3_1','B4_1','B6_1','B7_1','B13_1_2','B13_2_2','B13_3_2','C3_1','M4','M5','F6','F7_1','F7_2','F8','F9','F10','F11','F12','F13','F18','F19','H2','D1_1','H6_2','H6_3','H6_4','H7_2','H7_3','H7_4','H8_2','H8_3','H8_4','H9_2','H9_3','H9_4','H10_2','H10_3','H10_4','H11_2','H11_3','H11_4','H12_2','H12_3','H12_4','H13_2','H13_3','H13_4','H15_2','H15_3','H15_4','H16_2','H16_3','H16_4','H17_2','H17_3','H17_4','H18_2','H18_3','H18_4','H19_2','H19_3','H19_4','H20_2','H20_3','H20_4']);
+  if (explicit.has(id)) return true;
+  if (conditionalRequired.has(id) && isVisible(id)) return true;
+  if ((id === 'I3' || id === 'I4' || id === 'I5') && answers['I1_2'] !== undefined && answers['I1_2'] !== '') return true;
+  if (id === 'I2' && answers['I1_1'] !== undefined && answers['I1_1'] !== '') return true;
+  if (id === 'I1_1') return !answers['I1_2'];
+  if (id === 'I1_2') return !answers['I1_1'];
+  return false;
+}
+
+function hasAnswered(q) {
+  const a = answers;
+  if (q.type === 'text' || q.type === 'number') return a[q.id] !== undefined && String(a[q.id]).trim() !== '';
+  if (q.type === 'radio' || q.type === 'yesno' || q.type === 'yesno3' || q.type === 'freq4') return a[q.id] !== undefined && a[q.id] !== '';
+  if (q.type === 'likert5' || q.type === 'likert5b') return a[q.id] !== undefined && a[q.id] !== '';
+  if (q.type === 'checkbox') return q.options.some(opt => a[`${q.id}_${opt}`]);
+  return true;
+}
+
+function validateSection() {
+  const sections = buildFullSections();
+  const sec = sections[currentSection];
+  if (!sec) return true;
+  if (currentSection === 8) {
+    if (answers['I1_1'] && answers['I1_2']) { showErrorAndVibrate('⚠️ Solo puede responder Grupo A o Grupo B en I1, no ambos'); return false; }
+    if (answers['I1_1'] && answers['I1_1'] !== '') {
+      if (!answers['I2'] || answers['I2'] === '') {
+        showErrorAndVibrate('⚠️ Al responder el Grupo A, debe especificar la disponibilidad diaria de agua (I2).');
+        const i2Block = document.querySelector('[data-qid="I2"]');
+        if (i2Block) { i2Block.classList.add('has-error'); const input = i2Block.querySelector('input'); if (input) input.classList.add('field-error'); }
+        return false;
+      }
+    }
+  }
+  const errors = [];
+  for (const q of sec.questions) {
+    if (q.type === 'subtitle') continue;
+    if (!isVisible(q.id)) continue;
+    if (!isRequiredField(q.id, q.type)) continue;
+    if (!hasAnswered(q)) errors.push(q);
+  }
+  if (errors.length > 0) {
+    let container = document.getElementById('main');
+    let existing = container.querySelector('.validation-summary'); if (existing) existing.remove();
+    let summary = document.createElement('div');
+    summary.className = 'validation-summary';
+    summary.innerHTML = `⚠️ Por favor responde ${errors.length} pregunta(s) obligatoria(s) antes de continuar.`;
+    container.insertBefore(summary, container.firstChild);
+    errors.forEach(q => {
+      const block = container.querySelector(`[data-qid="${q.id}"]`);
+      if (block) {
+        block.classList.add('has-error');
+        block.querySelectorAll('input[type="text"],input[type="number"]').forEach(i => i.classList.add('field-error'));
+        const optionsList = block.querySelector('.options-list'); if (optionsList) optionsList.classList.add('error-outline');
+        const likertWrap = block.querySelector('.likert-wrap'); if (likertWrap) likertWrap.style.outline = '2px solid var(--red)';
+        if (!block.querySelector('.error-msg')) { const msg = document.createElement('div'); msg.className = 'error-msg'; msg.textContent = '* Campo obligatorio'; block.appendChild(msg); }
+      }
+    });
+    const firstErr = container.querySelector('.has-error');
+    if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+    vibrateOnError();
+    return false;
+  }
+  return true;
+}
+
+function obtenerUbicacion() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(posicion) {
+        const lat = posicion.coords.latitude, lng = posicion.coords.longitude, precision = posicion.coords.accuracy;
+        answers['ubicacion_lat'] = lat; answers['ubicacion_lng'] = lng; answers['ubicacion_precision'] = precision;
+        delete answers['ubicacion_manual'];
+        const urlGeo = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+        fetch(urlGeo).then(resp => resp.json()).then(data => {
+          if (data && data.display_name) { answers['ubicacion_direccion'] = data.display_name; answers['S0_ubic'] = data.display_name; }
+          else { answers['ubicacion_direccion'] = `Lat: ${lat}, Lng: ${lng}`; answers['S0_ubic'] = `Lat: ${lat}, Lng: ${lng}`; }
+          showToast('✅ Ubicación GPS capturada automáticamente');
+          renderSection();
+          clearTimeout(_ubicVerifTimerGPS);
+          _ubicVerifTimerGPS = setTimeout(() => verificarUbicacionDuplicada(), 600);
+        }).catch(err => {
+          answers['ubicacion_direccion'] = `Lat: ${lat}, Lng: ${lng}`; answers['S0_ubic'] = `Lat: ${lat}, Lng: ${lng}`;
+          renderSection();
+          clearTimeout(_ubicVerifTimerGPS);
+          _ubicVerifTimerGPS = setTimeout(() => verificarUbicacionDuplicada(), 600);
+        });
+      },
+      function(error) {
+        let mensaje = '';
+        switch(error.code) {
+          case error.PERMISSION_DENIED: mensaje = 'Permiso de ubicación denegado. Debes ingresar la ubicación manualmente.'; break;
+          case error.POSITION_UNAVAILABLE: mensaje = 'GPS no disponible. Ingresa la ubicación manualmente.'; break;
+          case error.TIMEOUT: mensaje = 'Tiempo de espera agotado. Ingresa la ubicación manualmente.'; break;
+          default: mensaje = 'Error de geolocalización. Ingresa la ubicación manualmente.'; break;
+        }
+        answers['ubicacion_error'] = mensaje;
+        delete answers['ubicacion_lat']; delete answers['ubicacion_lng'];
+        delete answers['ubicacion_precision']; delete answers['ubicacion_direccion'];
+        showToast('⚠️ ' + mensaje); renderSection();
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  } else {
+    answers['ubicacion_error'] = 'Este navegador no soporta geolocalización. Ingresa la ubicación manualmente.';
+    delete answers['ubicacion_lat']; delete answers['ubicacion_lng'];
+    showToast('⚠️ GPS no soportado. Ingresa ubicación manualmente.');
+  }
+}
+
+function getCommunityOptions() {
+  const municipio = answers['S0_dist'] || '';
+  const comunidades = {
+    'San Juan Bautista': [],
+    'Yurimaguas': [],
+    'Belén': [],
+    'Punchana': []
+  };
+  return comunidades[municipio] || [];
+}
+
+function updateA2Options() {
+  const a2Block = document.querySelector('[data-qid="A2"]');
+  if (!a2Block) return;
+  const currentValue = answers['A2'] || '';
+  a2Block.innerHTML = `<div class="question-label">A2. Nombre de la comunidad, pueblo, barrio (OTBS) o asentamiento humano <span class="required-mark">*</span></div><input type="text" value="${escHtml(currentValue)}" placeholder="Escriba el nombre de la comunidad..." oninput="setAnswer('A2',this.value)">`;
+}
+
+function renderQuestion(q) {
+  let block = document.createElement('div');
+  block.className = 'question-block';
+  block.setAttribute('data-qid', q.id);
+  const isReq = isRequiredField(q.id, q.type);
+  let html = `<div class="question-label">${q.text}${isReq ? '<span class="required-mark">*</span>' : ''}</div>`;
+  if(q.hint) html += `<div class="hint">ℹ️ ${q.hint}</div>`;
+  if(q.skip) html += `<div class="skip-note">⚠️ ${q.skip.replace(/\|/g,'<br>')}</div>`;
+  if (q.id === 'S0_dist') {
+    html += `<select onchange="setAnswer('${q.id}',this.value)"><option value="">Seleccione...</option>`;
+    ['San Juan Bautista','Yurimaguas','Belén','Punchana'].forEach(opt => { html += `<option value="${opt}" ${answers[q.id]===opt?'selected':''}>${opt}</option>`; });
+    html += `</select>`;
+  } else if (q.id === 'A2') {
+    block.innerHTML = html; setTimeout(() => updateA2Options(), 0); return block;
+  } else if(q.type === 'text') {
+    html += `<input type="text" value="${escHtml(answers[q.id]||'')}" placeholder="${q.placeholder||''}" oninput="setAnswer('${q.id}',this.value)">`;
+  } else if(q.type === 'number') {
+    html += `<input type="number" step="1" value="${answers[q.id]||''}" placeholder="${q.placeholder||''}" onchange="setAnswer('${q.id}',this.value)">`;
+  } else if(q.type === 'radio') {
+    html += `<div class="options-list">`;
+    q.options.forEach(opt => { let sel=answers[q.id]===opt?'selected':''; html += `<label class="option-item ${sel}" onclick="selectRadio('${q.id}','${escHtml(opt)}',this)"><input type="radio" name="${q.id}" ${answers[q.id]===opt?'checked':''}><span class="option-text">${opt}</span></label>`; });
+    html += `</div>`;
+    if(q.hasOther) { let otherVal=answers[`${q.id}_otro`]||''; let isVisibleOther=answers[q.id]==='Otro'; html += `<input type="text" id="other_input_${q.id}" class="other-input ${isVisibleOther?'visible':''}" placeholder="Especifique otro..." value="${escHtml(otherVal)}" oninput="setAnswer('${q.id}_otro',this.value)">`; }
+  } else if(q.type === 'checkbox') {
+    html += `<div class="options-list">`;
+    q.options.forEach(opt => { let key=`${q.id}_${opt}`; let sel=answers[key]?'selected':''; html += `<label class="option-item ${sel}" onclick="toggleCheck('${q.id}','${escHtml(opt)}',this)"><input type="checkbox" ${answers[key]?'checked':''}><span class="option-text">${opt}</span></label>`; });
+    html += `</div>`;
+    if(q.hasOther) { let otherVal=answers[`${q.id}_otro`]||''; let isVisibleOther=answers[`${q.id}_Otro`]===true; html += `<input type="text" id="other_input_${q.id}" class="other-input ${isVisibleOther?'visible':''}" placeholder="Especifique otro..." value="${escHtml(otherVal)}" oninput="setAnswer('${q.id}_otro',this.value)">`; }
+  } else if(q.type === 'yesno') {
+    html += `<div class="options-list">`; ['Sí','No'].forEach(opt => { let sel=answers[q.id]===opt?'selected':''; html += `<label class="option-item ${sel}" onclick="selectRadio('${q.id}','${opt}',this)"><input type="radio" name="${q.id}" ${answers[q.id]===opt?'checked':''}><span class="option-text">${opt}</span></label>`; }); html += `</div>`;
+  } else if(q.type === 'yesno3') {
+    html += `<div class="options-list">`; ['Sí','No','No lo sé'].forEach(opt => { let sel=answers[q.id]===opt?'selected':''; html += `<label class="option-item ${sel}" onclick="selectRadio('${q.id}','${opt}',this)"><input type="radio" name="${q.id}" ${answers[q.id]===opt?'checked':''}><span class="option-text">${opt}</span></label>`; }); html += `</div>`;
+  } else if(q.type === 'likert5' || q.type === 'likert5b') {
+    let opts=['Nada','Poco','Regular','Mucho'];
+    html += `<div class="likert-wrap">`; opts.forEach(o => { let sel=answers[q.id]===o?'selected':''; html += `<button class="likert-btn ${sel}" onclick="setLikert('${q.id}','${o}',this)">${o}</button>`; }); html += `</div>`;
+  } else if(q.type === 'freq4') {
+    let opts=['Para nada','Varios días','Más de la mitad de los días','Casi todos los días'];
+    html += `<div class="options-list">`; opts.forEach(o => { let sel=answers[q.id]===o?'selected':''; html += `<label class="option-item ${sel}" onclick="selectRadio('${q.id}','${o}',this)"><input type="radio" name="${q.id}" ${answers[q.id]===o?'checked':''}><span class="option-text">${o}</span></label>`; }); html += `</div>`;
+  }
+  block.innerHTML = html;
+  return block;
+}
+
+function renderSection(keepScroll) {
+  keepScroll = keepScroll || false;
+  const scrollY = keepScroll ? window.scrollY : 0;
+  updateProgress();
+  let el = document.getElementById('main'); el.innerHTML = '';
+  let sections = buildFullSections();
+  let sec = sections[currentSection]; if(!sec) return;
+  let card = document.createElement('div'); card.className = 'section-card';
+  card.innerHTML = `<div class="section-title"><span class="section-icon">${sec.icon}</span>${sec.title}</div>`;
+  if(currentSection === 8 && !i1Locked && (answers['I1_1'] || answers['I1_2'] || i1AnswerSelected || i1TimerInterval)) {
+    const timerDiv = document.createElement('div'); timerDiv.className = 'timer-info'; timerDiv.id = 'i1-timer-container';
+    timerDiv.innerHTML = `<span>⏱️ Tienes <span class="timer-countdown" id="i1-timer-display">${i1Locked?'Confirmado':i1TimeLeft+' segundos'}</span> para cambiar entre Grupo A y Grupo B</span><div class="timer-bar" style="width:100%"></div>`;
+    card.appendChild(timerDiv);
+  }
+  if(currentSection === 0 && (answers['ubicacion_lat'] || answers['ubicacion_error'])) {
+    let geoDiv = document.createElement('div'); geoDiv.className = 'geo-info';
+    if(answers['ubicacion_lat']) geoDiv.innerHTML = `📍 <strong>Ubicación automática:</strong><br>Lat: ${answers['ubicacion_lat']}, Lng: ${answers['ubicacion_lng']}<br>Precisión: ±${Math.round(answers['ubicacion_precision'])}m<br>${answers['ubicacion_direccion']?'Dirección: '+answers['ubicacion_direccion'].substring(0,100):''}`;
+    else if(answers['ubicacion_error']) geoDiv.innerHTML = `⚠️ <strong>No se pudo obtener la ubicación automática</strong><br>${answers['ubicacion_error']}`;
+    card.appendChild(geoDiv);
+  }
+  sec.questions.forEach(q => {
+    if(q.type === 'subtitle') { if(!isVisible(q.id)) return; let sub=document.createElement('div'); sub.className='question-block'; sub.setAttribute('data-qid',q.id); sub.innerHTML=q.text; card.appendChild(sub); }
+    else { if(!isVisible(q.id)) return; card.appendChild(renderQuestion(q)); }
+  });
+  if (currentSection === 6) {
+    const orderContainer = document.createElement('div'); orderContainer.id = 'd1-order-container'; orderContainer.className = 'order-input-container hidden';
+    orderContainer.innerHTML = `<label>📌 D1.1. Según la pregunta anterior ordene de mayor a menor grado de afectación los impactos seleccionados: <span class="required-mark">*</span></label><div id="d1-order-radios" class="radio-group-order"></div><input type="hidden" id="d1_order_text" value="${escHtml(answers['D1_1']||'')}"><div class="order-hint">Seleccione el orden de importancia para cada impacto.</div>`;
+    const d1Block = card.querySelector('[data-qid="D1"]');
+    if (d1Block) d1Block.insertAdjacentElement('afterend', orderContainer); else card.appendChild(orderContainer);
+  }
+  el.appendChild(card);
+  setTimeout(() => {
+    const sectionsList = buildFullSections();
+    const currentSec = sectionsList[currentSection];
+    if (currentSec) {
+      currentSec.questions.forEach(q => {
+        if (q.id === 'A2') updateA2Options();
+        if ((q.type === 'radio' || q.type === 'yesno' || q.type === 'yesno3') && q.hasOther) { const oi=document.getElementById(`other_input_${q.id}`); if(oi){ if(answers[q.id]==='Otro') oi.classList.add('visible'); else oi.classList.remove('visible'); } }
+        if (q.type === 'checkbox' && q.hasOther) { const oi=document.getElementById(`other_input_${q.id}`); if(oi){ if(answers[`${q.id}_Otro`]===true) oi.classList.add('visible'); else oi.classList.remove('visible'); } }
+      });
+      updateSectionProgress();
+      addTooltipToQuestion('A1','Si lleva 1 año o menos, la encuesta finalizará automáticamente');
+      addTooltipToQuestion('M8','Seleccione la práctica principal que usa su familia');
+      addTooltipToQuestion('B2','El nivel educativo del jefe de hogar');
+      addTooltipToQuestion('B3','Años de estudio desde primaria hasta superior');
+      addTooltipToQuestion('C5','Seleccione 1 o 2 combustibles principales que usa para cocinar');
+      addTooltipToQuestion('D1','Seleccione máximo 3 impactos del cambio climático. Si selecciona más de uno, deberá ordenarlos');
+      addTooltipToQuestion('F6','Seleccione hasta 2 enfermedades o lesiones principales');
+      addTooltipToQuestion('F9','Seleccione máximo 3 síntomas. "Ninguno" excluye las demás opciones');
+      if (currentSection === 3) enforceMaxSelections('C5', 2);
+      if (currentSection === 6) { enforceMaxSelections('D1', 3); updateD1OrderUI(); }
+      if (currentSection === 5) { enforceMaxSelections('F6', 2); enforceMaxSelections('F9', 3); }
+      if (currentSection === 2) validateB3InRealTime();
+      if (currentSection === 1) checkSameSex();
+    }
+  }, 100);
+  if (currentSection === 8 && i1Locked) lockI1Options();
+  if (!keepScroll) window.scrollTo({top:0, behavior:'smooth'}); else window.scrollTo(0, scrollY);
+}
+
+function getLocalTimestamp() {
+  const ahora = new Date();
+  return String(ahora.getDate()).padStart(2,'0') + '/' + String(ahora.getMonth()+1).padStart(2,'0') + '/' + ahora.getFullYear() + ' ' + String(ahora.getHours()).padStart(2,'0') + ':' + String(ahora.getMinutes()).padStart(2,'0') + ':' + String(ahora.getSeconds()).padStart(2,'0');
+}
+
+function finishSurvey() {
+  if (surveyFinished) return;
+  surveyFinished = true;
+  answers.timestamp = getLocalTimestamp();
+  answers.id = editingId || Date.now().toString();
+  saveRecord(answers);
+  localStorage.removeItem('survey_progress');
+  showComplete();
+}
+
+function showComplete() { document.getElementById('main-app').classList.add('hidden'); document.getElementById('complete-screen').classList.remove('hidden'); editingId = null; resetI1TimerGlobal(); }
+function newSurvey() { surveyFinished=false; answers={}; currentSection=0; resetI1TimerGlobal(); localStorage.removeItem('survey_progress'); document.getElementById('complete-screen').classList.add('hidden'); document.getElementById('consent-screen').classList.remove('hidden'); document.getElementById('main-app').classList.add('hidden'); }
+function getRecords() { try { return JSON.parse(localStorage.getItem('cap_records')||'[]'); } catch(e) { return []; } }
+function saveRecord(rec) { let records=getRecords(); let idx=records.findIndex(r=>r.id===rec.id); let recordToSave={...rec}; if(idx>=0) records[idx]=recordToSave; else records.push(recordToSave); localStorage.setItem('cap_records',JSON.stringify(records)); }
+function deleteRecord(id) { let records=getRecords().filter(r=>r.id!==id); localStorage.setItem('cap_records',JSON.stringify(records)); }
+function clearAll() { if(confirm('¿Eliminar TODOS los registros?')){ localStorage.removeItem('cap_records'); renderRecords(); showToast('Todos los registros eliminados'); } }
+function showAdmin() { document.getElementById('complete-screen').classList.add('hidden'); document.getElementById('admin-screen').classList.remove('hidden'); switchTab('records'); }
+function renderRecords() {
+  let records=getRecords(); let el=document.getElementById('records-list');
+  if(!records.length){ el.innerHTML=`<div class="empty-state"><div class="icon">📭</div><p>No hay registros guardados aún.</p></div>`; return; }
+  el.innerHTML=records.map(r=>`<div class="record-card"><div class="record-meta">${r.timestamp||'Sin fecha'} · ID: ${r.id}</div><div class="record-info">👤 ${r['S0_enc']||'Sin nombre'} · ${r['A2']||'Sin comunidad'}${r._sent?'<span class="sent-indicator"> ✓ Enviado</span>':''}</div><div class="record-actions"><button class="btn-sm btn-sm-primary" onclick="exportOne('${r.id}')">⬇️ CSV</button><button class="btn-sm btn-sm-danger" onclick="delRecord('${r.id}')">🗑️ Borrar</button></div></div>`).join('');
+}
+function delRecord(id) { if(confirm('¿Eliminar este registro?')){ deleteRecord(id); renderRecords(); showToast('Registro eliminado'); } }
+
+function getQuestionTextMap() {
+  const sections = buildFullSections();
+  const map = new Map();
+  for (const section of sections) {
+    for (const q of section.questions) {
+      if (q.id && q.text) map.set(q.id, q.text);
+      if (q.type === 'checkbox' && q.options) for (const opt of q.options) map.set(`${q.id}_${opt}`, `${q.text} - ${opt}`);
+    }
+  }
+  map.set('id','ID de registro'); map.set('timestamp','Fecha y hora'); map.set('consent','Consentimiento informado');
+  map.set('S0_email','Correo electrónico'); map.set('ubicacion_lat','Ubicación - Latitud'); map.set('ubicacion_lng','Ubicación - Longitud');
+  return map;
+}
+
+function processRadioOtherAnswers(record) {
+  const processed = { ...record };
+  const radioWithOther = ['A10','B6_1','B8','C1','C4','C7','C8','F1','F2','F8','F10','F18','G1','G2','G3','G4','M1','M4','M5','H6_2','H7_2','H8_2','H9_2','H10_2','H11_2','H12_2','H13_2','H15_3','H16_3','H17_3','H18_3','H19_3','H20_3','B12_1_1','B12_2_1','B12_3_1','B12_4_1','B12_5_1'];
+  for (const id of radioWithOther) {
+    const value = processed[id], otherValue = processed[`${id}_otro`];
+    if (value === 'Otro' && otherValue && otherValue.trim() !== '') processed[id] = `Otro: ${otherValue.trim()}`;
+    delete processed[`${id}_otro`];
+  }
+  return processed;
+}
+
+function processMultipleChoiceAnswers(record) {
+  const processed = { ...record };
+  const multipleChoiceQuestions = ['F9','D1','B5','C5','F6','M8','H4','I6','I7','I8'];
+  for (const questionId of multipleChoiceQuestions) {
+    const selectedOptions = [];
+    for (const key in record) { if (key.startsWith(`${questionId}_`) && record[key] === true && key !== `${questionId}_otro`) { const option = key.substring(questionId.length+1); selectedOptions.push(option); } }
+    if (record[`${questionId}_otro`] && record[`${questionId}_otro`].trim() !== '') {
+      const otroText = record[`${questionId}_otro`].trim();
+      const otroIndex = selectedOptions.findIndex(opt => opt === 'Otro');
+      if (otroIndex !== -1) selectedOptions[otroIndex] = `Otro: ${otroText}`; else selectedOptions.push(`Otro: ${otroText}`);
+    }
+    if (selectedOptions.length > 0) processed[questionId] = selectedOptions.join(', ');
+    else if (record[questionId] !== undefined && typeof record[questionId] !== 'string') delete processed[questionId];
+    for (const key in processed) if (key.startsWith(`${questionId}_`)) delete processed[key];
+  }
+  if (record['D1_1'] && record['D1_1'] !== '') processed['D1_1'] = record['D1_1'];
+  return processed;
+}
+
+function cleanExportRecord(rec) {
+  let cleaned = { ...rec }; delete cleaned['ubicacion_manual'];
+  if (cleaned.S0_ubic && cleaned.S0_ubic.trim() !== '') {
+    const tieneGps = cleaned.ubicacion_lat && cleaned.ubicacion_lat !== '' && cleaned.ubicacion_lng && cleaned.ubicacion_lng !== '';
+    if (!tieneGps) { cleaned.ubicacion_manual = cleaned.S0_ubic.trim(); cleaned.ubicacion_lat = ''; cleaned.ubicacion_lng = ''; }
+    else cleaned.ubicacion_manual = '';
+  } else cleaned.ubicacion_manual = '';
+  delete cleaned['ubicacion_precision']; delete cleaned['ubicacion_error'];
+  delete cleaned['ubicacion_direccion']; delete cleaned['S0_ubic'];
+  return cleaned;
+}
+
+function recordToCSV(rec) {
+  let cleanedRec = cleanExportRecord(rec);
+  let processedRec = processRadioOtherAnswers(cleanedRec);
+  processedRec = processMultipleChoiceAnswers(processedRec);
+  const map = getQuestionTextMap();
+  let keys = Object.keys(processedRec);
+  let header = keys.map(k => `"${map.get(k)||k}"`).join(',');
+  let row = keys.map(k => `"${String(processedRec[k]).replace(/"/g,'""')}"`).join(',');
+  return header + '\n' + row;
+}
+
+function allRecordsToCSV(records) {
+  if (!records.length) return '';
+  const map = getQuestionTextMap();
+  let allKeysSet = new Set();
+  const processedRecords = records.map(rec => { let cleaned=cleanExportRecord(rec); let p=processRadioOtherAnswers(cleaned); p=processMultipleChoiceAnswers(p); return p; });
+  for (const rec of processedRecords) for (const k of Object.keys(rec)) allKeysSet.add(k);
+  ['id','timestamp','consent','ubicacion_lat','ubicacion_lng'].forEach(k => allKeysSet.add(k));
+  let allKeys = Array.from(allKeysSet);
+  let header = allKeys.map(k => `"${map.get(k)||k}"`).join(',');
+  let rows = processedRecords.map(rec => allKeys.map(k => `"${String(rec[k]||'').replace(/"/g,'""')}"`).join(','));
+  return [header, ...rows].join('\n');
+}
+
+function downloadCSV(content, filename) { let BOM='\uFEFF'; let blob=new Blob([BOM+content],{type:'text/csv;charset=utf-8;'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
+function exportOne(id) { let rec=getRecords().find(r=>r.id===id); if(rec) downloadCSV(recordToCSV(rec),`encuesta_cap_${id}.csv`); showToast('CSV descargado'); }
+function exportAllCSV() { let records=getRecords(); if(!records.length){ showToast('No hay registros'); return; } downloadCSV(allRecordsToCSV(records),`encuestas_cap_perú_${Date.now()}.csv`); showToast(`${records.length} encuesta(s) exportada(s)`); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (tab === 'survey') {
+    resetI1TimerGlobal(); answers={}; currentSection=0; editingId=null; surveyFinished=false;
+    localStorage.removeItem('survey_progress');
+    document.getElementById('tab-survey').classList.add('active');
+    document.getElementById('main-app').classList.remove('hidden');
+    document.getElementById('admin-screen').classList.add('hidden');
+    document.getElementById('complete-screen').classList.add('hidden');
+    delete answers['ubicacion_lat']; delete answers['ubicacion_lng'];
+    delete answers['ubicacion_precision']; delete answers['ubicacion_direccion']; delete answers['ubicacion_error'];
+    obtenerUbicacion(); renderSection();
+  } else {
+    document.getElementById('tab-records').classList.add('active');
+    document.getElementById('main-app').classList.add('hidden');
+    document.getElementById('admin-screen').classList.remove('hidden');
+    document.getElementById('complete-screen').classList.add('hidden');
+    renderRecords();
+  }
+}
+
+function showToast(msg) { let t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
+
+updateConnectionStatus();
+const shortcutsHint = document.createElement('div');
+shortcutsHint.className = 'shortcuts-hint';
+document.body.appendChild(shortcutsHint);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── DEFINICIÓN DE SECCIONES ──────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+function buildFullSections() {
+  return [
+    { icon:'📋', title:'Sección 0. Datos del encuestador y ubicación', questions:[
+      { id:'S0_enc', type:'text', text:'Nombre del encuestador:' },
+      { id:'S0_email', type:'text', text:'Correo electrónico:' },
+      { id:'S0_cod', type:'text', text:'Código:', hint:'Colocar las primeras letras de tus nombres y apellidos' },
+      { id:'S0_ubic', type:'text', text:'Ubicación:' },
+      { id:'S0_zona', type:'radio', text:'Indique a que Zona corresponde la comunidad:', options:['Urbana','Suburbana o periurbana','Rural'] },
+      { id:'S0_dist', type:'radio', text:'Municipalidad o alcaldía', options:['San Juan Bautista','Yurimaguas','Belén','Punchana'] }
+    ]},
+    { icon:'👥', title:'Sección A. Demografía', questions:[
+      { id:'A1', type:'number', text:'A1. ¿Cuántos años llevas viviendo en la comunidad? (años)', skip:'Si es un año o menos, finaliza la encuesta, y avanza a la siguiente vivienda según el salto (k)' },
+      { id:'A2', type:'text', text:'A2. Nombre de la comunidad, pueblo, barrio (OTBS) o asentamiento humano' },
+      { id:'A3', type:'yesno', text:'A3. ¿Perteneces a una comunidad indígena?', skip:'Cuando la respuesta es afirmativa continue a A3.1, caso contrario pase a A4' },
+      { id:'A3_1', type:'text', text:'A3.1. Si es afirmativo ¿A qué comunidad?' },
+      { id:'subtitle_a4', type:'subtitle', text:'<strong>A4. Cantidad de personas en el hogar</strong>' },
+      { id:'A4_1', type:'number', text:'A4.1 ¿Cuántos hombres viven en tu casa?' }, { id:'A4_2', type:'number', text:'A4.2 ¿Cuántas mujeres viven en tu casa?' },
+      { id:'A4_3', type:'number', text:'A4.3 ¿Cuántas niñas y niños hasta 17 años viven en tu casa?' }, { id:'A4_4', type:'number', text:'A4.4 ¿Cuántos jóvenes de 18 a 29 años viven en tu casa?' },
+      { id:'A4_5', type:'number', text:'A4.5 ¿Cuántos adultos de 30 a 60 años viven en tu casa?' }, { id:'A4_6', type:'number', text:'A4.6 ¿Cuántos adultos mayores de más de 60 años viven en tu casa?' },
+      { id:'A5', type:'radio', text:'A5. Relación con el jefe/a de familia', options:['Jefe/a de hogar','Esposa/o o conviviente del jefe/a','Hijo/a (o adoptado) del jefe/a','Nieto/a del jefe/a','Otro'], hasOther:true },
+      { id:'A6', type:'radio', text:'A6. Sexo del jefe de hogar', options:['Masculino','Femenino'] },
+      { id:'A7', type:'number', text:'A7. Año de nacimiento del jefe de hogar', placeholder:'Ej: 1990' },
+      { id:'A8', type:'radio', text:'A8. Sexo del cónyuge del jefe de hogar', options:['Masculino','Femenino','No tiene cónyuge'] },
+      { id:'A9', type:'number', text:'A9. Año de nacimiento del cónyuge del jefe de hogar', placeholder:'Ej: 1990' },
+      { id:'A10', type:'radio', text:'A10. ¿Qué idioma hablan más en casa?', options:['Castellano/español','Cavineño','Chacoso','Esseejja','Aimara','Quechua','Cabineño','Tacana','Otro'], hasOther:true }
+    ]},
+    { icon:'💼', title:'Sección B. Situación socioeconómica', questions:[
+      { id:'B1', type:'yesno', text:'B1. ¿El jefe de hogar sabe leer y escribir?' },
+      { id:'B2', type:'radio', text:'B2. ¿Cuál es el nivel educativo del jefe de hogar?', options:['Primaria completa','Primaria incompleta','Secundaria completa','Secundaria incompleta','Superior técnico completo','Superior técnico incompleto','Superior universitaria completa','Superior universitaria incompleta','No tiene educación','No sabe'] },
+      { id:'B3', type:'number', text:'B3. ¿Cuántos años ha estudiado el jefe de hogar desde la primaria hasta la educación superior? (años)' },
+      { id:'B4', type:'yesno', text:'B4. ¿El jefe de hogar viajó regularmente por trabajo(s) temporal(es) el año pasado?', skip:'Cuando la respuesta es afirmativa continue a B4.1, caso contrario pase a B5' },
+      { id:'B4_1', type:'number', text:'B4.1. Si es así, ¿cuánto tiempo estuvo en este pueblo el año pasado? (meses)' },
+      { id:'B5', type:'checkbox', text:'B5. ¿Participó el jefe de hogar en las siguientes actividades en los últimos 12 meses?', options:['Cultivo de alimentos (chacra para consumo)','Cultivo para venta (chacra para negocio)','Cria de animales (ganadería/aves)','Actividades económicas no agrícolas (negocios, tiendas)','Empleo asalariado y jornalero (sueldo fijo o jornal)','Pesca o actividades forestales (madera)','Trabajo doméstico no remunerado','Otro'], hasOther:true },
+      { id:'B6', type:'yesno', text:'B6. ¿El jefe de familia trabaja para una empresa, institución o de forma independiente?', skip:'Cuando la respuesta es afirmativa continue a B6.1, caso contrario pase a B7' },
+      { id:'B6_1', type:'radio', text:'B6.1. Si es así, ¿en qué sector trabaja el jefe de familia?', options:['Agricultura, forestal (madera), pesca y caza','Minería, canteras y extracción de petróleo y gas','Construcción','Manufactura / fabricación','Comercio (mayorista y minorista / bodegas)','Transporte, almacenamiento y servicios públicos','Información y comunicaciones','Finanzas, seguros, bienes raíces y alquileres','Servicios profesionales, científicos, técnicos y de gestión','Servicios administrativos, de apoyo, gestión de residuos (limpieza)','Educación (profesor, estudiante, entre otros)','Atención de la salud y asistencia social (postas, hospitales)','Artes, entretenimiento, recreación, alojamiento y servicios de comida (restaurantes)','Otros servicios (reparación, personal, lavandería, trabajo doméstico, entre otros)','Prefiere no decir','Otro'], hasOther:true },
+      { id:'B7', type:'yesno', text:'B7. ¿La semana pasada, algún miembro del hogar dedicó tiempo a recolectar leña o materiales combustibles?', skip:'Cuando la respuesta es afirmativa continue a B7.1, caso contrario pase a B8' },
+      { id:'B7_1', type:'number', text:'B7.1. En promedio, ¿cuántas horas al día dedicaron los miembros del hogar a recolectar leña? (horas)' },
+      { id:'B8', type:'radio', text:'B8. ¿Qué actividad es la principal fuente de ingresos del hogar?', options:['Cultivo de alimentos (chacra consumo)','Cultivo para venta (chacra negocio)','Crianza de animales','Actividades económicas no agrícolas (ej.negocio propio, bodega)','Empleo asalariado (sueldo/jornal)','Pesca o actividades forestales (madera)','Otro'], hasOther:true },
+      { id:'B9', type:'number', text:'B9. Si recibió alguna remesa de familiares fuera de este hogar, ¿cuánto recibió el último año? (perúnos)' },
+      { id:'B10', type:'number', text:'B10. En los últimos 7 días, ¿cuánto dinero gastó su hogar? (perúnos)' },
+      { id:'B11', type:'radio', text:'B11. ¿Quién es el dueño de esta casa?', options:['Jefe de hogar o cónyuge','Alguien más dentro del hogar que no es el jefe ni el conyugue','Alguien de afuera'] },
+      { id:'subtitle_b12', type:'subtitle', text:'<strong>B12. ¿Cuánto tiempo toma acceder al más cercano siguiente?</strong>' },
+      { id:'subtitle_b12_1', type:'subtitle', text:'<strong>B12.1. Colegio</strong>' },
+      { id:'B12_1_1', type:'radio', text:'B12.1.1. Colegio ¿Cómo llega allá?', options:['Pie','Bicicleta','Bus/colectivo','Vehículo propio (ej: Mototaxi, moto o carro)','Otro'], hasOther:true },
+      { id:'B12_1_2', type:'number', text:'B12.1.2. Colegio. Tiempo de viaje (solo ida, minutos)' },
+      { id:'subtitle_b12_2', type:'subtitle', text:'<strong>B12.2. Establecimiento de salud (posta)</strong>' },
+      { id:'B12_2_1', type:'radio', text:'B12.2.1. Establecimiento de salud (posta) ¿Cómo llega allá?', options:['Pie','Bicicleta','Bus/colectivo','Vehículo propio (ej: Mototaxi, moto o carro)','Otro'], hasOther:true },
+      { id:'B12_2_2', type:'number', text:'B12.2.2. Establecimiento de salud (posta). Tiempo de viaje (solo ida, minutos)' },
+      { id:'subtitle_b12_3', type:'subtitle', text:'<strong>B12.3. Mercado</strong>' },
+      { id:'B12_3_1', type:'radio', text:'B12.3.1. Mercado ¿Cómo llega allá?', options:['Pie','Bicicleta','Bus/colectivo','Vehículo propio (ej: Mototaxi, moto o carro)','Otro'], hasOther:true },
+      { id:'B12_3_2', type:'number', text:'B12.3.2. Mercado. Tiempo de viaje (solo ida, minutos)' },
+      { id:'subtitle_b12_4', type:'subtitle', text:'<strong>B12.4. Municipalidad o alcaldía/oficina local</strong>' },
+      { id:'B12_4_1', type:'radio', text:'B12.4.1. Municipalidad o alcaldía/oficina local ¿Cómo llega allá?', options:['Pie','Bicicleta','Bus/colectivo','Vehículo propio (ej: Mototaxi, moto o carro)','Otro'], hasOther:true },
+      { id:'B12_4_2', type:'number', text:'B12.4.2. Municipalidad o alcaldía/oficina local. Tiempo de viaje (solo ida, minutos)' },
+      { id:'subtitle_b12_5', type:'subtitle', text:'<strong>B12.5. Banco</strong>' },
+      { id:'B12_5_1', type:'radio', text:'B12.5.1. Banco ¿Cómo llega allá?', options:['Pie','Bicicleta','Bus/colectivo','Vehículo propio (ej: Mototaxi, moto o carro)','Otro'], hasOther:true },
+      { id:'B12_5_2', type:'number', text:'B12.5.2. Banco. Tiempo de viaje (solo ida, minutos)' },
+      { id:'subtitle_b13', type:'subtitle', text:'<strong>B13. Las siguientes preguntas están relacionadas con el gasto del hogar</strong>' },
+      { id:'subtitle_b13_1', type:'subtitle', text:'<strong>B13.1. Alimentos</strong>' },
+      { id:'B13_1_1', type:'yesno', text:'B13.1.1. En el último mes, ¿usted u otros en su hogar consumieron algún alimento comprado?', skip:'Cuando la respuesta es afirmativa continue a B13.1.2, caso contrario pase a B13.2' },
+      { id:'B13_1_2', type:'number', text:'B13.1.2. En el último mes, ¿cuánto gastaron en alimentación total? (S/./)' },
+      { id:'subtitle_b13_2', type:'subtitle', text:'<strong>B13.2. Salud y medicina</strong>' },
+      { id:'B13_2_1', type:'yesno', text:'B13.2.1. En el último mes, ¿usted u otros en su hogar consumieron algún servicio de salud o compraron medicina?', skip:'Cuando la respuesta es afirmativa continue a B13.2.2, caso contrario pase a B13.3' },
+      { id:'B13_2_2', type:'number', text:'B13.2.2. En el último mes, ¿cuánto gastaron en salud y medicina? (BS./)' },
+      { id:'subtitle_b13_3', type:'subtitle', text:'<strong>B13.3. Otros artículos no alimenticios</strong>' },
+      { id:'B13_3_1', type:'yesno', text:'B13.3.1. En el último mes, ¿usted u otros en su hogar compraron algún artículo no alimenticio?', skip:'Cuando la respuesta es afirmativa continue a B13.3.2, caso contrario pase a la sección C' },
+      { id:'B13_3_2', type:'number', text:'B13.3.2. En el último mes, ¿cuánto gastaron en artículos no alimenticios? (S/./)' }
+    ]},
+    { icon:'🏠', title:'Sección C. Activos: bienes duraderos (Vivienda)', questions:[
+      { id:'C1', type:'radio', text:'C1. ¿Cuál es la ruta principal hacia este pueblo/barrio?', options:['Carretera asfaltada (Pista)','Carretera de tierra / afirmada','Trocha / Camino de tierra','Ruta fluvial (río o lago)','Otro'], hasOther:true },
+      { id:'C2', type:'yesno', text:'C2. ¿Tienen electricidad en este pueblo?' },
+      { id:'C3', type:'yesno', text:'C3. ¿Su hogar tiene electricidad del sistema interconectado (red pública)?', skip:'Cuando la respuesta es afirmativa continue a C3.1, caso contrario pase a C4' },
+      { id:'C3_1', type:'number', text:'C3.1. En caso sea afirmativo, ¿cuántas horas al día tiene electricidad su hogar en promedio? (horas)' },
+      { id:'C4', type:'radio', text:'C4. Si no tiene electricidad, ¿cuál es la principal fuente de energía en su hogar?', options:['Carbón y leña','Energía solar','Gas','Otro'], hasOther:true },
+      { id:'C5', type:'checkbox', text:'C5. ¿Cuáles son los dos principales combustibles usados para cocinar? (Seleccione 1 o 2)', options:['Leña o carbón','Gas','Electricidad','Otro'], hasOther:true },
+      { id:'C6', type:'number', text:'C6. ¿Cuántas habitaciones (cuartos) tiene?' },
+      { id:'C7', type:'radio', text:'C7. Tipo de techo (observar)', options:['Vegetal o palma (Irapay/crisneja)','Hoja de motacu','Hoja de jatata','Calamina o zinc','Tejas de arcilla','Cemento','Otro'], hasOther:true },
+      { id:'C8', type:'radio', text:'C8. Tipo de pared (observar)', options:['Madera','Ladrillo o cemento (material noble)','Adobe','Chuchio (tallos de chuchio cubierto con barro)','Otro'], hasOther:true },
+      { id:'C9', type:'radio', text:'C9. Tipo de piso (observar)', options:['Cemento','Machimbrado o madera pulida','Tierra o arena','Tablas de madera, pona u otras tablas de palma','Losetas/cerámica'] },
+      { id:'subtitle_c10', type:'subtitle', text:'<strong>C10. Bienes en el hogar</strong>' },
+      { id:'C10_1', type:'yesno', text:'C10.1. Celular' },
+      { id:'C10_2', type:'yesno', text:'C10.2. Smartphone (celular inteligente)' },
+      { id:'C10_3', type:'yesno', text:'C10.3. Radio' },
+      { id:'C10_4', type:'yesno', text:'C10.4. Televisor' },
+      { id:'C10_5', type:'yesno', text:'C10.5. Computadora' },
+      { id:'C10_6', type:'yesno', text:'C10.6. Vehículo (moto, bicicleta, canoa, peque-peque, otro)' },
+      { id:'C10_7', type:'yesno', text:'C10.7. Refrigeradora/congeladora' },
+      { id:'C10_8', type:'yesno', text:'C10.8. Carro o camión' }
+    ]},
+    { icon:'🦟', title:'Sección M. Comportamiento de prevención de la malaria y el dengue', questions:[
+      { id:'M1', type:'radio', text:'M1. ¿En qué parte de su vivienda o entorno le pican más los mosquitos?', options:['Principalmente adentro, dentro de su casa','Principalmente adentro, en otro lugar que no es su casa (ej. trabajo, oficina, escuela, etc.)','Principalmente afuera, alrededor de su casa (ej. huerta, patio, balcón o vecindario inmediato)','Principalmente afuera, lejos de su casa (ej. en el monte, orilla del río, caminos, chacra u otros espacios públicos)','Igual adentro y afuera, o en varios lugares sin un patrón claro','Otro'], hasOther:true },
+      { id:'M2', type:'yesno', text:'M2. ¿Considera necesario fumigar dentro de la casa o recibir insecticida (abate) como parte de las prácticas para prevenir el contagio de malaria o dengue?' },
+      { id:'M3', type:'yesno', text:'M3. ¿Permitió que fumigaran su casa o recibió el insecticida (abate) en casa?', skip:'Cuando la respuesta es afirmativa continue a M5, caso contrario pase a M4' },
+      { id:'M4', type:'radio', text:'M4. Si la respuesta anterior fue no, ¿cuál fue la razón principal?', options:['El equipo de fumigación no vino','No había nadie en casa','Daña las paredes','Es malo para nuestra salud, incluyendo mascotas, plantas y otros','No queríamos que vieran nuestra casa','Fumigar no sirve de nada','La fumigación es molesta / huele feo','No respetan mi cultura o forma de ser','No sé','Otro'], hasOther:true },
+      { id:'M5', type:'radio', text:'M5. ¿Quién fumigó la vivienda o entregó el abate (insecticida)?', options:['Trabajador del gobierno / programa (Ministerio de Salud y Deportes)','Empresa privada','ONG: World Vision o KOICA','Otras ONGs','No sé','Otro'], hasOther:true },
+      { id:'M6', type:'radio', text:'M6. ¿Cuándo fue la última vez que alguna casa en esta comunidad fue fumigada o recibió abate?', options:['Hace menos de 3 meses','Hace 3 a 5 meses','Hace 6 a 11 meses','Hace un año o más','Nunca','No sé'] },
+      { id:'M7', type:'number', text:'M7. ¿Cuántos mosquiteros tiene tu casa?' },
+      { id:'M8', type:'radio', text:'M8. ¿Cómo se protege su familia de la picadura del zancudo que transmite malaria o dengue?', options:['Dormimos cubiertos con el mosquitero','Usamos repelentes','No nos quedamos fuera de la casa por la noche o desde la hora que hay zancudos','Fumigamos la casa con insecticida o usamos el abate','Mantenemos el ambiente de la casa limpio','Rellenamos los charcos de agua estancada o eliminamos los objetos inservibles con agua','Cuando tenemos fiebre vamos al establecimiento de salud (posta)','Uso medicinas que me protegen de la malaria','No sé','Otro'], hasOther:true },
+      { id:'subtitle_m9', type:'subtitle', text:'<strong>M9. Importancia de la afirmación</strong>' },
+      { id:'M9_1', type:'likert5', text:'M9.1. Es importante ir al centro de salud (posta) rápidamente cuando se tienen síntomas de malaria o dengue' },
+      { id:'M9_2', type:'likert5', text:'M9.2. Es importante tomar la medicina para la malaria rápidamente cuando se diagnostica malaria o dengue' },
+      { id:'M9_3', type:'likert5', text:'M9.3. Es importante fumigar contra los zancudos y mantener un ambiente limpio para prevenir malaria o dengue' }
+    ]},
+    { icon:'🏥', title:'Sección F. Salud', questions:[
+      { id:'F1', type:'radio', text:'F1. ¿Qué hace usualmente si un familiar (incluido usted) en casa tiene síntomas de fiebre, malaria o dengue?', options:['Ir inmediatamente al establecimiento de salud (posta)','Ir a la farmacia / botica por un medicamento','Tratar en casa con cuidados personales','Medicina natural','Nada','Otro'], hasOther:true },
+      { id:'F2', type:'radio', text:'F2. ¿Qué hace usualmente en su casa para desinfectar el agua antes de beberla?', options:['Hervirla','Comprar agua de un pilón o grifo tratado de la comunidad','Usar un filtro (ej. cerámica, filtro de carbón activado)','Usar el método de desinfección solar','Usar lámpara UV o purificador UV','Dejar que el agua se asiente','No hago nada','Comprar agua de bidón de una empresa','Otro'], hasOther:true },
+      { id:'F3', type:'yesno3', text:'F3. ¿Alguien de la familia se ha atendido con la brigada de salud o campaña médica móvil?' },
+      { id:'F4', type:'yesno', text:'F4. Durante los últimos 12 meses, ¿algún miembro de la familia fue hospitalizado o pasó la noche(s) en un establecimiento de salud?' },
+      { id:'F5', type:'yesno', text:'F5. Durante los últimos seis meses, ¿algún miembro de la familia ha sufrido alguna enfermedad o lesión?', skip:'Cuando la respuesta es afirmativa continue a F6, caso contrario pase a F14' },
+      { id:'F6', type:'checkbox', text:'F6. ¿Cuál fue la enfermedad o lesión? (*elija hasta dos)', options:['Malaria','Dengue','Dolor de estómago','Agotamiento por calor / insolación / golpe de calor','Vómitos','Otros síntomas de oído/nariz/garganta incluyendo asma','Anemia','Dolor de cabeza / desmayos','Problema de la piel / problema dental / problema de los ojos','Problema del corazón / presión arterial','Diabetes','Dolores de cuerpo y articulaciones','Otro'], hasOther:true },
+      { id:'subtitle_f7', type:'subtitle', text:'<strong>F7. Malaria o dengue</strong>' },
+      { id:'F7_1', type:'radio', text:'F7.1. ¿Un profesional de la salud le dijo a usted o a su familiar que tienen malaria o dengue?', options:['Sí, malaria','Sí, dengue','No','No sé'], skip:'Cuando la respuesta sea "No" o "No sé", pase a F8; caso contrario continue a F7.2' },
+      { id:'F7_2', type:'radio', text:'F7.2. ¿Cuánto tiempo tomó desde la prueba inicial para obtener un diagnóstico confirmado?', options:['Menos de 3 horas (Pasar a F9)','Más de 3 horas, pero menos de 6 horas (Pasar a F9)','Más de 6 horas, pero menos de 1 día (Pasar a F9)','2 a 5 días (Pasar a F8)','Más de 5 días (Pasar a F8)'] },
+      { id:'F8', type:'radio', text:'F8. ¿Cuál sería la principal razón por la que retrasaría la visita al centro de salud?', options:['La distancia es demasiado grande','El coste es demasiado alto','El tiempo de espera es demasiado largo','Servicio deficiente (mala atención)','Prefiero la atención tradicional (curanderos)','Los síntomas no eran graves','Otro'], hasOther:true },
+      { id:'F9', type:'checkbox', text:'F9. ¿Usted o su familiar experimentaron alguno de los siguientes síntomas? (*elija hasta 3)', skip:'Cuando la respuesta sea ninguno pase a F14, caso contrario siga a F10', options:['Fiebre (calentura)','Sudor frío','Escalofríos (chucho)','Diarrea','Tos','Dolor muscular','Mareos','Ninguno (pasar a la F14)','Otro'], hasOther:true },
+      { id:'F10', type:'radio', text:'F10. ¿Qué acción tomó para aliviar su enfermedad?', options:['No hice nada, no era grave','No hice nada, no tengo dinero','Usé medicina que tenía guardada','Remedios caseros conocidos','Busqué tratamiento en establecimiento de salud del gobierno (Posta)','Busqué tratamiento en iglesia/misión','Busqué tratamiento en establecimiento de salud privado (Clínica)','Busqué tratamiento en botiquín comunal / con promotor de salud','Fui a la farmacia local','Fui a la bodega local por medicina','Busqué tratamiento con curandero tradicional','Otro'], hasOther:true },
+      { id:'F11', type:'number', text:'F11. Durante los últimos seis meses, ¿cuántos días tuvo que dejar sus actividades normales debido a esta enfermedad?' },
+      { id:'F12', type:'number', text:'F12. Durante los últimos seis meses, ¿cuántos días alguien más en el hogar tuvo que dejar sus actividades para cuidar a otros miembros de la familia?' },
+      { id:'F13', type:'number', text:'F13. Durante los últimos seis meses, ¿cuántos días tuvo que dejar sus actividades debido a la(s) enfermedad(es) de sus hijos?' },
+      { id:'F14', type:'number', text:'F14. Durante los últimos seis meses, ¿cuántos días visitó el establecimiento de salud del gobierno local (posta)?' },
+      { id:'F15', type:'number', text:'F15. Durante los últimos seis meses, ¿cuántos días visitó un establecimiento de salud privado?' },
+      { id:'subtitle_f16', type:'subtitle', text:'<strong>F16. Durante los últimos seis meses, ¿con qué frecuencia te han molestado los siguientes problemas?</strong>' },
+      { id:'F16_1', type:'freq4', text:'F16.1. Desinterés en hacer cosas:' },
+      { id:'F16_2', type:'freq4', text:'F16.2. Sentirse decaído, deprimido o sin esperanza:' },
+      { id:'F17', type:'yesno', text:'F17. Si usted o alguien de su familia tiene fiebre, ¿considera necesario hacerse la prueba de malaria o dengue?', skip:'Cuando la respuesta es afirmativa continue a F19, caso contrario pase a F18' },
+      { id:'F18', type:'radio', text:'F18. Si respondió no, ¿por qué no se haría la prueba de malaria o dengue?', options:['Es muy invasiva (muchas inyecciones/hincadas)','No es confiable','El costo es muy alto','El tiempo de espera es muy largo','Prefiero la atención tradicional','Los síntomas no eran graves','No lo sé','Otro'], hasOther:true },
+      { id:'F19', type:'radio', text:'F19. Solo si fue en el último año a la posta por fiebre para descartar Malaria o Dengue: ¿Tenían pruebas disponibles?', options:['Sí','No','Nunca fui'] }
+    ]},
+    { icon:'🌡️', title:'Sección D. Impacto y percepciones del clima', questions:[
+      { id:'D1', type:'checkbox', text:'D1. Durante los últimos dos años, ¿su hogar fue afectado por los impactos del cambio climático? (Puede marcar hasta tres opciones)', options:['Sequía (ríos secos / mermante)','Lluvias irregulares','Inundaciones (crecientes)','Ola de calor','Incendios','Derrumbes','Ganancia agrícola inusualmente baja (mala cosecha)','Ganancia inusualmente baja de actividad económica no agrícola','Otro'], hasOther:true },
+      { id:'D2', type:'likert5b', text:'D2. ¿Ha escuchado sobre cambio climático y calentamiento global?' },
+      { id:'D3', type:'likert5b', text:'D3. En los últimos 2 años, he notado que las lluvias fuertes favorecen la presencia de zancudos (mosquitos)' },
+      { id:'D4', type:'likert5b', text:'D4. En los últimos 2 años, he notado que el cambio climático afecta el brote de malaria o dengue' },
+      { id:'D5', type:'likert5b', text:'D5. En los últimos 2 años, he notado que los ríos, cañerías, lagos u otros cuerpos de agua se secan con más frecuencia' },
+      { id:'D6', type:'likert5b', text:'D6. En los últimos 2 años, he notado un aumento en el número de olas de calor o fuertes bochornos' },
+      { id:'D7', type:'likert5b', text:'D7. ¿En qué medida cree que el cambio climático afectará la prevalencia (cantidad) de zancudos?' },
+      { id:'D8', type:'likert5b', text:'D8. ¿En qué medida cree que el cambio climático afectará los brotes de malaria o dengue?' }
+    ]},
+    { icon:'🤝', title:'Sección H. Apoyo Comunitario y actividades', questions:[
+      { id:'H1', type:'yesno', text:'H1. ¿Ha participado en alguna asociación, grupo o comité ambiental, o en uno que proteja el agua y el medio ambiente?', skip:'Cuando la respuesta es afirmativa continue a H2, caso contrario pase a H3' },
+      { id:'H2', type:'yesno', text:'H2. Si es así: ¿La organización, comité o institución en la que participó sigue activa o trabajando?' },
+      { id:'H3', type:'yesno', text:'H3. ¿Ha participado en algún grupo de defensa comunitaria? (Por ejemplo, contra el dengue, malaria, mordeduras de serpiente u otras enfermedades.)' },
+      { id:'H4', type:'radio', text:'H4. En los últimos 6 meses, ¿cuál de las siguientes actividades ha visto, escuchado o realizado con más frecuencia en su comunidad?', options:['He escuchado anuncios o programas de radio','He visto anuncios o programas de TV','He visto murales o carteles pintados en las paredes con mensajes sobre dengue y malaria','He asistido a charlas o reuniones comunitarias sobre el tema','Promotores de salud han visitado mi casa','He recibido información a través de redes sociales (Facebook, WhatsApp, etc.)','No he visto ni escuchado nada sobre el tema','Otro'], hasOther:true },
+      { id:'H5', type:'yesno', text:'H5. Durante el último año, ¿participó en algún programa de capacitación o campaña relacionada con la salud?', skip:'Si responde Sí en H5, complete desde H6|Si responde No en H5, complete desde H14' },
+      { id:'subtitle_h6', type:'subtitle', text:'<strong>H6. Formación en malaria o dengue</strong>' },
+      { id:'H6_1', type:'yesno', text:'H6.1. ¿Supo o escuchó de algún programa o actividad sobre formación en malaria o dengue?', skip:'Cuando la respuesta es afirmativa continue a H6.2, caso contrario pase a H7' },
+      { id:'H6_2', type:'radio', text:'H6.2. ¿Quién realizó la formación en malaria o dengue?', options:['Gobierno (Ministerio de Salud y Deportes, municipio)','World Vision','Otras ONG','Otro'], hasOther:true },
+      { id:'H6_3', type:'yesno', text:'H6.3. ¿Usted participó en el programa o actividad de malaria o dengue?' },
+      { id:'H6_4', type:'radio', text:'H6.4. ¿Cuándo empezó este programa o actividad de malaria o dengue?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h7', type:'subtitle', text:'<strong>H7. Formación sobre cambio climático</strong>' },
+      { id:'H7_1', type:'yesno', text:'H7.1. ¿Supo o escuchó de algún programa de capacitación sobre cambio climático?', skip:'Cuando la respuesta es afirmativa continue a H7.2, caso contrario pase a H8' },
+      { id:'H7_2', type:'radio', text:'H7.2. ¿Quién realizó la formación sobre cambio climático?', options:['Gobierno (Ministerio de Salud y Deportes, municipio)','World Vision','Otras ONG','Otro'], hasOther:true },
+      { id:'H7_3', type:'yesno', text:'H7.3. ¿Usted participó en el programa de capacitación sobre cambio climático?' },
+      { id:'H7_4', type:'radio', text:'H7.4. ¿Cuándo empezó este programa de capacitación sobre cambio climático?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h8', type:'subtitle', text:'<strong>H8. Visitas de trabajadores comunitarios de salud</strong>' },
+      { id:'H8_1', type:'yesno', text:'H8.1. ¿Supo o escuchó de algún programa o actividad sobre visitas de trabajadores comunitarios de salud?', skip:'Cuando la respuesta es afirmativa continue a H8.2, caso contrario pase a H9' },
+      { id:'H8_2', type:'radio', text:'H8.2. ¿Quién realizó la formación en visitas de trabajadores comunitarios de salud?', options:['Gobierno (Ministerio de Salud y Deportes, município)','World Vision','Otras ONG','Otro'], hasOther:true },
+      { id:'H8_3', type:'yesno', text:'H8.3. ¿Usted participó en el programa sobre visitas de trabajadores comunitarios de salud?' },
+      { id:'H8_4', type:'radio', text:'H8.4. ¿Cuándo empezó este programa?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h9', type:'subtitle', text:'<strong>H9. Programa de limpieza local</strong>' },
+      { id:'H9_1', type:'yesno', text:'H9.1. ¿Supo o escuchó de algún programa o actividad sobre limpieza local?', skip:'Cuando la respuesta es afirmativa continue a H9.2, caso contrario pase a H10' },
+      { id:'H9_2', type:'radio', text:'H9.2. ¿Quién realizó el programa o actividad sobre limpieza local?', options:['Gobierno (Ministerio de Salud y Deportes, municipio)','World Vision','Otras ONG','No sé','Otro'], hasOther:true },
+      { id:'H9_3', type:'yesno', text:'H9.3. ¿Usted participó en el programa o actividad sobre limpieza local?' },
+      { id:'H9_4', type:'radio', text:'H9.4. ¿Cuándo empezó este programa o actividad sobre limpieza local?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h10', type:'subtitle', text:'<strong>H10. Campaña local relacionada con limpieza de la comunidad</strong>' },
+      { id:'H10_1', type:'yesno', text:'H10.1. ¿Supo o escuchó de algún programa de campaña local relacionado con limpieza de la comunidad?', skip:'Cuando la respuesta es afirmativa continue a H10.2, caso contrario pase a H11' },
+      { id:'H10_2', type:'radio', text:'H10.2. ¿Quién realizó el programa relacionado con limpieza de la comunidad?', options:['Gobierno (Ministerio de Salud y Deportes, municipio)','World Vision','Otras ONG','No sé','Otro'], hasOther:true },
+      { id:'H10_3', type:'yesno', text:'H10.3. ¿Usted participó en el programa relacionado con limpieza de la comunidad?' },
+      { id:'H10_4', type:'radio', text:'H10.4. ¿Cuándo empezó este programa?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h11', type:'subtitle', text:'<strong>H11. Instalación de mosquiteros</strong>' },
+      { id:'H11_1', type:'yesno', text:'H11.1. ¿Supo o escuchó de algún programa o actividad de instalación de mosquiteros?', skip:'Cuando la respuesta es afirmativa continue a H11.2, caso contrario pase a H12' },
+      { id:'H11_2', type:'radio', text:'H11.2. ¿Quién realizó el programa o actividad de instalación de mosquiteros?', options:['Gobierno (Ministerio de Salud y Deportes, município)','World Vision','Otras ONG','No sé','Otro'], hasOther:true },
+      { id:'H11_3', type:'yesno', text:'H11.3. ¿Usted participó en el programa o actividad de instalación de mosquiteros?' },
+      { id:'H11_4', type:'radio', text:'H11.4. ¿Cuándo empezó este programa?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h12', type:'subtitle', text:'<strong>H12. Fumigación o uso del abate</strong>' },
+      { id:'H12_1', type:'yesno', text:'H12.1. ¿Supo o escuchó de algún programa o actividad sobre formación en fumigación o uso del abate?', skip:'Cuando la respuesta es afirmativa continue a H12.2, caso contrario pase a H13' },
+      { id:'H12_2', type:'radio', text:'H12.2. ¿Quién realizó el programa o actividad de formación en fumigación o uso del abate?', options:['Gobierno (Ministerio de Salud y Deportes, município)','World Vision','Otras ONG','No sé','Otro'], hasOther:true },
+      { id:'H12_3', type:'yesno', text:'H12.3. ¿Usted participó en el programa o actividad sobre formación en fumigación o uso del abate?' },
+      { id:'H12_4', type:'radio', text:'H12.4. ¿Cuándo empezó este programa?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'subtitle_h13', type:'subtitle', text:'<strong>H13. Reunión comunitaria para debatir temas de salud, higiene o cambio climático</strong>' },
+      { id:'H13_1', type:'yesno', text:'H13.1. ¿Supo o escuchó de alguna reunión comunitaria para debatir temas de salud, higiene o cambio climático?', skip:'Cuando la respuesta es afirmativa continue a H13.2, caso contrario pase a H14' },
+      { id:'H13_2', type:'radio', text:'H13.2. ¿Quién realizó la reunión comunitaria?', options:['Gobierno (Ministerio de Salud y Deportes, municipio)','World Vision','Otras ONG','No sé','Otro'], hasOther:true },
+      { id:'H13_3', type:'yesno', text:'H13.3. ¿Usted participó en la reunión comunitaria?' },
+      { id:'H13_4', type:'radio', text:'H13.4. ¿Cuándo empezó esta reunión comunitaria?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H14', type:'yesno', text:'H14. ¿Existe algún grupo comunitario voluntario en el pueblo?', skip:'Si responde Sí, complete las preguntas de H15 a H20|Si responde No, proceder con la Sección I' },
+      { id:'subtitle_h15', type:'subtitle', text:'<strong>H15. Cooperativa agrícola</strong>' },
+      { id:'H15_1', type:'yesno3', text:'H15.1. ¿Existe la cooperativa agrícola en su comunidad?', skip:'Cuando la respuesta es afirmativa continue a H15.2, cuando sea "no" o "no lo sé", pase a H16' },
+      { id:'H15_2', type:'radio', text:'H15.2. ¿Cuándo se formó la cooperativa agrícola en su comunidad?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H15_3', type:'radio', text:'H15.3. ¿Con qué frecuencia se reúnen los miembros de la cooperativa agrícola?', options:['Cada 2 a 3 días','Semanalmente','Quincenalmente','Mensualmente','Trimestralmente','Anualmente','No lo sé (pase a la H16)','Otro'], hasOther:true },
+      { id:'H15_4', type:'number', text:'H15.4. ¿Cuántos miembros participan en la cooperativa agrícola? (Si no sabe poner 0)' },
+      { id:'subtitle_h16', type:'subtitle', text:'<strong>H16. Grupo de ahorro y crédito</strong>' },
+      { id:'H16_1', type:'yesno3', text:'H16.1. ¿Existe el grupo crecer y promujer en su comunidad?', skip:'Cuando la respuesta es afirmativa continue a H16.2, cuando sea "no" o "no lo sé", pase a H17' },
+      { id:'H16_2', type:'radio', text:'H16.2. ¿Cuándo se formó el grupo crecer y promujer?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H16_3', type:'radio', text:'H16.3. ¿Con qué frecuencia se reúnen los miembros del grupo crecer y promujer?', options:['Cada 2 a 3 días','Semanalmente','Quincenalmente','Mensualmente','Trimestralmente','Anualmente','No lo sé (pase a la H17)','Otro'], hasOther:true },
+      { id:'H16_4', type:'number', text:'H16.4. ¿Cuántos miembros participan en el grupo crecer y promujer? (Si no sabe poner 0)' },
+      { id:'subtitle_h17', type:'subtitle', text:'<strong>H17. Grupo de mujeres (club de madres/vaso de leche)</strong>' },
+      { id:'H17_1', type:'yesno3', text:'H17.1. ¿Existe el club alma en su comunidad?', skip:'Cuando la respuesta es afirmativa continue a H17.2, cuando sea "no" o "no lo sé", pase a H18' },
+      { id:'H17_2', type:'radio', text:'H17.2. ¿Cuándo se formó el club alma?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H17_3', type:'radio', text:'H17.3. ¿Con qué frecuencia se reúnen los miembros del club alma?', options:['Cada 2 a 3 días','Semanalmente','Quincenalmente','Mensualmente','Trimestralmente','Anualmente','No lo sé (pase a la H18)','Otro'], hasOther:true },
+      { id:'H17_4', type:'number', text:'H17.4. ¿Cuántos miembros participan en el club alma? (Si no sabe poner 0)' },
+      { id:'subtitle_h18', type:'subtitle', text:'<strong>H18. Grupo juvenil</strong>' },
+      { id:'H18_1', type:'yesno3', text:'H18.1. ¿Existe algún grupo juvenil en su comunidad?', skip:'Cuando la respuesta es afirmativa continue a H18.2, cuando sea "no" o "no lo sé", pase a H19' },
+      { id:'H18_2', type:'radio', text:'H18.2. ¿Cuándo se formó el grupo juvenil?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H18_3', type:'radio', text:'H18.3. ¿Con qué frecuencia se reúnen los miembros del grupo juvenil?', options:['Cada 2 a 3 días','Semanalmente','Quincenalmente','Mensualmente','Trimestralmente','Anualmente','No lo sé (pase a la H19)','Otro'], hasOther:true },
+      { id:'H18_4', type:'number', text:'H18.4. ¿Cuántos miembros participan en el grupo juvenil? (Si no sabe poner 0)' },
+      { id:'subtitle_h19', type:'subtitle', text:'<strong>H19. Comité de salud</strong>' },
+      { id:'H19_1', type:'yesno3', text:'H19.1. ¿Existe algún comité de salud en su comunidad?', skip:'Cuando la respuesta es afirmativa continue a H19.2, cuando sea "no" o "no lo sé", pase a H20' },
+      { id:'H19_2', type:'radio', text:'H19.2. ¿Cuándo se formó el comité de salud?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H19_3', type:'radio', text:'H19.3. ¿Con qué frecuencia se reúnen los miembros del comité de salud?', options:['Cada 2 a 3 días','Semanal','Quincenal','Mensual','Trimestral','Anual','No lo sé (pase a la H20)','Otro'], hasOther:true },
+      { id:'H19_4', type:'number', text:'H19.4. ¿Cuántos miembros participan en el comité de salud? (Si no sabe poner 0)' },
+      { id:'subtitle_h20', type:'subtitle', text:'<strong>H20. Grupo comunitario de limpieza</strong>' },
+      { id:'H20_1', type:'yesno3', text:'H20.1. ¿Existe algún grupo comunitario de limpieza en su comunidad?', skip:'Cuando la respuesta es afirmativa continue a H20.2, cuando sea "no" o "no lo sé", pase a la sección I' },
+      { id:'H20_2', type:'radio', text:'H20.2. ¿Cuándo se formó el grupo de limpieza?', options:['Hace menos de 6 meses','Hace más de 6 meses, pero menos de 1 año','Hace 1 a 2 años','Hace más de 2 años'] },
+      { id:'H20_3', type:'radio', text:'H20.3. ¿Con qué frecuencia se reúnen los miembros del grupo de limpieza?', options:['Cada 2 a 3 días','Semanal','Quincenal','Mensual','Trimestral','Anual','No lo sé','Otro'], hasOther:true },
+      { id:'H20_4', type:'number', text:'H20.4. ¿Cuántos miembros participan en el grupo de limpieza? (Si no sabe poner 0)' }
+    ]},
+    { icon:'💧', title:'Sección I. Agua y Saneamiento', questions:[
+      { id:'subtitle_i1', type:'subtitle', text:'<strong>I1. ¿Cuál es la principal fuente de agua para beber que utiliza este hogar?<br>(Elija una fuente que se usa la mayor parte del tiempo para beber.)<br>Aquí puedes responder en grupo A o grupo B, pero no en ambos</strong>' },
+      { id:'I1_1', type:'radio', text:'I1.1. Grupo A: Agua potable', options:['Agua entubada dentro de la vivienda/patio/terreno (red pública)','Pilón público / Grifo público','Pozo tubular / Perforación','Pozo excavado protegido','Manantial protegido','Otro'], hasOther:true },
+      { id:'I1_2', type:'radio', text:'I1.2. Grupo B: Agua no necesariamente potable', options:['Pozo excavado no protegido','Manantial no protegido','Agua superficial (ej. río, represa, lago/cocha, estanque)','Agua embotellada o bidón (verifique la fuente principal para otros usos del hogar)','Quiosco','Camión cisterna','Otro'], hasOther:true, skip:'Solo puede responder uno de los grupos A o B' },
+      { id:'I2', type:'number', text:'I2. (Si respondió en grupo A en I1) ¿Cómo describiría la disponibilidad diaria de agua de su fuente principal en las últimas dos semanas? (horas por día)', placeholder:'Ej: 12 horas' },
+      { id:'I3', type:'radio', text:'I3. (Si respondió en grupo B en I1) ¿Está ubicada la fuente principal de agua dentro de los predios de su hogar?', options:['Sí, en el predio, dentro de la vivienda/edificio (pase a la I6)','Sí, en el predio, dentro del terreno/patio/lote (pase a la I6)','No hay instalaciones en el predio ni en la casa (pase a la I4)'] },
+      { id:'I4', type:'number', text:'I4. (Si respondió en grupo B en I1) ¿Cuánto tiempo le toma ir a la fuente de agua, recolectar agua y regresar a su hogar? (ida y vuelta, en minutos)' },
+      { id:'I5', type:'radio', text:'I5. (Si respondió en grupo B en I1) ¿Quién va principalmente a esta fuente a buscar agua?', options:['Hombre adulto (mayor o igual de 18 años)','Mujer adulta (mayor o igual de 18 años)','Niña (< 18 años)','Niño (< 18 años)'] },
+      { id:'I6', type:'checkbox', text:'I6. ¿Cómo se elimina o drena el agua de lluvia?', options:['Canaletas / tubos','Zanja o drenaje abierto (cuneta)','No tiene / nada','Otro'], hasOther:true },
+      { id:'I7', type:'checkbox', text:'I7. ¿A dónde va el agua que usa en casa para lavar platos o para higiene personal?', options:['Desagüe a través de la red pública','Tanque séptico o silo','Río o quebrada','Filtración en el suelo (se echa a la tierra)','Otro'], hasOther:true },
+      { id:'I8', type:'checkbox', text:'I8. ¿Dónde defecan (hacen sus necesidades)?', options:['Letrina / silo','Baño o letrina (conectado a desagüe)','Al aire libre (tierra, monte o río)','Otro'], hasOther:true },
+      { id:'I9', type:'radio', text:'I9. ¿Dónde se lavan las manos los miembros de su hogar con más frecuencia?', options:['Instalación fija observada (lavadero/caño) en la vivienda','Instalación fija observada (lavadero/caño) en el patio/terreno','Objeto móvil observado (balde/jarra/tetera)','No hay lugar para lavarse las manos en la vivienda','Sin permiso para ver'] },
+      { id:'I10', type:'yesno', text:'I10. ¿Hay jabón o detergente disponible en el lugar para lavarse las manos?' }
+    ]},
+    { icon:'⚖️', title:'Sección G. Toma de decisiones de las mujeres', questions:[
+      { id:'G1', type:'radio', text:'G1. Cuando se toman decisiones sobre problemas de salud o enfermedades en su hogar, ¿quién toma usualmente esas decisiones?', options:['El jefe de hogar, esposo o conviviente','La jefa de hogar, esposa o conviviente','Ambos juntos','Otro miembro del hogar','Junto con otra persona dentro de la casa','Junto con otra persona fuera del hogar','Otro'], hasOther:true },
+      { id:'G2', type:'radio', text:'G2. Cuando se toman decisiones con respecto a la generación de ingresos de su hogar, ¿quién es el que normalmente toma la decisión?', options:['Hombre principal o marido','Mujer principal o esposa','Marido y mujer conjuntamente','Alguien más en el hogar','Conjuntamente con alguien más dentro del hogar','Conjuntamente con alguien más fuera del hogar','Alguien fuera del hogar/otro','Mi hogar no participa en la actividad, así que no se toman decisiones'], hasOther:true },
+      { id:'G3', type:'radio', text:'G3. Cuando se toman decisiones sobre gastos menores del hogar, ¿quién toma usualmente la decisión?', options:['El jefe de hogar, esposo o conviviente','La jefa de hogar, esposa o conviviente','Ambos juntos','Otro miembro del hogar','Junto con otra persona dentro de la casa','Junto con otra persona fuera del hogar','Otro'], hasOther:true },
+      { id:'G4', type:'radio', text:'G4. ¿Quién toma usualmente las decisiones sobre el cuidado de la salud de los niños?', options:['El jefe de familia','Cónyuge del jefe de familia','Conjuntamente (jefe de familia y su cónyuge)','Otro'], hasOther:true },
+      { id:'G5', type:'yesno', text:'G5. En los últimos 12 meses, ¿el jefe de este hogar ha usado un teléfono móvil para realizar transacciones financieras?' }
+    ]},
+    { icon:'😊', title:'Sección E. Bienestar subjetivo', questions:[
+      { id:'E1', type:'radio', text:'E1. Con respecto al consumo de alimentos de su hogar durante el último mes, ¿cuál de las siguientes afirmaciones es verdadera?', options:['No alcanzó / no fue suficiente para las necesidades de la casa','Alcanzó a las justas para las necesidades de la casa','Fue más que suficiente / alcanzó bien y sobró'] },
+      { id:'E2', type:'radio', text:'E2. Con respecto a la vivienda de su hogar durante el último mes, ¿cuál de las siguientes afirmaciones es verdadera?', options:['No alcanzó / no fue suficiente para las necesidades de la casa','Alcanzó a las justas para las necesidades de la casa','Fue más que suficiente / alcanzó bien y sobró'] },
+      { id:'E3', type:'radio', text:'E3. Con respecto a la atención de salud de su hogar durante el último mes, ¿cuál de las siguientes afirmaciones es verdadera?', options:['No alcanzó / no fue suficiente para las necesidades de la casa','Alcanzó a las justas para las necesidades de la casa','Fue más que suficiente / alcanzó bien y sobró'] },
+      { id:'E4', type:'radio', text:'E4. ¿Cuál de las siguientes afirmaciones es verdadera con respecto a sus ingresos actuales?', options:['Le permite generar ahorros','Le permite ahorrar solo un poco','Solo cubre los gastos (a las justas)','No es suficiente, necesita usar ahorros','Realmente no es suficiente, necesita pedir prestado'] }
+    ]}
+  ];
+}
 </script>
 </body>
 </html>
